@@ -1,0 +1,127 @@
+body{
+    background-color: #efeae3;
+    background-image: url("../images/cappuccino.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+#errorMsg{
+    color: red;
+}
+
+.errorSpan{
+    color: red;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 0.8em;
+}
+
+.center{
+    text-align: center;
+}
+
+.mainFrm{
+    margin-left:auto;
+    margin-right:auto;
+    border:2px solid #a1a1a1;
+    padding:10px 40px;
+    background:#dddddd;
+    border-radius:25px;
+    width: 500px;
+    filter: alpha(opacity=80);
+    opacity: 0.8;
+    z-index: 10000;
+}
+
+
+#ui-datepicker-div{
+    font-size:11px;
+}
+
+.inputRender{
+    border-radius: 5px;
+    background-color: #efeae3;
+}
+
+.signature{
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+.theForm{
+    text-align: left;
+}
+
+.subHeader{
+    font-weight: bold;
+}
+
+.reportDiv{
+    text-align: left;
+}
+
+.reportDiv ul{
+    text-align: left;
+    list-style: none;
+}
+
+.reportDiv li:before{
+    content: '✓';
+    margin-left:-2em;
+    margin-right:.100em;
+
+}
+
+*:focus {
+    outline: none;
+}
+.processForm input{
+
+    -moz-transition: padding .25s;
+    -webkit-transition: padding .25s;
+    -o-transition: padding .25s;
+    transition: padding .25s;
+}
+
+.processForm input:focus, .processForm textarea:focus {
+    background: #fff;
+    border:1px solid #555;
+    box-shadow: 0 0 3px #aaa;
+    padding-right:70px;
+}
+
+/* === HTML5 validation styles === */
+.processForm input:required, .processForm textarea:required {
+    background: #efeae3 url(../images/asterisk.png) no-repeat 98% center;
+}
+
+.processForm input:required:valid, .processForm textarea:required:valid {
+    background: #fff url(../images/valid.png) no-repeat 98% center;
+    box-shadow: 0 0 5px #5cd053;
+    border-color: #28921f;
+}
+
+.processForm input:focus:invalid, .processForm textarea:focus:invalid {
+    background: #fff url(../images/invalid.png) no-repeat 98% center;
+    box-shadow: 0 0 5px #d45252;
+    border-color: #b03535
+}
+
+
+.left{
+    float:left;
+    width:50%;
+}
+
+.left3{
+    float:left;
+    width:33%;
+    text-align: center;
+}
+
+/* used in main pag para el welcome user */
+    .welcomeMsg{
+    color: #bd9651;
+    font-style: italic;
+    font-size: 0.8em;
+}

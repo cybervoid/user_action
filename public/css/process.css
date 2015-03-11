@@ -1,0 +1,116 @@
+
+
+.processMainDiv{
+    margin-left:auto;
+    margin-right:auto;
+    border:2px solid #a1a1a1;
+    padding:10px 40px;
+    background:#dddddd;
+    border-radius:25px;
+    width: 750px;
+    filter: alpha(opacity=80);
+    opacity: 0.8;
+    z-index: 10000;
+}
+
+
+
+/* === Remove input autofocus webkit === */
+*:focus {
+    outline: none;
+}
+
+.processForm ul{
+    width:750px;
+    list-style-type: none;
+    list-style-position: outside;
+    margin:0px;
+    padding:0px;
+}
+
+.processForm li{
+    padding:12px;
+    position:relative;
+}
+
+.processForm label {
+    width:150px;
+    margin-top: 3px;
+    display:inline-block;
+    float:left;
+    padding:3px;
+}
+
+.processForm input {
+    height:15px;
+    width:220px;
+    padding:5px 8px;
+}
+
+.processForm select {
+    height:30px;
+    padding:5px 8px;
+}
+
+.processForm textarea {padding:8px; width:300px;}
+
+/* form element visual styles */
+.processForm input, .processForm textarea {
+
+    -moz-transition: padding .25s;
+    -webkit-transition: padding .25s;
+    -o-transition: padding .25s;
+    transition: padding .25s;
+}
+
+.processForm input:focus, .processForm textarea:focus {
+    background: #fff;
+    border:1px solid #555;
+    box-shadow: 0 0 3px #aaa;
+    padding-right:70px;
+}
+
+/* === HTML5 validation styles === */
+.processForm input:required, .processForm textarea:required {
+    background: #efeae3 url(../images/asterisk.png) no-repeat 98% center;
+}
+
+.processForm input:required:valid, .processForm textarea:required:valid {
+    background: #fff url(../images/valid.png) no-repeat 98% center;
+    box-shadow: 0 0 5px #5cd053;
+    border-color: #28921f;
+}
+
+.processForm input:focus:invalid, .processForm textarea:focus:invalid {
+    background: #fff url(../images/invalid.png) no-repeat 98% center;
+    box-shadow: 0 0 5px #d45252;
+    border-color: #b03535
+}
+
+#employee{
+    width: 50px;
+}
+
+
+.checkbox ul{
+    list-style-type: none;
+    list-style-position: outside;
+    margin: 0px;
+    padding-left: 0px;
+    margin-left: 0px;
+}
+
+.checkbox li{
+    margin: 0px;
+    padding: 2px;
+    position: relative;
+    padding-left: 0px;
+    margin-left: 0px;
+}
+
+.checkbox label {
+    display:inline-block;
+    padding:3px;
+    margin-left: 0px;
+    cursor: pointer;
+}
