@@ -28,6 +28,9 @@ class User implements AuthenticatableContract, CanResetPasswordContract {
         //todo check AD password
         // if password not correct return null
 
+
+        Ldap::ldap_login_validate('gilra','R4f43lg1l');
+
         $user = new User();
         $user->id = 'gilra';
         $user->givenName = 'Rafael';

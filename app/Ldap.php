@@ -16,7 +16,7 @@ class Ldap implements AuthenticatableContract, CanResetPasswordContract
     public $sn;
 
 
-    public static function ldap_connect()
+    public static function ldap_MyConnect()
     {
         $ldap = ldap_connect("ldap://DCUSA2.ILLY-DOMAIN.COM");
         if (!$ldap)
@@ -31,6 +31,34 @@ class Ldap implements AuthenticatableContract, CanResetPasswordContract
             return $ldap;
         }
     }
+
+
+    /**
+     * Gets the current logged in User
+     *
+     * @param $userName
+     * @param $password
+     *
+     * @internal param string $txtSearch
+     * @internal param string $myDN
+     * @internal param string $query
+     *
+     * @return User
+     */
+    public static function  ldap_login_validate($userName, $password)
+    {
+        $attributes = array('dn','title', 'givenname', 'sn','directReports', 'CN');
+
+        $ldap = self::ldap_MyConnect();
+        $result = ldap_search($ldap, "OU=North America,DC=ILLY-DOMAIN,DC=COM","(&(sAMAccountName={$userName})(memberOf=CN=HR-Tool,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM))" , $attributes);
+        $entry = ldap_get_entries($ldap, $result);
+        dump($entry);
+        ldap_close($ldap);
+
+        return $entry;
+
+    }
+
 
     /**
      * Gets the current logged in User
