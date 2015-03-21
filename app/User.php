@@ -9,9 +9,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 
-class User implements AuthenticatableContract, CanResetPasswordContract {
+class User implements AuthenticatableContract, CanResetPasswordContract
+{
 
-	use Authenticatable, CanResetPassword;
+    use Authenticatable, CanResetPassword;
 
     public $id; //sAMAccountName
     public $givenName;
@@ -28,20 +29,29 @@ class User implements AuthenticatableContract, CanResetPasswordContract {
         //todo check AD password
         // if password not correct return null
 
+        $result = Ldap::ldap_login_validate($req->input('userName'), $req->input('password'));
 
-        Ldap::ldap_login_validate('gilra','R4f43lg1l');
 
-        $user = new User();
-        $user->id = 'gilra';
-        $user->givenName = 'Rafael';
-        $user->sn = 'Gil';
+        if (!$result){ return false; }
 
-        Session::put('user_id', $user->id);
-        Session::put('givenName', $user->givenName);
-        return $user;
+        if (isset($result[0]["count"]))
+        {
+            //$_SESSION['userName'] = $row[0]["cn"][0];
+            $user = new User();
+            $user->id = 'gilra';
+            $user->givenName = 'Rafael';
+            $user->sn = 'Gil';
+
+            Session::put('user_id', $user->id);
+            Session::put('givenName', $user->givenName);
+
+            return $user;
+        } else return false;
+
     }
 
-    public function is_guest(){
+    public function is_guest()
+    {
         return !isset($this->id);
     }
 
@@ -49,10 +59,12 @@ class User implements AuthenticatableContract, CanResetPasswordContract {
      * Gets the current logged in User
      * @return User
      */
-    public static function  current(){
+    public static function  current()
+    {
         $user = new User();
         $user->id = Session::get('user_id');
         $user->givenName = Session::get('givenName');
+
         return $user;
     }
 

@@ -14,12 +14,4 @@
 Route::get('/', 'DashboardController@index');
 Route::get('login', 'LoginController@index');
 Route::post('login', 'LoginController@check_password');
-
-
-/*
-Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
-]);
-
-*/
+Route::get('newHire', 'newHireController@index');

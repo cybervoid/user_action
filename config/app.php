@@ -2,7 +2,9 @@
 
 return [
 
+    'adUserName' => 'adm_gilra',
     'adPassword' => 'R4f43lg1l',
+    'adDomain' => 'ILLY-DOMAIN.COM',
 	/*
 	|--------------------------------------------------------------------------
 	| Application Debug Mode

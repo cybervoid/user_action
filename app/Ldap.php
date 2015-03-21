@@ -5,6 +5,7 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use League\Flysystem\Exception;
 
 class Ldap implements AuthenticatableContract, CanResetPasswordContract
 {
@@ -21,13 +22,20 @@ class Ldap implements AuthenticatableContract, CanResetPasswordContract
         $ldap = ldap_connect("ldap://DCUSA2.ILLY-DOMAIN.COM");
         if (!$ldap)
         {
-            return ldap_error($ldap);
+            error_log(ldap_error($ldap));
+            return null;
         }
         else
         {
+            $adUserName= \Config::get('app.adUserName');
+            $adPassword= \Config::get('app.adPassword');
+            $adDomain= \Config::get('app.adDomain');
+
+
             ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
             ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
             ldap_set_option($ldap, LDAP_OPT_SIZELIMIT, 1000); //this is just for speed.
+            if(! ldap_bind($ldap, $adUserName . "@" . $adDomain, $adPassword)) return null;
             return $ldap;
         }
     }
@@ -47,15 +55,24 @@ class Ldap implements AuthenticatableContract, CanResetPasswordContract
      */
     public static function  ldap_login_validate($userName, $password)
     {
-        $attributes = array('dn','title', 'givenname', 'sn','directReports', 'CN');
-
         $ldap = self::ldap_MyConnect();
-        $result = ldap_search($ldap, "OU=North America,DC=ILLY-DOMAIN,DC=COM","(&(sAMAccountName={$userName})(memberOf=CN=HR-Tool,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM))" , $attributes);
-        $entry = ldap_get_entries($ldap, $result);
-        dump($entry);
-        ldap_close($ldap);
 
-        return $entry;
+        $attributes = array( 'givenname', 'sn', 'sAMAccountName');
+        if (!$ldap){ return false; }
+        $result = ldap_search($ldap, "OU=North America,DC=ILLY-DOMAIN,DC=COM", "(&(sAMAccountName={$userName})(memberOf=CN=HR-Tool,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM))" , $attributes);
+        $entry = ldap_get_entries($ldap, $result);
+
+        if (isset($entry[0]["count"])){
+            //verify the password
+
+            if (@$bind = ldap_bind($ldap, $userName."@ILLY-DOMAIN.COM", $password)){
+                return $entry;
+            } // else password incorrect
+
+            ldap_close($ldap);
+        } else return false; // username incorrect or not allowed to login
+
+
 
     }
 
@@ -73,7 +90,7 @@ class Ldap implements AuthenticatableContract, CanResetPasswordContract
     public static function  ldap_query($txtSearch, $myDN, $query = "")
     {
 
-
+        $ldap= ldap_MyConnect;
         if ($bind = ldap_bind($ldap, "adm_gilra@ILLY-DOMAIN.COM", "R4f43lg1l"))
         {
             $attributes = array('dn', 'title', 'givenname', 'sn', 'manager', 'department', 'memberOf', 'mail',
