@@ -8,11 +8,15 @@
     });
 </script>
 
-<img src="images/logo.bmp">
 
 
-<h1>
-    illy Human Resources User Notification Tool</h1>
+<p style="color: red;
+                    @if (!Session::get('message'))
+                            display: none
+                    @endif">
+    {{ Session::get('message') }}
+</p>
+
 
 Please enter your company's credentials above<br><br>
 <div class="processForm">

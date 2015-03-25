@@ -9,8 +9,8 @@ $(document).ready(function () {
             case "newHire":
                 window.location.href='newHire';
                 break;
-            case "termination":
-                window.location.href='newHire.php?cmd=end';
+            case "separation":
+                window.location.href='separation';
                 break;
             case "org_change":
                 //window.location.href='change_org.php';

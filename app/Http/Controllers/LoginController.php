@@ -16,11 +16,11 @@ class LoginController extends Controller {
 	|
 	*/
 
-	/**
-	 * Create a new controller instance.
-	 *
-	 * @return void
-	 */
+    /**
+     * Create a new controller instance.
+     *
+     * @return \App\Http\Controllers\LoginController
+     */
 
 	public function __construct()
 	{

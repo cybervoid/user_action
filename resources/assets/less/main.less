@@ -1,12 +1,5 @@
 body{
-    background-color: #efeae3;
-    background-image: url("../images/cappuccino.jpg");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-}
-
-#errorMsg{
-    color: red;
+    background: #efeae3 url("../../../public/images/cappuccino.jpg") no-repeat fixed;
 }
 
 .errorSpan{
@@ -27,7 +20,7 @@ body{
     padding:10px 40px;
     background:#dddddd;
     border-radius:25px;
-    width: 500px;
+    width: 750px;
     filter: alpha(opacity=80);
     opacity: 0.8;
     z-index: 10000;
@@ -92,17 +85,17 @@ body{
 
 /* === HTML5 validation styles === */
 .processForm input:required, .processForm textarea:required {
-    background: #efeae3 url(../images/asterisk.png) no-repeat 98% center;
+    background: #efeae3 url(../../../public/images/asterisk.png) no-repeat 98% center;
 }
 
 .processForm input:required:valid, .processForm textarea:required:valid {
-    background: #fff url(../images/valid.png) no-repeat 98% center;
+    background: #fff url(../../../public/images/valid.png) no-repeat 98% center;
     box-shadow: 0 0 5px #5cd053;
     border-color: #28921f;
 }
 
 .processForm input:focus:invalid, .processForm textarea:focus:invalid {
-    background: #fff url(../images/invalid.png) no-repeat 98% center;
+    background: #fff url(../../../public/images/invalid.png) no-repeat 98% center;
     box-shadow: 0 0 5px #d45252;
     border-color: #b03535
 }
