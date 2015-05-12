@@ -2,6 +2,13 @@
  * Created by rafag on 3/21/15.
  */
 
+var App = App || {};
+
+(function($){
+    "use strict";
+
+    App.separation = App.separation || {};
+
 
 $(document).ready(function() {
 
@@ -15,6 +22,12 @@ $(document).ready(function() {
             $('#departmentError').html('');
         }
     });
+    $('#salesLevel').change( function(){
+        if($('#salesLevel option:selected').text()=='Level III'){
+            $('#salesLevelDiv').html('Level III Regional / Division Sales Manager / <br> National Retail Managers / Systems Mgr');
+        } else $('#salesLevelDiv').html('');
+    });
+
     $('#location').change( function(){
         if($('#location').val()=='empty'){
             $('#location').toggleClass('inputRender', true)
@@ -39,9 +52,9 @@ $(document).ready(function() {
         if($('#laptop').is(":checked"))
             $("#prepareLaptop").after('<li id="ship" style="padding-left: 20px"><label><input type="checkbox" class="inputRender" name="iTDept[]" id="laptopShipping" value="Laptop needs to be shipped to an outside location, please contact hiring manager for address"> Laptop needs to be shipped to an outside location, please contact hiring manager for address</label></li>'); else
             $("#ship").remove()
-
-
-
+    });
+    $('#cancel').click(function(){  // cancel the new hire and move to the main page
+        window.location.href = "/";
     });
 
     $('#manager').keyup( function(){
@@ -51,39 +64,45 @@ $(document).ready(function() {
 
     $('#newHire').submit(function( event) {
         // VALIDATION
-        cansubmit= true;
+        var cansubmit= true;
+
+        if($('#company').val()=="empty"){
+            $('#company').toggleClass('inputRender validateError')
+            $('#companyError').html('<span class="errorSpan"> * You have to choose a department before proceeding</span>');
+            cansubmit= false;
+        } else $('#companyError').html('<span class="errorSpan"> *</span>');
 
         if($('#department').val()=="empty"){
             $('#department').toggleClass('inputRender validateError')
             $('#departmentError').html('<span class="errorSpan"> * You have to choose a department before proceeding</span>');
             cansubmit= false;
-        }
+        } else $('#departmentError').html('<span class="errorSpan"> *</span>');
 
         if($('#hireStatus').val()=="empty"){
             $('#hireStatus').toggleClass('inputRender validateError')
             $('#hireStatusError').html('<span class="errorSpan"> * You have to choose a hire status before proceeding</span>');
             cansubmit= false;
-        }
+        } else $('#hireStatusError').html('<span class="errorSpan"> * </span>');
 
 
         if($('#startDate').val().length<2){
             $('#startDate').toggleClass('inputRender validateError')
             $('#startDateError').html('<span class="errorSpan"> * You have to choose a start date before proceeding</span>');
             cansubmit= false;
-        }
+        } else $('#startDateError').html('<span class="errorSpan"> * </span>');
 
 
         if($('#payrollDate').val().length<2){
             $('#payrollDate').toggleClass('inputRender validateError')
             $('#payrollDateError').html('<span class="errorSpan"> * You have to choose a payroll start date before proceeding</span>');
             cansubmit= false;
-        }
+        } else $('#payrollDateError').html('<span class="errorSpan"> * </span>');
 
         if($('#location').val()=="empty"){
             $('#location').toggleClass('inputRender validateError')
             $('#locationError').html('<span class="errorSpan"> * You must choose a location before proceeding</span>');
             cansubmit= false;
-        }
+        } else $('#locationError').html('<span class="errorSpan"> * </span>');
 
 
         if(cansubmit== false){
@@ -95,12 +114,12 @@ $(document).ready(function() {
 
             $.ajax({
                 type: "POST",
-                url: "newHire_ajax.php",
+                url: "add",
                 data: $("#newHire").serialize()
             })
                 .done(function( msg ) {
-                    $('#report').html(msg);
-                    $('#report').show();
+                    $('#report').html(App.templates.separation(msg));
+                    //$('#report').html(msg);
                 });
 
 
@@ -117,9 +136,10 @@ $(document).ready(function() {
                 .done(function( msg ) {
                     $("#errorDiv").html("");
                     if(msg !="done"){
-                        $("#errorDiv").html("Unexpected error occurried while processing your request.");
+                        $("#errorDiv").html("Unexpected error occurred while processing your request.");
                         $("#content").html(msg);
                     } else{
+                        /*
                         donePage = '<br><br><p class="center">Your request has been processed successfully<p>';
                         donePage = donePage + '<p>We have created two forms, one has been sent to Payroll and the other to service desk, these are the download links</p>';
                         donePage = donePage + '<p>Employee: ' + $("#name").val() + ' ' + $("#lastName").val();
@@ -133,7 +153,7 @@ $(document).ready(function() {
                         donePage = donePage + '<br><br><br><p class="subHeader">What\'s next: <br></p>';
 
                         donePage = donePage + '<ul class="navigation" style="text-align: center"><li class="myNavigation navigationLink" id="home">Home Screen</a></li><li class="myNavigation navigationLink" id="another">Add another employee</li></ul>';
-
+*/
                         $("#content").html(donePage);
                     }
 
@@ -193,3 +213,4 @@ $(document).ready(function() {
 
 });
 
+}(jQuery));

@@ -1,10 +1,14 @@
 // Made by Rafael Gil 2014
 
+var App = App || {};
 
-$("document").ready(function(){
-    $('#newHire').on('submit', function(){
+(function($){
+    "use strict";
 
+    App.separation = App.separation || {};
 
+    function newHireSubmit()
+    {
         $.ajax({
             type: "POST",
             url: "add",
@@ -16,6 +20,18 @@ $("document").ready(function(){
             });
 
         return false;
-    });
+    }
 
-});//end of document ready function
+    $("document").ready(function()
+    {
+        $('#newHire').on('submit', newHireSubmit);
+    });//end of document ready function
+}(jQuery));
+
+/*
+(function($){
+    "use strict";
+
+
+}(jQuery));
+*/

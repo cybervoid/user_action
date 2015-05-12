@@ -26,7 +26,8 @@
     </div>
 
 
-<!--    <script src="js/jquery-ui.js"></script>-->
+    <script src="js/jquery-ui.js"></script>
+
     <script src="vendor/handlebars/handlebars.js"></script>
     <script src="js/templates.js"></script>
     </body>

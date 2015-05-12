@@ -4,6 +4,7 @@ var wrap = require('gulp-wrap');
 var concat = require('gulp-concat');
 var declare = require('gulp-declare');
 var handlebars = require('gulp-handlebars');
+var sourcemaps = require('gulp-sourcemaps');
 
 gulp.task('templates', function() {
     // Load templates from the client/templates/ folder relative to where gulp was executed
@@ -20,7 +21,6 @@ gulp.task('templates', function() {
                 // Allow nesting based on path using gulp-declare's processNameByPath()
                 // You can remove this option completely if you aren't using nested folders
                 // Drop the client/templates/ folder from the namespace path by removing it from the filePath
-                console.log(filePath);
                 return declare.processNameByPath(filePath.replace('resources\\handlebars\\', ''));
             }
         }))
@@ -32,9 +32,12 @@ gulp.task('templates', function() {
 
 gulp.task('less', function() {
     gulp.src('resources/assets/less/**/*.less')
+        .pipe(sourcemaps.init())
         .pipe(less({
             //paths: [ path.join(__dirname, 'less', 'includes') ]
         }))
+        .pipe(sourcemaps.write())
         .pipe(gulp.dest('public/css/'));
 });
+
 gulp.task('default', ['templates']);

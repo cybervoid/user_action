@@ -35,11 +35,22 @@ class newHireController extends Controller {
      */
     public function index()
     {
-
         $user = User::current();
         return view('newHire',[
             'user' => $user
         ]);
+
+    }
+
+
+    public function add(Request $req)
+    {
+        $array = $req->request->all();
+        $array['test']= false;
+        $response = new Response(json_encode($array), 200, [
+            'Content-Type' => 'application/json'
+        ]);
+        return $response;
 
     }
 
