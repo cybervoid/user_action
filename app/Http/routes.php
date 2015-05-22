@@ -16,10 +16,13 @@ Route::get('login', 'LoginController@index');
 Route::post('login', 'LoginController@check_password');
 
 Route::get('newHire', 'newHireController@index');
-Route::post('add', 'newHireController@test');
+Route::post('add', 'newHireController@add');
+
+
+Route::get('report/{name}', 'newHireController@getReport')->where('name', '[a-zA-Z0-9 -]+\.pdf');
 
 Route::get('separation', 'SeparationController@index');
-
+Route::post('separation_search', 'SeparationController@separation_search');
 
 
 
@@ -45,5 +48,8 @@ Route::get('separation', 'SeparationController@index');
 ul.checkmark {
     list-style-type: none;
 }
+
+3- Para las diferentes companías, en newhire ponber las direcciones diferentes
+espressamente illy = > 800 westchester ave, #S438
  *
  * */

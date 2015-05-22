@@ -1,28 +1,28 @@
 @extends('mainTemplate')
 
+@section('javascript')
+<script src="js/separation.js" ></script >
+@endsection
+
+@section('css')
+<link rel="stylesheet" href="css/theForms.css" >
+@endsection
+
+
 @section('content')
 
-<link rel="stylesheet" href="css/theForms.css">
+<br>
+<form method="post" id="frmUpdateInfo" name="frmUpdateInfo">
+    <label>Search by Email</label>
+    <input type="text" id="email" name="email" placeholder="name.lastname@illy.com" class="inputRender" value="rafael.gil@illy.com">
+    <input type="button" value="Search" id="search" name="search" class="inputRender">
 
+    <br>
 
-@if (isset($req))
+    <br>
+    <div class="report" id="report"></div>
 
-<h2>{{ $req->userName }}</h2>
-@endif
-
-Separation
-
-
-<form method="post" action="/" name="newHire" id="newHire">
-    <label>Username</label>
-    <input type="input" name="userName" id="userName" class="inputRender" required=""><br>
-    <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-    <label>Password</label>
-    <input type="password" name="password" id="password" class="inputRender" required=""><br>
-    <input type="submit" value="Login" class="inputRender"><br>
+    <input type="button" name="submit" id="submit" value="Submit" hidden="hidden" class="inputRender">
 
 </form>
-
-<div id="report"></div>
-<script src="js/separation.js"></script>
 @endsection

@@ -5,12 +5,12 @@ $(document).ready(function () {
 
 
     activateMenu().on('click', function (e) {
-        switch ($(this).attr('id')){
+        switch ($(this).attr('id')) {
             case "newHire":
-                window.location.href='newHire';
+                window.location.href = 'newHire';
                 break;
             case "separation":
-                window.location.href='separation';
+                window.location.href = 'separation';
                 break;
             case "org_change":
                 //window.location.href='change_org.php';
@@ -18,8 +18,6 @@ $(document).ready(function () {
                 break;
         }
     });
-
-
 
 
 });
