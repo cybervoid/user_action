@@ -9,8 +9,6 @@ var App = App || {};
 
     App.newHire = App.newHire || {};
 
-    $(App.templates.newHire()).appendTo('#newHireFrm');
-
     $(document).ready(function () {
 
         $('#department').change(function () {
