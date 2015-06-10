@@ -3,7 +3,7 @@
     "laravel-elixir": "*"
   },
   "dependencies": {
-    "gulp": "^3.8.11",
+    "gulp": "^3.9.0",
     "gulp-concat": "^2.5.2",
     "gulp-declare": "^0.3.0",
     "gulp-exec": "^2.1.1",
