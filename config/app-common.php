@@ -1,6 +1,6 @@
 <?php
 
-return [
+$settings = [
 
 
     'newHireReportsPath' => storage_path() . '/reports/New_Hires/',

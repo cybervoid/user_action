@@ -7,3 +7,5 @@
  */
 
 include('app-common.php');
+
+return $settings;
