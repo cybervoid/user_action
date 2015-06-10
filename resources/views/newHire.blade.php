@@ -27,7 +27,8 @@
 <div class="report" id="report" hidden="" ></div >
 <div class="processForm" >
 
-<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>" >
+
 <div class="subHeader" >Personal information</div >
 <ul >
     <li >
@@ -40,7 +41,7 @@
         <label >Last Name</label >
         <input type="text" class="inputRender" name="lastName" id="lastName" required="" value="Duck" >
     </li >
-</ul>
+</ul >
 
 <p >
 
@@ -51,7 +52,7 @@
     <label >Will be working for</label >
     <select class="inputRender" name="company" id="company" >
         <option value="empty" >Select</option >
-        <option selected >illy caffe North America</option >
+        <option selected >illy caffè North America, Inc.</option >
         <option >Espressamente illy</option >
         <option >illy Espresso Canada</option >
     </select ><span id="companyError" class="errorSpan" >*</span ><br >
@@ -185,6 +186,7 @@
             <p >Sales level</p >
 
             <select name="salesLevel" id="salesLevel" class="inputRender" >
+                <option value="" >Select</option >
                 <option value="Level I District Sales Manager" >Level I District Sales Manager</option >
                 <option value="Level IA Business Development Manager" >Level IA Business Development Manager</option >
                 <option value="Level II Branch Sales Manager" >Level II Branch Sales Manager</option >
@@ -213,45 +215,45 @@
         </div >
         <br style="clear: left" >
     </li >
-</ul>
+</ul >
 
-    <br ><br ><br >
-    <!-- Employee Benefits Section: -->
-    <p >
+<br ><br ><br >
+<!-- Employee Benefits Section: -->
+<p >
 
-    <div class="subHeader" >Employee Benefits Section:</div >
-    </p>
-    <hr >
+<div class="subHeader" >Employee Benefits Section:</div >
+</p>
+<hr >
 
-    <label >HRB Entry Date:</label >
-    <input type="text" class="inputRender" name="HRB" id="HRB" readonly style="width: 100px" >
-    <br ><span id="HRBError" class="errorSpan" ></span >
-    <li >
-        <label >Payroll Comments</label >
-        <textarea class="inputRender" cols="40" rows="6" id="payrollComments" name="payrollComments" ></textarea >
-    </li >
+<label >HRB Entry Date:</label >
+<input type="text" class="inputRender" name="HRB" id="HRB" readonly style="width: 100px" >
+<br ><span id="HRBError" class="errorSpan" ></span >
+<li >
+    <label >Payroll Comments</label >
+    <textarea class="inputRender" cols="40" rows="6" id="payrollComments" name="payrollComments" ></textarea >
+</li >
 
 
-    <p >
+<p >
 
-    <div class="subHeader" >Information for other departments:</div >
-    </p>
-    <hr >
+<div class="subHeader" >Information for other departments:</div >
+</p>
+<hr >
 
-    <li >
-        <label >Location</label >
-        <select class="inputRender" name="location" id="location" >
-            <option value="empty" >Select</option >
-            <option value="Rye Brook" >Rye Brook</option >
-            <option value="New York City" >NYC</option >
-            <option value="Canada" selected >Canada</option >
-            <option value="Scottsdale" >Scottsdale</option >
-            <option value="Remote Users" >Other</option >
-        </select ><span id="locationError" class="errorSpan" >*</span >
+<li >
+    <label >Location</label >
+    <select class="inputRender" name="location" id="location" >
+        <option value="empty" >Select</option >
+        <option value="Rye Brook" >Rye Brook</option >
+        <option value="New York City" >NYC</option >
+        <option value="Canada" selected >Canada</option >
+        <option value="Scottsdale" >Scottsdale</option >
+        <option value="Remote Users" >Other</option >
+    </select ><span id="locationError" class="errorSpan" >*</span >
         <span id="location_Other_Span" hidden="true" >
             <input class="inputRender" type="text" name="location_Other" id="location_Other" >
             </span >
-    </li >
+</li >
 </div >
 
 
@@ -382,7 +384,7 @@
 Aditional Instructions if applicable: <br >
 <textarea class="inputRender" cols="40" rows="6" id="comments" name="comments" ></textarea >
 
-    <br >
+    <br ><br >
     <input type="submit" class="inputRender" >
     <input type="button" class="inputRender" id="cancel" value="Cancel" >
 

@@ -55,14 +55,43 @@ var App = App || {};
 
         });
 
+
         $('#laptop').click(function () {  // add/remove li element to the list
             if ($('#laptop').is(":checked")) {
-                $("#prepareLaptop").after('<li id="ship" style="padding-left: 20px"><label><input type="checkbox" class="inputRender" name="iTDept[]" id="laptopShipping" value="Laptop needs to be shipped to an outside location, please contact hiring manager for address"> Laptop needs to be shipped to an outside location, please contact hiring manager for address</label></li>');
+                $("#prepareLaptop").after('<li id="deliveryDateli" style="margin: 0px 0px 0px 30px">Delivery Date <input type="text" class="inputRender" name="deliveryDate" id="deliveryDate" style="width: 100px"></li>');
+                $("#prepareLaptop").after('<li id="ship" style="margin: 0px 0px 0px 20px"><label><input type="checkbox" class="inputRender" name="iTDept[]" id="laptopShipping" value="Laptop needs to be shipped to an outside location, please contact hiring manager for address"> Laptop needs to be shipped to an outside location, please contact hiring manager for address</label></li>');
+
+                if ($('#startDate').val() != '') {
+                    var d = new Date($('#startDate').val());
+                    d.setDate(d.getDate() - 3);
+
+                    //yourDate.getDay()
+                    if (d.getDay() == 6) {
+                        d.setDate(d.getDate() + 2);
+                        //alert('Saturday detected')
+                    }
+                    if (d.getDay() == 0) {
+                        d.setDate(d.getDate() + 1);
+                    }
+
+                    var deliveryDate = (d.getMonth() + 1).toString() + '/' + d.getDate().toString() + '/' + d.getFullYear().toString();
+                    $('#deliveryDate').val(deliveryDate);
+                }
+
+
+                $("#deliveryDate").datepicker({
+                    onSelect: function (dateText) {
+                        $("#startDateError").html("");
+                    }
+                });
             }
             else {
-                $("#ship").remove()
+                $("#ship").remove();
+                $("#deliveryDateli").remove();
             }
         });
+
+
         $('#cancel').click(function () {  // cancel the new hire and move to the main page
             window.location.href = "/";
         });
@@ -139,107 +168,113 @@ var App = App || {};
             }
             //else {  // run ajax
 
-                // create the user
-                /*
-                $.ajax({
-                    type: "POST",
-                    url: "add",
-                    data: $("#newHire").serialize()
-                })
-                    .done(function (msg) {
-                        $('#newHireFrm').html(App.templates.newHire(msg));
-                        console.log(msg);
-                        //$('#report').html(msg);
-                    });
+            // create the user
+            /*
+            $.ajax({
+                type: "POST",
+                url: "add",
+                data: $("#newHire").serialize()
+            })
+                .done(function (msg) {
+                    $('#newHireFrm').html(App.templates.newHire(msg));
+                    console.log(msg);
+                    //$('#report').html(msg);
+                });
 
 
-                // create word document with the form info
+            // create word document with the form info
 
-                $.ajax({
-                    type: "POST",
-                    url: "newHire_export_ajax.php",
-                    data: $("#newHire").serialize(),
-                    start: function(){
-                        $("#content").html('Processing your request ...');
+            $.ajax({
+                type: "POST",
+                url: "newHire_export_ajax.php",
+                data: $("#newHire").serialize(),
+                start: function(){
+                    $("#content").html('Processing your request ...');
+                }
+            })
+                .done(function( msg ) {
+                    $("#errorDiv").html("");
+                    if(msg !="done"){
+                        $("#errorDiv").html("Unexpected error occurred while processing your request.");
+                        $("#content").html(msg);
+                    } else{
+
+                        donePage = '<br><br><p class="center">Your request has been processed successfully<p>';
+                        donePage = donePage + '<p>We have created two forms, one has been sent to Payroll and the other to service desk, these are the download links</p>';
+                        donePage = donePage + '<p>Employee: ' + $("#name").val() + ' ' + $("#lastName").val();
+
+                        donePage = donePage + '<ul>';
+                        donePage = donePage + '<li>Payroll form: <a target="_blank" href="files/docs/Action User Notification-' + $("#name").val() + ' ' + $('#lastName').val() + '.doc">pAYROLL User Notification-'+ $("#name").val() + ' ' + $("#lastName").val() + '.doc</a></li>';
+                        donePage = donePage + '<li>Service desk form: <a target="_blank" href="files/docs/User Notification-' + $("#name").val() + ' ' + $('#lastName').val() + '.doc">User Notification-'+ $("#name").val() + ' ' + $("#lastName").val() + '.doc</a></li>';
+                        donePage = donePage + '</ul>';
+
+                        donePage = donePage + '<p>The reports are being stored in the <strong>"Human Resources"</strong> shared drive, under a folder named <strong>"Employee Action Forms"</strong>.</p>';
+                        donePage = donePage + '<br><br><br><p class="subHeader">What\'s next: <br></p>';
+
+                        donePage = donePage + '<ul class="navigation" style="text-align: center"><li class="myNavigation navigationLink" id="home">Home Screen</a></li><li class="myNavigation navigationLink" id="another">Add another employee</li></ul>';
+
+                        $("#content").html(donePage);
                     }
-                })
-                    .done(function( msg ) {
-                        $("#errorDiv").html("");
-                        if(msg !="done"){
-                            $("#errorDiv").html("Unexpected error occurred while processing your request.");
-                            $("#content").html(msg);
-                        } else{
 
-                            donePage = '<br><br><p class="center">Your request has been processed successfully<p>';
-                            donePage = donePage + '<p>We have created two forms, one has been sent to Payroll and the other to service desk, these are the download links</p>';
-                            donePage = donePage + '<p>Employee: ' + $("#name").val() + ' ' + $("#lastName").val();
-
-                            donePage = donePage + '<ul>';
-                            donePage = donePage + '<li>Payroll form: <a target="_blank" href="files/docs/Action User Notification-' + $("#name").val() + ' ' + $('#lastName').val() + '.doc">pAYROLL User Notification-'+ $("#name").val() + ' ' + $("#lastName").val() + '.doc</a></li>';
-                            donePage = donePage + '<li>Service desk form: <a target="_blank" href="files/docs/User Notification-' + $("#name").val() + ' ' + $('#lastName').val() + '.doc">User Notification-'+ $("#name").val() + ' ' + $("#lastName").val() + '.doc</a></li>';
-                            donePage = donePage + '</ul>';
-
-                            donePage = donePage + '<p>The reports are being stored in the <strong>"Human Resources"</strong> shared drive, under a folder named <strong>"Employee Action Forms"</strong>.</p>';
-                            donePage = donePage + '<br><br><br><p class="subHeader">What\'s next: <br></p>';
-
-                            donePage = donePage + '<ul class="navigation" style="text-align: center"><li class="myNavigation navigationLink" id="home">Home Screen</a></li><li class="myNavigation navigationLink" id="another">Add another employee</li></ul>';
-
-                            $("#content").html(donePage);
+                    activateMenu().on('click', function (e) {
+                        switch ($(this).attr('id')){
+                            case "home":
+                                window.location.href='mainPage.php';
+                                break;
+                            case "another":
+                                window.location.href='newHire.php';
+                                break;
                         }
-
-                        activateMenu().on('click', function (e) {
-                            switch ($(this).attr('id')){
-                                case "home":
-                                    window.location.href='mainPage.php';
-                                    break;
-                                case "another":
-                                    window.location.href='newHire.php';
-                                    break;
-                            }
-                        });
-
                     });
-                */
+
+                });
+            */
 
             //}
 
         });
-        $("#startDate").datepicker({
+        /*
+        {
             onSelect: function (dateText) {
                 $("#startDateError").html("");
-            }
-        });
+            },
+            */
+
+        $("#startDate").datepicker({"dateFormat": "mm/dd/yy"});
+
+
         var d = new Date();
         var n = d.getFullYear() - 30;
         $("#birthDate").datepicker({
             defaultDate: new Date('23 February ' + n),
             changeYear: true,
             changeMonth: true,
+            "dateFormat": "mm/dd/yy",
             onSelect: function (dateText) {
                 $("#startDateError").html("");
             }
         })
 
         $("#benefitDate").datepicker({
+            "dateFormat": "mm/dd/yy",
             onSelect: function (dateText) {
                 $("#startDateError").html("");
             }
         });
 
         $("#payrollDate").datepicker({
+            "dateFormat": "mm/dd/yy",
             onSelect: function (dateText) {
                 $("#startDateError").html("");
             }
         });
 
         $("#HRB").datepicker({
+            "dateFormat": "mm/dd/yy",
             onSelect: function (dateText) {
                 $("#startDateError").html("");
             }
         });
-
-// aqui
-
 
     });
 

@@ -10,7 +10,7 @@
         * Transactions to be processed within 48 hours of notification
     </p >
 
-    <p style="font-weight: bold" >NEW HIRE</p ></div >
+    <p style="font-weight: bold" >Separation</p ></div >
 
 <p ><span >Name: </span >{{ $req['name'] }} {{ $req['lastName'] }}</p >
 
@@ -37,44 +37,41 @@
 @endif
 
 
-    <p ><span >Employee #: </span >{{ $req["employee"] or 'TBD' }}</p >
+<p ><span >Employee #: </span >{{ $req["employee"] or 'TBD' }}</p >
 
 
+<div class="left3"><span >Separation Date: </span > {{ $req["termDate"] }}</div>
+<div class="left3"><span >Hire Status: </span > {{ $req["hireStatus"] }}</div>
+@if (isset($req["location_Other"]))
+<div class="left3"><span >Location: </span > {{ $req["location"] }} {{ $req["location_Other"] }}</div>
+@endif
 
+<!--
 <table width="100%" >
     <tr >
-        <td width="left" ><span >Start Date: </span > {{ $req["startDate"] }}</td >
+        <td width="left" ><span >Separation Date: </span > {{ $req["termDate"] }}</td >
 
         @if (isset($req["location_Other"]))
-            <td width="center" ><span >Location: </span > {{ $req["location"] }} {{ $req["location_Other"] }}</td >
+        <td width="center" ><span >Location: </span > {{ $req["location"] }} {{ $req["location_Other"] }}</td >
         @endif
 
         <td width="right" ><span >Hire Status: </span > {{ $req["hireStatus"] }}</td >
     </tr >
 </table >
-
+-->
 
 @if (isset($req["iTDeptEmail"]))
 
-    <p ><span >IT Department Checklist: Rafael Gil and Service Desk</span ></p >
+<p ><span >IT Department Checklist: Rafael Gil and Service Desk</span ></p >
 
-    <p >Standard notification request includes on all computers/laptops: OfficeSuite, Adobe Acrobat Pro, CCleaner, VPN,
-        Efax, Chrome, Firefox, Silverlight, FlashPlayer, Omniform, Skype, Dropbox, VLC Media Player, 7Zip. Outlook, Addition
-        to distributions lists.</p >
-
-    <p > All Cellphones will include a link to Hotspot set up.</p >
-
-    <p > *Upon user notification request, IT provides customer service to hiring manager and new hire. Hiring managers will
-        be contacted before new hire begins.</p >
-
-    <p ><span >E-Mail Distribution List:</span ></p >
-    <ul >
+<p ><span >E-Mail Distribution List:</span ></p >
+<ul >
 
 
-        @foreach($req["iTDeptEmail"] as $item)
-        <li >{{ $item }}</li >
-        @endforeach
-    </ul >
+    @foreach($req["iTDeptEmail"] as $item)
+    <li >{{ $item }}</li >
+    @endforeach
+</ul >
 @endif
 
 @if (isset($req["iTDept"]))
@@ -84,12 +81,15 @@
     <li >{{ $item }}</li >
     @endforeach
 </ul >
-
 @endif
 
 
-<p ><span >Specific assets and or functionalities needed: not listed on the User Notification form should be confirmed with hiring manager by IT.<p ></p >SPECIFIC INSTRUCTIONS HERE:<P ></P ></span >
-</p >
+@if (isset($req["itComments"]))
+<p><span>Additional instructions for IT:</span></p>
+<p style="margin-left: 22px">
+{{ $req["itComments"] }}
+</p>
+@endif
 
 
 @if(isset($req["oracle"]))
@@ -103,9 +103,9 @@
 <p ><span >HQ Office Manager-Suzie Schwab</span ></p >
 
 <ul>
-@foreach($req["oManager"] as $item)
-<li >{{ $item }}</li >
-@endforeach
+    @foreach($req["oManager"] as $item)
+    <li >{{ $item }}</li >
+    @endforeach
 </ul>
 @endif
 
@@ -121,16 +121,27 @@
 <p ><span >COMPANY CREDIT CARD-Marjorie Guthrie (if applicable)-included in new hires and separation notices</span >
 </p >
 <ul>
-@foreach($req["creditCard"] as $item)
-<li >{{ $item }}</li >
-@endforeach
+    @foreach($req["creditCard"] as $item)
+    <li >{{ $item }}</li >
+    @endforeach
 </ul>
 @endif
 
+@if (isset($req["generalComments"]))
+<p><span>Additional instructions for Administration Office:</span></p>
+<p style="margin-left: 22px">
+    {{ $req["generalComments"] }}
+</p>
+@endif
 
-@if($req["comments"]!="")
-<p ><span >Comments: </span ></p >
-{{ $req["comments"] }}
+@if(isset($req["creditCard"]))
+<p ><span >COMPANY CREDIT CARD-Marjorie Guthrie</span >
+</p >
+<ul>
+    @foreach($req["creditCard"] as $item)
+    <li >{{ $item }}</li >
+    @endforeach
+</ul>
 @endif
 
 
@@ -142,6 +153,5 @@
         </td >
     </tr >
 </table >
-
 
 @endsection

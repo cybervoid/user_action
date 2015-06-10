@@ -17,12 +17,14 @@ Route::post('login', 'LoginController@check_password');
 
 Route::get('newHire', 'newHireController@index');
 Route::post('add', 'newHireController@add');
+//Route::get('send', 'newHireController@send');
 
 
 Route::get('report/{name}', 'newHireController@getReport')->where('name', '[a-zA-Z0-9 -]+\.pdf');
 
 Route::get('separation', 'SeparationController@index');
 Route::post('separation_search', 'SeparationController@separation_search');
+Route::post('separation_add', 'SeparationController@add');
 
 
 
@@ -52,4 +54,9 @@ ul.checkmark {
 3- Para las diferentes companías, en newhire ponber las direcciones diferentes
 espressamente illy = > 800 westchester ave, #S438
  *
+ 4- en separation marcar los grupos a los que el usuario esta suscrito
+
+5- en new hire autocompletar el manager para los new hires
+
+6- aplicar el estilo de newhire a separation (el required que no funciona en separation)
  * */

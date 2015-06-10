@@ -12,7 +12,8 @@
 @section('content')
 
 <br>
-<form method="post" id="frmUpdateInfo" name="frmUpdateInfo">
+<form method="post" action="/separation_add" name="separation" id="separation" >
+    <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>" >
     <label>Search by Email</label>
     <input type="text" id="email" name="email" placeholder="name.lastname@illy.com" class="inputRender" value="rafael.gil@illy.com">
     <input type="button" value="Search" id="search" name="search" class="inputRender">
@@ -22,7 +23,7 @@
     <br>
     <div class="report" id="report"></div>
 
-    <input type="button" name="submit" id="submit" value="Submit" hidden="hidden" class="inputRender">
+
 
 </form>
 @endsection

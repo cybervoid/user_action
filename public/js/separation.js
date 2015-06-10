@@ -9,17 +9,19 @@ var App = App || {};
     $(document).ready(function () {
         $('#email').focus();
 
-        $('#frmUpdateInfo').submit( function(){
-            $('#search').trigger('click');
-            return false;
+        $( '#email' ).bind('keypress', function(e){
+            if ( e.keyCode == 13 ) {
+                $('#search').click();
+            }
         });
+
+
 
         $("#search").click(function () {
 
             //validate form first
             if ($("#email").val() == "") {
                 $('#errorDiv').html('We need a valid email in order to proceed width the search');
-                $('#report').hide();
                 $('#email').focus();
                 return false;
             }
@@ -38,16 +40,38 @@ var App = App || {};
             })
                 .done(function (msg) {
                     $('#report').html(App.templates.separation(msg));
+                    $("#cancel").click(function () {
+                        document.location = '/';
+                    });
 
-                    /*
-                    $('#report').html('');
-                    $('#report').html(msg);
-                    $('#submit').show();
                     $("#termDate,#effectiveDate,#effectiveDate1").datepicker({
                         onSelect: function (dateText) {
                             $("#startDateError").html("");
                         }
                     });
+
+                    $('#onTimePayment').keyup(function () {
+                        $('#onetime').prop("checked", true);
+                    });
+
+                    $('#severancePay,#overTime').keyup(function () {
+                        $('#severance').prop("checked", true);
+                    });
+
+                    $('#periodPaid').keyup(function () {
+                        $('#cobra').prop("checked", true);
+                    });
+
+
+                    // set the groups where the user is registered
+
+
+                    /*
+                    $('#report').html('');
+                    $('#report').html(msg);
+                    $('#submit').show();
+
+
                     $('#other').click(function () {
                         if ($('#other').is(':checked')) {
                             $('#otherComments').html('<p></p><textarea class="inputRender" cols="40" rows="6" id="inputOtherComments" name="inputOtherComments"></textarea>');
@@ -61,10 +85,13 @@ var App = App || {};
                 });
         });
 
-        /*
-        $("#submit").click(function () {
-            // validate form before submit
-            cansubmit = true;
+       $("#separation").submit(function () {
+            return validateSubmit();
+        });
+
+        function validateSubmit() {
+            var cansubmit = true;
+
             if ($('#termDate').val().length < 2) {
                 $('#termDateError').html('<span class="errorSpan"> * You have to choose a termination date before proceeding</span>');
                 cansubmit = false;
@@ -72,6 +99,11 @@ var App = App || {};
             else {
                 $('#termDateError').html('');
             }
+
+            if($('#hireStatus').val()==="empty"){
+                $('#hireStatusError').html('<span class="errorSpan"> * You have to choose a hire status before proceeding</span>');
+                cansubmit = false;
+            } else $('#hireStatusError').html('');
 
             if ($('#ptoDays').val() === "") {
                 $('#ptoDaysError').html('<span class="errorSpan"> * You have to enter a PTO time before proceeding</span>');
@@ -85,42 +117,16 @@ var App = App || {};
                 $('#errorDiv').html("* You have some errors in your form, Please check the fields in red.");
                 $("html, body").animate({ scrollTop: 0 }, "slow");
             }
-            else {
-                $('#errorDiv').html("");
-                $.ajax({
-                    type: "POST",
-                    url: "termination_export_ajax.php",
-                    data: $("#frmUpdateInfo").serialize(),
-                    beforeSend: function () {
-                        $('<img src="files/images/wait.gif" align="middle">').load(function () {
-                            $(this).width(52).height(52).appendTo('#report');
-                        });
 
-                        $('#report').html('Processing your request ...');
-                    }
-                })
-                    .done(function (msg) {
-                        $('#report').html(msg);
-                        $('#report').show();
-                        $('#submit').hide();
+            return cansubmit;
+        }
 
-                        activateMenu().on('click', function (e) {
-                            switch ($(this).attr('id')) {
-                                case "home":
-                                    window.location.href = 'mainPage.php';
-                                    break;
-                                case "another":
-                                    window.location.href = 'newHire.php?cmd=end';
-                                    break;
-                            }
-                        });
-                    });
-            }
-        });
-        */
 
 
     });
 
-}(jQuery));
+}
+    (jQuery)
+    )
+;
 
