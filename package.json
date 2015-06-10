@@ -6,6 +6,7 @@
     "gulp": "^3.8.11",
     "gulp-concat": "^2.5.2",
     "gulp-declare": "^0.3.0",
+    "gulp-exec": "^2.1.1",
     "gulp-handlebars": "^4.0.0",
     "gulp-less": "^3.0.2",
     "gulp-sourcemaps": "^1.5.1",

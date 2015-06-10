@@ -5,6 +5,7 @@ var concat = require('gulp-concat');
 var declare = require('gulp-declare');
 var handlebars = require('gulp-handlebars');
 var sourcemaps = require('gulp-sourcemaps');
+var exec = require('gulp-exec');
 
 gulp.task('templates', function() {
     // Load templates from the client/templates/ folder relative to where gulp was executed
@@ -40,4 +41,8 @@ gulp.task('less', function() {
         .pipe(gulp.dest('public/css/'));
 });
 
-gulp.task('default', ['templates']);
+gulp.task('composer', function() {
+    exec('composer install');
+});
+
+gulp.task('default', ['templates', 'composer']);
