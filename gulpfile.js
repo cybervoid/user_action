@@ -57,4 +57,4 @@ gulp.task('bower', function (cb) {
 });
 
 
-gulp.task('default', ['templates', 'composer', 'bower']);
+gulp.task('default', ['templates', 'less', 'composer', 'bower']);
