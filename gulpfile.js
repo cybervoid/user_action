@@ -49,7 +49,7 @@ gulp.task('composer', function (cb) {
     });
 });
 gulp.task('bower', function (cb) {
-    exec('bower install', function (err, stdout, stderr) {
+    exec('bower install --allow-root', function (err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
         cb(err);
