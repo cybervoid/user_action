@@ -5,9 +5,9 @@ var concat = require('gulp-concat');
 var declare = require('gulp-declare');
 var handlebars = require('gulp-handlebars');
 var sourcemaps = require('gulp-sourcemaps');
-var exec = require('gulp-exec');
+var exec = require('child_process').exec;
 
-gulp.task('templates', function() {
+gulp.task('templates', function () {
     // Load templates from the client/templates/ folder relative to where gulp was executed
     gulp.src('resources/handlebars/**/*.hbs')
         // Compile each Handlebars template source file to a template function
@@ -18,7 +18,7 @@ gulp.task('templates', function() {
         .pipe(declare({
             namespace: 'App.templates',
             noRedeclare: true, // Avoid duplicate declarations
-            processName: function(filePath) {
+            processName: function (filePath) {
                 // Allow nesting based on path using gulp-declare's processNameByPath()
                 // You can remove this option completely if you aren't using nested folders
                 // Drop the client/templates/ folder from the namespace path by removing it from the filePath
@@ -31,7 +31,7 @@ gulp.task('templates', function() {
         .pipe(gulp.dest('public/js/'));
 });
 
-gulp.task('less', function() {
+gulp.task('less', function () {
     gulp.src('resources/assets/less/**/*.less')
         .pipe(sourcemaps.init())
         .pipe(less({
@@ -41,8 +41,20 @@ gulp.task('less', function() {
         .pipe(gulp.dest('public/css/'));
 });
 
-gulp.task('composer', function() {
-    exec('composer install');
+gulp.task('composer', function (cb) {
+    exec('composer install', function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
+});
+gulp.task('bower', function (cb) {
+    exec('bower install', function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
 });
 
-gulp.task('default', ['templates', 'composer']);
+
+gulp.task('default', ['templates', 'composer', 'bower']);
