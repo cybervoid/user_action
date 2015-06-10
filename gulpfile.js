@@ -48,6 +48,7 @@ gulp.task('composer', function (cb) {
         cb(err);
     });
 });
+
 gulp.task('bower', function (cb) {
     exec('bower install --allow-root', function (err, stdout, stderr) {
         console.log(stdout);
