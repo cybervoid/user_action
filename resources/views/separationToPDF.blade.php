@@ -6,7 +6,7 @@
 
 <div class="center" ><p style="font-weight: bold" >USER NOTIFICATION FORM</p >
 
-    <p >Human Resources<br>
+    <p >Human Resources<br >
         * Transactions to be processed within 48 hours of notification
     </p >
 
@@ -40,10 +40,10 @@
 <p ><span >Employee #: </span >{{ $req["employee"] or 'TBD' }}</p >
 
 
-<div class="left3"><span >Separation Date: </span > {{ $req["termDate"] }}</div>
-<div class="left3"><span >Hire Status: </span > {{ $req["hireStatus"] }}</div>
+<div class="left3" ><span >Separation Date: </span > {{ $req["termDate"] }}</div >
+<div class="left3" ><span >Hire Status: </span > {{ $req["hireStatus"] }}</div >
 @if (isset($req["location_Other"]))
-<div class="left3"><span >Location: </span > {{ $req["location"] }} {{ $req["location_Other"] }}</div>
+<div class="left3" ><span >Location: </span > {{ $req["location"] }} {{ $req["location_Other"] }}</div >
 @endif
 
 <!--
@@ -76,7 +76,7 @@
 
 @if (isset($req["iTDept"]))
 <p ><span >Assets:</span ></p >
-<ul>
+<ul >
     @foreach($req["iTDept"] as $item)
     <li >{{ $item }}</li >
     @endforeach
@@ -85,10 +85,10 @@
 
 
 @if (isset($req["itComments"]))
-<p><span>Additional instructions for IT:</span></p>
-<p style="margin-left: 22px">
-{{ $req["itComments"] }}
-</p>
+<p ><span >Additional instructions for IT:</span ></p >
+<p style="margin-left: 22px" >
+    {{ $req["itComments"] }}
+</p >
 @endif
 
 
@@ -102,17 +102,10 @@
 @if(isset($req["oManager"]))
 <p ><span >HQ Office Manager-Suzie Schwab</span ></p >
 
-<ul>
+<ul >
     @foreach($req["oManager"] as $item)
     <li >{{ $item }}</li >
     @endforeach
-</ul>
-@endif
-
-@if(isset($req["newDriver"]))
-<p ><span >New Driver for Company Vehicle Form-Erik Tellone (new hire notification only) (if applicable)</span ></p >
-<ul >
-    <li >Form to Hiring Manager</li >
 </ul >
 @endif
 
@@ -120,28 +113,18 @@
 @if(isset($req["creditCard"]))
 <p ><span >COMPANY CREDIT CARD-Marjorie Guthrie (if applicable)-included in new hires and separation notices</span >
 </p >
-<ul>
+<ul >
     @foreach($req["creditCard"] as $item)
     <li >{{ $item }}</li >
     @endforeach
-</ul>
+</ul >
 @endif
 
 @if (isset($req["generalComments"]))
-<p><span>Additional instructions for Administration Office:</span></p>
-<p style="margin-left: 22px">
+<p ><span >Additional instructions for Administration Office:</span ></p >
+<p style="margin-left: 22px" >
     {{ $req["generalComments"] }}
-</p>
-@endif
-
-@if(isset($req["creditCard"]))
-<p ><span >COMPANY CREDIT CARD-Marjorie Guthrie</span >
 </p >
-<ul>
-    @foreach($req["creditCard"] as $item)
-    <li >{{ $item }}</li >
-    @endforeach
-</ul>
 @endif
 
 

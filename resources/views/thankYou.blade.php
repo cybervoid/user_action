@@ -3,7 +3,7 @@
 
 @section('javascript')
 <script src="js/menu.js" ></script >
-<script src="js/newHireThankYou.js" ></script >
+<script src="js/thankYou.js" ></script >
 @endsection
 
 @section('css')
@@ -12,33 +12,42 @@
 
 @section('content')
 
+
 <br ><br ><p class="center" >Your request has been processed successfully<p >
+
+
+    @if($reportType=='separation')
+<p >The form was created successfully and has been sent to service desk, below is the download link</p >
+
+@else
 <p >We have created two forms, one has been sent to Payroll and the other to service desk, these are the download
     links</p >
-<p >Employee: <strong>{{ $name }} {{ $lastName }} </strong>
+@endif
+
+<p >Employee: <strong >{{ $name }} {{ $lastName }} </strong >
 
 <ul class="ulNoStyle" >
 
-    <li >Service desk form: <a target="_blank" href="/report/{{ $newHireReport }}" >{{ $newHireReport }}</a ></li >
+    <li >Service desk form: <a target="_blank" href="{{ $routeURL }}{{ $newHireReport }}" >{{ $newHireReport }}</a >
+    </li >
 </ul >
 
 <p >The reports are being stored in the <strong >"Human Resources"</strong > shared drive, under a folder named
     <strong >"Employee Action Forms"</strong >.</p >
 
 
-
 <p >
 
     @if ($sendMail)
     The following users has been notified with this form: <br >
-<div style="width: 50%; margin: 0 auto;">
-    <ul style="text-align: left">
+<div style="width: 50%; margin: 0 auto;" >
+    <ul style="text-align: left" >
         @foreach ($sendMail as $recipient)
-        <li> <a target="_blank" href="mailto:{{ $recipient }}">{{ $recipient }}</a> </li>
+        <li ><a target="_blank" href="mailto:{{ $recipient }}" >{{ $recipient }}</a ></li >
         @endforeach
-    </ul>
-    <p class="notify">Total notifications sent <strong>{{ count($sendMail) }}</strong></p>
-</div>
+    </ul >
+    <p class="notify" >Total notifications sent <strong >{{ count($sendMail) }}</strong ></p >
+</div >
 @endif
 
 
@@ -49,7 +58,13 @@
 
 <ul class="navigation" style="text-align: center" >
     <li class="myNavigation navigationLink" id="home" >Home Screen</a></li >
-    <li class="myNavigation navigationLink" id="another" >Add another employee</li >
+
+    @if($reportType=='separation')
+    <li class="myNavigation navigationLink" id="separation" >Enter another separation</li >
+    @else
+    <li class="myNavigation navigationLink" id="newHire" >Add another employee</li >
+    @endif
+
 </ul >
 
 

@@ -44,19 +44,9 @@ class newHireController extends Controller
 
     }
 
-    /**
-     * New request is created, create the report and show the welcome page
-     *
-     * @param Request $req
-     *
-     * @return \Illuminate\View\View
-     */
-    public function add(Request $req)
-    {
-        /*REVISAR COMO CAPTURAR LOS ERRORES SI EL EMAIL NO SE PUEDE ENVIAR POR ALGUN MOTIVO*/
-        $newHireReport = 'Action User Notification-' . $req->request->get('name') . ' ' . $req->request->get('lastName') . '.pdf';
-        $this->generateReport($newHireReport, $req);
 
+    private function emailRecipients(Request $req)
+    {
         //* send the form by email *//
         $ccRecipients = '';
 
@@ -107,74 +97,38 @@ class newHireController extends Controller
             $ccRecipients[$req->request->get('managerEmail')] = $req->request->get('managerEmail');
         }
 
-        $sendMailResult = $this->sendMail($req->request->get('name') . ' ' . $req->request->get('lastName'), $ccRecipients, storage_path() . '\\reports\\New_Hires\\' . $newHireReport);
+        return $ccRecipients;
+    }
 
+    /**
+     * New request is created, create the report and show the welcome page
+     *
+     * @param Request $req
+     *
+     * @return \Illuminate\View\View
+     */
+    public function add(Request $req)
+    {
+
+        // generate reports
+        $newHireReport = 'Action User Notification-' . $req->request->get('name') . ' ' . $req->request->get('lastName') . '.pdf';
+        Reports::generateReport($newHireReport, \Config::get('app.newHireReportsPath'), $req);
+
+
+        //send the email
+        $ccRecipients = $this->emailRecipients($req);
+        $sendMailResult = $this->sendMail($req->request->get('name') . ' ' . $req->request->get('lastName'), $ccRecipients, \Config::get('app.newHireReportsPath') . $newHireReport);
 
         //create the username in the AD
         $this->createUserAD($req);
 
-        return view('newHireThankYou', ['name' => $req->request->get('name'),
-            'lastName' => $req->request->get('lastName'), 'newHireReport' => $newHireReport,
+
+        return view('thankYou', ['name' => $req->request->get('name'), 'lastName' => $req->request->get('lastName'),
+            'newHireReport' => $newHireReport, 'reportType' => 'newhire', 'routeURL' => \Config::get('app.newHireURL'),
             'sendMail' => $sendMailResult]);
     }
 
-    /**
-     * Generate the report in the temp folder
-     *
-     * @param $reportName
-     * @param Request $req
-     */
 
-    private function generateReport($reportName, Request $req)
-    {
-        $myFile = sys_get_temp_dir() . "\\export.html";
-        $toPDF = fopen($myFile, "w");
-
-        //get the domain so I can load the image on the PDF
-        $parse = parse_url($req->url());
-
-        if ($req->request->get('employee') == "")
-        {
-            $req->request->set('employee', 'TBD');
-        }
-
-
-        $myView = view('newHireToPDF', ['req' => $req->request->all(),
-            'server' => $parse['scheme'] . '://' . $parse['host'] . '/',]);
-
-
-        fwrite($toPDF, $myView);
-        fclose($toPDF);
-        //convert to pdf
-        $error = array();
-
-        exec('"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe" ' . $myFile . ' ' . '"' . storage_path() . '\\reports\\New_Hires\\' . $reportName . '"', $error);
-
-    }
-
-
-    /**
-     * Transfer the report so the user can download it
-     *
-     * @param Request $req
-     *
-     * @return Response
-     */
-    public function getReport(Request $req)
-    {
-        $name = $req->route('name');
-        $filePath = \Config::get('app.newHireReportsPath') . $name;
-        $content = file_get_contents($filePath);
-
-        /*
-        return new Response($content, Response::HTTP_OK, ["content-type" => "application/pdf",
-            "content-length" => filesize($filePath), "content-disposition" => "inline; filename=\"$name\""]);
-        */
-
-        return new Response($content, Response::HTTP_OK, ["content-type" => "application/pdf",
-            "content-length" => filesize($filePath), "content-disposition" => "attachment; filename=\"$name\""]);
-
-    }
 
 
     /**

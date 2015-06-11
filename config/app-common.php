@@ -3,7 +3,11 @@
 $settings = [
 
 
-    'newHireReportsPath' => storage_path() . '/reports/New_Hires/',
+    'newHireReportsPath' => storage_path() . '\\reports\\New_Hires\\', 'newHireURL' => '/report/newhire/',
+
+    'separationReportsPath' => storage_path() . '\\reports\\Separations\\', 'separationURL' => '/report/separation/',
+
+    'pdfCreator' => '"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe"',
 
     /*
      * Email settings

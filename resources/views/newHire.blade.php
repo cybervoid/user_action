@@ -24,6 +24,8 @@
 
 <form method="post" action="/add" name="newHire" id="newHire" >
 
+<input type="hidden" name="reportType" id="reportType" value="newHire" >
+
 <div class="report" id="report" hidden="" ></div >
 <div class="processForm" >
 

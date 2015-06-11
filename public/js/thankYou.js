@@ -10,8 +10,11 @@ $(document).ready(function () {
             case "home":
                 window.location.href = '/';
                 break;
-            case "another":
+            case "newHire":
                 window.location.href = '/newHire';
+                break;
+            case "separation":
+                window.location.href = '/separation';
                 break;
         }
     });
