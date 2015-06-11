@@ -7,10 +7,8 @@
  */
 
 
-
-
-
-class ActiveDirectory extends Controller {
+class ActiveDirectory extends Controller
+{
 
     public static function ldap_MyConnect()
     {
@@ -39,4 +37,5 @@ class ActiveDirectory extends Controller {
             return $ldap;
         }
     }
+
 }

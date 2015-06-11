@@ -45,60 +45,7 @@ class newHireController extends Controller
     }
 
 
-    private function emailRecipients(Request $req)
-    {
-        //* send the form by email *//
-        $ccRecipients = '';
 
-        $iTDeptEmail = $req->request->get('iTDeptEmail');
-        if (isset($iTDeptEmail))
-        {
-            $ccRecipients[\Config::get('app.eMailIT')] = \Config::get('app.eMailIT');
-        }
-
-        $oracle = $req->request->get('oracle');
-        if (isset($oracle))
-        {
-            $ccRecipients[\Config::get('app.eMailOracle')] = \Config::get('app.eMailOracle');
-        }
-
-        $oManager = $req->request->get('oManager');
-        if (isset($oManager))
-        {
-            $ccRecipients[\Config::get('app.eMailManagement')] = \Config::get('app.eMailManagement');
-            $ccRecipients[\Config::get('app.eMailManagement1')] = \Config::get('app.eMailManagement1');
-        }
-
-        $creditCard = $req->request->get('creditCard');
-        if (isset($creditCard))
-        {
-            $ccRecipients[\Config::get('app.eMailFinanceCreditCard')] = \Config::get('app.eMailFinanceCreditCard');
-        }
-
-        $newDriver = $req->request->get('newDriver');
-        if (isset($newDriver))
-        {
-            $ccRecipients[\Config::get('app.eMailFinanceDrivers')] = \Config::get('app.eMailFinanceDrivers');
-        }
-
-
-        // Per Maren's request include Stacey when we hire Sales Person
-        if ($req->request->get('department') == 'Sales')
-        {
-            $ccRecipients['Stacey.Berger@illy.com'] = 'Stacey.Berger@illy.com';
-        }
-
-        // Per Maren's request include lisa Gutman in all the requests
-        $ccRecipients['Lissa.Guttman@illy.com'] = 'Lissa.Guttman@illy.com';
-
-        //Add the manager's email in the recipients list
-        if ($req->request->get('managerEmail') != '')
-        {
-            $ccRecipients[$req->request->get('managerEmail')] = $req->request->get('managerEmail');
-        }
-
-        return $ccRecipients;
-    }
 
     /**
      * New request is created, create the report and show the welcome page
@@ -111,13 +58,18 @@ class newHireController extends Controller
     {
 
         // generate reports
-        $newHireReport = 'Action User Notification-' . $req->request->get('name') . ' ' . $req->request->get('lastName') . '.pdf';
+        $newHireReport = \Config::get('app.newHireReportsPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName') . '.pdf';
         Reports::generateReport($newHireReport, \Config::get('app.newHireReportsPath'), $req);
 
 
         //send the email
-        $ccRecipients = $this->emailRecipients($req);
-        $sendMailResult = $this->sendMail($req->request->get('name') . ' ' . $req->request->get('lastName'), $ccRecipients, \Config::get('app.newHireReportsPath') . $newHireReport);
+        $to = \Config::get('app.servicedesk'); //$to = 'rafael.gil@illy.com';
+        $ccRecipients = Mail::emailRecipients($req);
+        $subject = \Config::get('app.subjectPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName');
+        //Mail::send_mail($to, $ccRecipients, $subject, \Config::get('app.emailBody'), \Config::get('app.newHireReportsPath') . $newHireReport);
+        $ccRecipients[$to] = $to;
+        $ccRecipients = array_unique($ccRecipients);
+
 
         //create the username in the AD
         $this->createUserAD($req);
@@ -125,63 +77,11 @@ class newHireController extends Controller
 
         return view('thankYou', ['name' => $req->request->get('name'), 'lastName' => $req->request->get('lastName'),
             'newHireReport' => $newHireReport, 'reportType' => 'newhire', 'routeURL' => \Config::get('app.newHireURL'),
-            'sendMail' => $sendMailResult]);
+            'sendMail' => $ccRecipients]);
     }
 
 
 
-
-    /**
-     * Send the email and return the list of recipients
-     *
-     * @param $name
-     * @param $cc
-     * @param $attachment
-     *
-     * @internal param $attachement
-     *
-     * @return array
-     */
-    public function sendMail($name, $cc, $attachment)
-    {
-
-        $recipient = \Config::get('app.recipient');
-        $ccRecipients[] = \Config::get('app.eMailHRAdd');
-
-        /*
-        $recipient = 'rafael.gil@illy.com';
-        $ccRecipients['rafaelgil83@gmail.com'] = 'rafaelgil83@gmail.com';
-*/
-        // get other recipients
-
-        if ($cc != '')
-        {
-            foreach ($cc as $emailAdd)
-            {
-                $ccRecipients[$emailAdd] = $emailAdd;
-            }
-        }
-
-
-        $ccRecipients[] = $recipient;
-        $ccRecipients = array_unique($ccRecipients);
-
-        return $ccRecipients;
-
-        /*
-                if (!Mail::send_mail($recipient, $ccRecipients, 'USER NOTIFICATION - ' . $name, 'Hi Team, please see attached.', $attachment))
-                {
-                    //$error = 'An error ocurred while trying to email the reports, please contact IT.';
-                    //echo $error;
-                    return false;
-                }
-                else
-                {
-                    $ccRecipients[] = $recipient;
-                    return $ccRecipients;
-                }
-        */
-    }
 
     private function createUserAD(Request $req)
     {

@@ -3,8 +3,10 @@
 $settings = [
 
 
-    'newHireReportsPath' => storage_path() . '\\reports\\New_Hires\\', 'newHireURL' => '/report/newhire/',
+    'newHireReportsPrefix' => 'Action User Notification-', 'separationReportsPrefix' => 'Separation Notification-',
 
+    // location for the reports
+    'newHireReportsPath' => storage_path() . '\\reports\\New_Hires\\', 'newHireURL' => '/report/newhire/',
     'separationReportsPath' => storage_path() . '\\reports\\Separations\\', 'separationURL' => '/report/separation/',
 
     'pdfCreator' => '"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe"',
@@ -12,10 +14,12 @@ $settings = [
     /*
      * Email settings
      */
-    'recipient' => 'rafael.gil@illy.com', 'eMailHRAdd' => 'Maren.Gizicki@illy.com', 'eMailIT' => 'rafael.gil@illy.com',
-    'eMailOracle' => 'Natasha.DSouza@illy.com', 'eMailManagement' => 'Suzanne.Schwab@illy.com',
+    'servicedesk' => 'servicedesk@illy.com', 'eMailHRAdd' => 'Maren.Gizicki@illy.com',
+    'eMailIT' => 'rafael.gil@illy.com', 'eMailOracle' => 'Natasha.DSouza@illy.com', 'eMailManagement' => 'Suzanne.Schwab@illy.com',
     'eMailManagement1' => 'stephanie.brush@illy.com', 'eMailFinanceCreditCard' => 'Marjorie.Guthrie@illy.com',
     'eMailFinanceDrivers' => 'Erik.Tellone@illy.com',
+
+    'subjectPrefix' => 'User Action Notification for ', 'emailBody' => 'Hi Team, please see attached.',
 
 
     'adUserName' => 'adm_gilra', 'adPassword' => 'R4f43lg1l', 'adDomain' => 'ILLY-DOMAIN.COM', /*

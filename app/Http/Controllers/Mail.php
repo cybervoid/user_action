@@ -1,4 +1,5 @@
 <?php namespace App\Http\Controllers;
+
 /**
  * Created by PhpStorm.
  * User: rafag
@@ -7,10 +8,10 @@
  */
 
 
+use Illuminate\Http\Request;
 
-
-
-class Mail extends Controller {
+class Mail extends Controller
+{
 
     /**
      * Prepare email basic params to send email
@@ -36,13 +37,13 @@ class Mail extends Controller {
 
         $mailer->SMTPAuth = true; // enable SMTP authentication
         $mailer->Port = 25; // set the SMTP port for the GMAIL server
-        $mailer->Username = "illy\user1"; // SMTP account username // $mailer->Username =
-        $mailer->Password = "Illy2014"; // SMTP account password
+        $mailer->Username = "illy\hrdept"; // SMTP account username // $mailer->Username =
+        $mailer->Password = "Illy4559"; // SMTP account password
         $mailer->SMTPSecure = 'tls';
         $mailer->SMTPAuth = true;
         $mailer->CharSet = "UTF-8";
         $mailer->Timeout = 60;
-        $mailer->setFrom("user1@illy.com", "illy NA HR Notifications");
+        $mailer->setFrom("hrdeptnorthamerica@illy.com", "illy NA HR Notifications");
         $mailer->addAddress($to);
         if ($ccRecipients != '')
         {
@@ -54,8 +55,72 @@ class Mail extends Controller {
 
         $mailer->Subject = $subject;
         $mailer->Body = $body;
-        if($attachment!='') $mailer->addAttachment($attachment);
+        if ($attachment != '')
+        {
+            $mailer->addAttachment($attachment);
+        }
 
         return $mailer->send();
     }
+
+    static public function emailRecipients(Request $req)
+    {
+
+//      $ccRecipients['Edward.Edwards@illy.com'] = 'Edward.Edwards@illy.com';
+
+
+        $ccRecipients[\Config::get('app.eMailHRAdd')] = \Config::get('app.eMailHRAdd');
+
+
+        $iTDeptEmail = $req->request->get('iTDeptEmail');
+        if (isset($iTDeptEmail))
+        {
+            $ccRecipients[\Config::get('app.eMailIT')] = \Config::get('app.eMailIT');
+        }
+
+        $oracle = $req->request->get('oracle');
+        if (isset($oracle))
+        {
+            $ccRecipients[\Config::get('app.eMailOracle')] = \Config::get('app.eMailOracle');
+        }
+
+        $oManager = $req->request->get('oManager');
+        if (isset($oManager))
+        {
+            $ccRecipients[\Config::get('app.eMailManagement')] = \Config::get('app.eMailManagement');
+            $ccRecipients[\Config::get('app.eMailManagement1')] = \Config::get('app.eMailManagement1');
+        }
+
+        $creditCard = $req->request->get('creditCard');
+        if (isset($creditCard))
+        {
+            $ccRecipients[\Config::get('app.eMailFinanceCreditCard')] = \Config::get('app.eMailFinanceCreditCard');
+        }
+
+        $newDriver = $req->request->get('newDriver');
+        if (isset($newDriver))
+        {
+            $ccRecipients[\Config::get('app.eMailFinanceDrivers')] = \Config::get('app.eMailFinanceDrivers');
+        }
+
+
+        // Per Maren's request include Stacey when we hire Sales Person
+        if ($req->request->get('department') == 'Sales')
+        {
+            $ccRecipients['Stacey.Berger@illy.com'] = 'Stacey.Berger@illy.com';
+        }
+
+        // Per Maren's request include lisa Gutman in all the requests
+        $ccRecipients['Lissa.Guttman@illy.com'] = 'Lissa.Guttman@illy.com';
+
+        //Add the manager's email in the recipients list
+        if ($req->request->get('managerEmail') != '')
+        {
+            $ccRecipients[$req->request->get('managerEmail')] = $req->request->get('managerEmail');
+        }
+
+        return $ccRecipients;
+    }
+
+
 }

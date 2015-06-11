@@ -11,19 +11,20 @@
 
 @section('content')
 
-<br>
+<br >
 <form method="post" action="/separation_add" name="separation" id="separation" >
     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>" >
-    <label>Search by Email</label>
-    <input type="text" id="email" name="email" placeholder="name.lastname@illy.com" class="inputRender" value="rafael.gil@illy.com">
-    <input type="button" value="Search" id="search" name="search" class="inputRender">
+    <label >Search by Email</label >
+    <input type="text" id="email" name="email" placeholder="name.lastname@illy.com" class="inputRender"
+           value="donald.duck@illy.com" >
+    <input type="button" value="Search" id="search" name="search" class="inputRender" >
 
-    <br>
+    <br >
 
-    <br>
-    <div class="report" id="report"></div>
+    <br >
+
+    <div class="report" id="report" ></div >
 
 
-
-</form>
+</form >
 @endsection

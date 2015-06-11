@@ -47,11 +47,6 @@ class Reports extends Controller
 
     }
 
-    static public function newRequest()
-    {
-
-    }
-
 
     static public function generateReport($reportName, $location, Request $req)
     {
