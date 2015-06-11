@@ -4,13 +4,7 @@
 @section('content')
 
 
-<div class="center" ><p style="font-weight: bold" >USER NOTIFICATION FORM</p >
-
-    <p >Human Resources<br>
-        * Transactions to be processed within 48 hours of notification
-    </p >
-
-    <p style="font-weight: bold" >NEW HIRE</p ></div >
+<p style="font-weight: bold" >NEW HIRE</p ></div >
 
 <p ><span >Name: </span >{{ $req['name'] }} {{ $req['lastName'] }}</p >
 
@@ -37,8 +31,7 @@
 @endif
 
 
-    <p ><span >Employee #: </span >{{ $req["employee"] or 'TBD' }}</p >
-
+<p ><span >Employee #: </span >{{ $req["employee"] or 'TBD' }}</p >
 
 
 <table width="100%" >
@@ -46,7 +39,7 @@
         <td width="left" ><span >Start Date: </span > {{ $req["startDate"] }}</td >
 
         @if (isset($req["location_Other"]))
-            <td width="center" ><span >Location: </span > {{ $req["location"] }} {{ $req["location_Other"] }}</td >
+        <td width="center" ><span >Location: </span > {{ $req["location"] }} {{ $req["location_Other"] }}</td >
         @endif
 
         <td width="right" ><span >Hire Status: </span > {{ $req["hireStatus"] }}</td >
@@ -56,30 +49,30 @@
 
 @if (isset($req["iTDeptEmail"]))
 
-    <p ><span >IT Department Checklist: Rafael Gil and Service Desk</span ></p >
+<p ><span >IT Department Checklist: Rafael Gil and Service Desk</span ></p >
 
-    <p >Standard notification request includes on all computers/laptops: OfficeSuite, Adobe Acrobat Pro, CCleaner, VPN,
-        Efax, Chrome, Firefox, Silverlight, FlashPlayer, Omniform, Skype, Dropbox, VLC Media Player, 7Zip. Outlook, Addition
-        to distributions lists.</p >
+<p >Standard notification request includes on all computers/laptops: OfficeSuite, Adobe Acrobat Pro, CCleaner, VPN,
+    Efax, Chrome, Firefox, Silverlight, FlashPlayer, Omniform, Skype, Dropbox, VLC Media Player, 7Zip. Outlook, Addition
+    to distributions lists.</p >
 
-    <p > All Cellphones will include a link to Hotspot set up.</p >
+<p > All Cellphones will include a link to Hotspot set up.</p >
 
-    <p > *Upon user notification request, IT provides customer service to hiring manager and new hire. Hiring managers will
-        be contacted before new hire begins.</p >
+<p > *Upon user notification request, IT provides customer service to hiring manager and new hire. Hiring managers will
+    be contacted before new hire begins.</p >
 
-    <p ><span >E-Mail Distribution List:</span ></p >
-    <ul >
+<p ><span >E-Mail Distribution List:</span ></p >
+<ul >
 
 
-        @foreach($req["iTDeptEmail"] as $item)
-        <li >{{ $item }}</li >
-        @endforeach
-    </ul >
+    @foreach($req["iTDeptEmail"] as $item)
+    <li >{{ $item }}</li >
+    @endforeach
+</ul >
 @endif
 
 @if (isset($req["iTDept"]))
 <p ><span >Assets:</span ></p >
-<ul>
+<ul >
     @foreach($req["iTDept"] as $item)
     <li >{{ $item }}</li >
     @endforeach
@@ -102,11 +95,11 @@
 @if(isset($req["oManager"]))
 <p ><span >HQ Office Manager-Suzie Schwab</span ></p >
 
-<ul>
-@foreach($req["oManager"] as $item)
-<li >{{ $item }}</li >
-@endforeach
-</ul>
+<ul >
+    @foreach($req["oManager"] as $item)
+    <li >{{ $item }}</li >
+    @endforeach
+</ul >
 @endif
 
 @if(isset($req["newDriver"]))
@@ -120,11 +113,11 @@
 @if(isset($req["creditCard"]))
 <p ><span >COMPANY CREDIT CARD-Marjorie Guthrie (if applicable)-included in new hires and separation notices</span >
 </p >
-<ul>
-@foreach($req["creditCard"] as $item)
-<li >{{ $item }}</li >
-@endforeach
-</ul>
+<ul >
+    @foreach($req["creditCard"] as $item)
+    <li >{{ $item }}</li >
+    @endforeach
+</ul >
 @endif
 
 

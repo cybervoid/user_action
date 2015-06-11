@@ -45,8 +45,6 @@ class newHireController extends Controller
     }
 
 
-
-
     /**
      * New request is created, create the report and show the welcome page
      *
@@ -72,15 +70,13 @@ class newHireController extends Controller
 
 
         //create the username in the AD
-        $this->createUserAD($req);
+        //$this->createUserAD($req);
 
 
         return view('thankYou', ['name' => $req->request->get('name'), 'lastName' => $req->request->get('lastName'),
             'newHireReport' => $newHireReport, 'reportType' => 'newhire', 'routeURL' => \Config::get('app.newHireURL'),
             'sendMail' => $ccRecipients]);
     }
-
-
 
 
     private function createUserAD(Request $req)

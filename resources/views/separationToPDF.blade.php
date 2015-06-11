@@ -4,13 +4,7 @@
 @section('content')
 
 
-<div class="center" ><p style="font-weight: bold" >USER NOTIFICATION FORM</p >
-
-    <p >Human Resources<br >
-        * Transactions to be processed within 48 hours of notification
-    </p >
-
-    <p style="font-weight: bold" >Separation</p ></div >
+<p style="font-weight: bold" >SEPARATION</p ></div >
 
 <p ><span >Name: </span >{{ $req['name'] }} {{ $req['lastName'] }}</p >
 

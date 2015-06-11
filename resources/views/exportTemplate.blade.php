@@ -21,7 +21,14 @@
 <div class="center">
     <img src="{{ $server }}/images/logo.bmp">
 </div>
-@yield('content')
+
+<div class="center" ><p style="font-weight: bold" >USER NOTIFICATION FORM</p >
+
+    <p >Human Resources<br >
+        * Transactions to be processed within 48 hours of notification
+    </p >
+
+    @yield('content')
 
 </body >
 </html >

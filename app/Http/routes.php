@@ -65,4 +65,13 @@ http://user_action.com/report/Action%20User%20Notification-Donald%20Duck.pdf
 8-         REVISAR COMO CAPTURAR LOS ERRORES SI EL EMAIL NO SE PUEDE ENVIAR POR ALGUN MOTIVO
 
 9- cuando el nombre del reporte  abajar no es el correcto arroja un error
+
+
+
+#######################################################
+Desghabilitar en testing
+newHireController
+    user creation  #75
+    Send MAil       #69
+
  */
