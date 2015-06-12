@@ -55,9 +55,16 @@ class newHireController extends Controller
     public function add(Request $req)
     {
 
+        //generate payroll Report
+        $newHireReport = \Config::get('app.payrollReportsPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName') . '.pdf';
+        Reports::generateReport($newHireReport, \Config::get('app.payrollReportsPath'), 'payroll', $req);
+        //return Reports::generateReport($newHireReport, \Config::get('app.newHireReportsPath'), 'payroll', $req);
+        die;
+
+
         // generate reports
         $newHireReport = \Config::get('app.newHireReportsPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName') . '.pdf';
-        Reports::generateReport($newHireReport, \Config::get('app.newHireReportsPath'), $req);
+        Reports::generateReport($newHireReport, \Config::get('app.newHireReportsPath'), $req->request->get('reportType'), $req);
 
 
         //send the email
@@ -78,6 +85,14 @@ class newHireController extends Controller
             'sendMail' => $ccRecipients]);
     }
 
+    /*
+        private function createPayrollReport(Request $req)
+        {
+
+            $parse = parse_url($req->url());
+            return view('payrollToPDF', ['req' => $req->request->all(),'server' => $parse['scheme'] . '://' . $parse['host'] . '/']);
+        }
+    */
 
     private function createUserAD(Request $req)
     {

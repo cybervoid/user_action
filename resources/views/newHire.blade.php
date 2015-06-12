@@ -177,10 +177,10 @@
             <p >Payroll/Salary:</p >
             <input type="text" class="inputRender" name="salary" id="salary" style="width: 70px" >
             <select name="salaryType" id="salaryType" class="inputRender" >
+                <option value="" >Select</option >
                 <option value="Annual Salary" >Annual Salary</option >
                 <option value="Hourly" >Hourly</option >
                 <option value="Half Month" >Half Month</option >
-                <option value="Other" >Other</option >
                 <option value="Other" >Other</option >
             </select >
         </div >

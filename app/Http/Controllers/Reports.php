@@ -48,7 +48,7 @@ class Reports extends Controller
     }
 
 
-    static public function generateReport($reportName, $location, Request $req)
+    static public function generateReport($reportName, $location, $reportType, Request $req)
     {
 
         $myFile = sys_get_temp_dir() . "\\export.html";
@@ -57,13 +57,7 @@ class Reports extends Controller
         //get the domain so I can load the image on the PDF
         $parse = parse_url($req->url());
 
-        if ($req->request->get('employee') == "")
-        {
-            $req->request->set('employee', 'TBD');
-        }
-
-
-        $myView = view($req->request->get('reportType') . 'ToPDF', ['req' => $req->request->all(),
+        $myView = view($reportType . 'ToPDF', ['req' => $req->request->all(),
             'server' => $parse['scheme'] . '://' . $parse['host'] . '/',]);
 
 

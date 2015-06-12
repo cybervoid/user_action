@@ -30,5 +30,15 @@
 
     @yield('content')
 
+
+    <table border="0" width="50%" align="center" >
+        <tr align="center" >
+            <td align="left" >
+                <span class="bold" >Printed name: Maren Gizicki</span ></td >
+            <td align="right" ><span class="bold" >Date: {{ date('m-d-Y') }}<br ><br ><span >_____________________<br >Signature</span ></span >
+            </td >
+        </tr >
+    </table >
+
 </body >
 </html >

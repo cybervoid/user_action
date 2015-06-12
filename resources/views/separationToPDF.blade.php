@@ -40,19 +40,6 @@
 <div class="left3" ><span >Location: </span > {{ $req["location"] }} {{ $req["location_Other"] }}</div >
 @endif
 
-<!--
-<table width="100%" >
-    <tr >
-        <td width="left" ><span >Separation Date: </span > {{ $req["termDate"] }}</td >
-
-        @if (isset($req["location_Other"]))
-        <td width="center" ><span >Location: </span > {{ $req["location"] }} {{ $req["location_Other"] }}</td >
-        @endif
-
-        <td width="right" ><span >Hire Status: </span > {{ $req["hireStatus"] }}</td >
-    </tr >
-</table >
--->
 
 @if (isset($req["iTDeptEmail"]))
 
@@ -121,14 +108,5 @@
 </p >
 @endif
 
-
-<table border="0" width="50%" align="center" >
-    <tr align="center" >
-        <td align="left" >
-            <span class="bold" >Printed name: Maren Gizicki</span ></td >
-        <td align="right" ><span class="bold" >Date: {{ date('m-d-Y') }}<br ><br ><span >_____________________<br >Signature</span ></span >
-        </td >
-    </tr >
-</table >
 
 @endsection

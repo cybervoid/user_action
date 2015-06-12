@@ -66,7 +66,7 @@ http://user_action.com/report/Action%20User%20Notification-Donald%20Duck.pdf
 
 9- cuando el nombre del reporte  abajar no es el correcto arroja un error
 
-
+10- validar todas las pags por si los campos no estan llenos
 
 #######################################################
 Desghabilitar en testing
