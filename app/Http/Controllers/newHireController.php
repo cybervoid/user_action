@@ -55,17 +55,14 @@ class newHireController extends Controller
     public function add(Request $req)
     {
 
-        //generate payroll Report
-        $newHireReport = \Config::get('app.payrollReportsPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName') . '.pdf';
-        Reports::generateReport($newHireReport, \Config::get('app.payrollReportsPath'), 'payroll', $req);
-        //return Reports::generateReport($newHireReport, \Config::get('app.newHireReportsPath'), 'payroll', $req);
-        die;
-
-
-        // generate reports
+        // generate newHire reports
         $newHireReport = \Config::get('app.newHireReportsPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName') . '.pdf';
         Reports::generateReport($newHireReport, \Config::get('app.newHireReportsPath'), $req->request->get('reportType'), $req);
 
+
+        //generate payroll Report
+        $payrollReport = \Config::get('app.payrollReportsPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName') . '.pdf';
+        Reports::generateReport($payrollReport, \Config::get('app.payrollReportsPath'), 'payroll', $req);
 
         //send the email
         $to = \Config::get('app.servicedesk'); //$to = 'rafael.gil@illy.com';
@@ -81,18 +78,11 @@ class newHireController extends Controller
 
 
         return view('thankYou', ['name' => $req->request->get('name'), 'lastName' => $req->request->get('lastName'),
-            'newHireReport' => $newHireReport, 'reportType' => 'newhire', 'routeURL' => \Config::get('app.newHireURL'),
-            'sendMail' => $ccRecipients]);
+            'newHireReport' => $newHireReport, 'reportType' => 'newhire',
+            'newHireRouteURL' => \Config::get('app.newHireURL'), 'sendMail' => $ccRecipients,
+            'payrollReport' => $payrollReport, 'payrollRouteURL' => \Config::get('app.payrollURL')]);
     }
 
-    /*
-        private function createPayrollReport(Request $req)
-        {
-
-            $parse = parse_url($req->url());
-            return view('payrollToPDF', ['req' => $req->request->all(),'server' => $parse['scheme'] . '://' . $parse['host'] . '/']);
-        }
-    */
 
     private function createUserAD(Request $req)
     {

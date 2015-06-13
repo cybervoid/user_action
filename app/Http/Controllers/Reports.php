@@ -88,6 +88,11 @@ class Reports extends Controller
             $filePath = \Config::get('app.newHireReportsPath') . $name;
         }
 
+        if ($reportType == 'payroll')
+        {
+            $filePath = \Config::get('app.payrollReportsPath') . $name;
+        }
+
         if ($reportType == 'separation')
         {
             $filePath = \Config::get('app.separationReportsPath') . $name;

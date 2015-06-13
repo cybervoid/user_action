@@ -8,7 +8,9 @@ $settings = [
 
     // location for the reports
     'newHireReportsPath' => storage_path() . '\\reports\\New_Hires\\', 'newHireURL' => '/report/newhire/',
+
     'separationReportsPath' => storage_path() . '\\reports\\Separations\\', 'separationURL' => '/report/separation/',
+
     'payrollReportsPath' => storage_path() . '\\reports\\Payroll\\', 'payrollURL' => '/report/payroll/',
 
     'pdfCreator' => '"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe"',
@@ -17,9 +19,9 @@ $settings = [
      * Email settings
      */
     'servicedesk' => 'servicedesk@illy.com', 'eMailHRAdd' => 'Maren.Gizicki@illy.com',
-    'eMailIT' => 'rafael.gil@illy.com', 'eMailOracle' => 'Natasha.DSouza@illy.com', 'eMailManagement' => 'Suzanne.Schwab@illy.com',
-    'eMailManagement1' => 'stephanie.brush@illy.com', 'eMailFinanceCreditCard' => 'Marjorie.Guthrie@illy.com',
-    'eMailFinanceDrivers' => 'Erik.Tellone@illy.com',
+    'eMailIT' => 'rafael.gil@illy.com', 'eMailOracle' => 'Natasha.DSouza@illy.com',
+    'eMailManagement' => 'Suzanne.Schwab@illy.com', 'eMailManagement1' => 'stephanie.brush@illy.com',
+    'eMailFinanceCreditCard' => 'Marjorie.Guthrie@illy.com', 'eMailFinanceDrivers' => 'Erik.Tellone@illy.com',
 
     'subjectPrefix' => 'User Action Notification for ', 'emailBody' => 'Hi Team, please see attached.',
 

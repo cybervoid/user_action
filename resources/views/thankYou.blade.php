@@ -26,10 +26,23 @@
 
 <p >Employee: <strong >{{ $name }} {{ $lastName }} </strong >
 
-<ul class="ulNoStyle" >
 
-    <li >Service desk form: <a target="_blank" href="{{ $routeURL }}{{ $newHireReport }}" >{{ $newHireReport }}</a >
+<ul class="ulNoStyle" >
+    @if(isset($newHireReport))
+    <li >Service Desk Form: <a target="_blank" href="{{ $newHireRouteURL }}{{ $newHireReport }}" >{{ $newHireReport
+            }}</a >
     </li >
+    @endif
+    @if(isset($payrollReport))
+    <li >Payroll Form: <a target="_blank" href="{{ $payrollRouteURL }}{{ $payrollReport }}" >{{ $payrollReport }}</a >
+    </li >
+    @endif
+    @if(isset($separationReport))
+    <li >Payroll Form: <a target="_blank" href="{{ $separationRouteURL }}{{ $separationReport }}" >{{ $separationReport
+            }}</a >
+    </li >
+    @endif
+
 </ul >
 
 <p >The reports are being stored in the <strong >"Human Resources"</strong > shared drive, under a folder named

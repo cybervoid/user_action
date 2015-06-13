@@ -67,7 +67,7 @@
     </tr >
     <tr align="center" >
         <td >
-            <span class="bold" >Salary:</span > ${{ $req["salary"] ?: 'TBD'}}
+            <span class="bold" >Salary:</span > $ {{ $req["salary"] ?: 'TBD'}}
 
             @if($req["salaryType"]!="")
             {{$req["salaryType"] }}

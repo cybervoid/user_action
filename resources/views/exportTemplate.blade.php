@@ -14,13 +14,29 @@
         .alignLeft {
             float: left;
             width: 50%;
-        } </style >
+        }
+
+        li:before {
+            content: '✔';
+            margin-left: -1em;
+            margin-right: .100em;
+        }
+
+        ul {
+            padding-left: 20px;
+            text-indent: 2px;
+            list-style: none;
+            list-style-position: outside;
+        }
+
+
+    </style >
 </head >
 <body >
 
-<div class="center">
-    <img src="{{ $server }}/images/logo.bmp">
-</div>
+<div class="center" >
+    <img src="{{ $server }}/images/logo.bmp" >
+</div >
 
 <div class="center" ><p style="font-weight: bold" >USER NOTIFICATION FORM</p >
 

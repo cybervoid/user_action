@@ -55,6 +55,7 @@
 </ul >
 @endif
 
+<p ><span >Assets: </span ></p >
 @if (isset($req["iTDept"]))
 <p ><span >Assets:</span ></p >
 <ul >
