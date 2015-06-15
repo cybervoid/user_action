@@ -101,9 +101,6 @@ class Reports extends Controller
 
         $content = file_get_contents($filePath);
 
-        //echo 'rafag';
-        //die;
-
         /*
         return new Response($content, Response::HTTP_OK, ["content-type" => "application/pdf",
             "content-length" => filesize($filePath), "content-disposition" => "inline; filename=\"$name\""]);

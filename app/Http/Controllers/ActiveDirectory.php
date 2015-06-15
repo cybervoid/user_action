@@ -6,6 +6,9 @@
  * Time: 9:45 AM
  */
 
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+
 
 class ActiveDirectory extends Controller
 {
@@ -36,6 +39,82 @@ class ActiveDirectory extends Controller
 
             return $ldap;
         }
+    }
+
+    public static function getEmail($email)
+    {
+
+        // fetch the info from AD
+        $ldap = ActiveDirectory::ldap_MyConnect();
+
+        $attributes = array('dn', 'title', 'givenname', 'sn', 'manager', 'company', 'department', "memberOf",
+            'samaccountname', 'mail');
+
+        if (!$ldap)
+        {
+            return false;
+        }
+
+        $result = ldap_search($ldap, "OU=North America,DC=ILLY-DOMAIN,DC=COM", "mail={$email}", $attributes);
+
+        return ldap_get_entries($ldap, $result);
+
+    }
+
+
+    private static function lookupUser($param)
+    {
+
+        // fetch the info from AD
+        $ldap = ActiveDirectory::ldap_MyConnect();
+        $attributes = array('givenname', 'sn', 'mail');
+
+        if (!$ldap)
+        {
+            return false;
+        }
+
+        $result = ldap_search($ldap, "OU=North America,DC=ILLY-DOMAIN,DC=COM", "(|(givenname={$param})(sn={$param}))", $attributes);
+
+        return ldap_get_entries($ldap, $result);
+
+    }
+
+    public function autocomplete(Request $req)
+    {
+
+        $consult = $this->lookupUser($req->request->get('term') . '*');
+
+        $result = "[";
+
+        $first = true;
+        for ($i = 0; $i < $consult["count"]; $i++)
+        {
+
+            //  if (isset($consult[$i]["givenname"][0])) echo '<p>'.$consult[$i]["givenname"][0] . ' ' . $consult[$i]["sn"][0] .'</p>';
+            if (isset($consult[$i]["givenname"][0]) && isset($consult[$i]["sn"][0]) && isset($consult[$i]["mail"][0]))
+            {
+                if (preg_match("/@illy.com/", $consult[$i]["mail"][0]))
+                {
+                    if ($first)
+                    {
+                        $result .= '{ "label": "' . $consult[$i]["givenname"][0] . ' ' . $consult[$i]["sn"][0] . '", "value": "' . $consult[$i]["mail"][0] . '" }';
+                        $first = false;
+                    }
+                    else
+                    {
+                        $result .= ',{ "label": "' . $consult[$i]["givenname"][0] . ' ' . $consult[$i]["sn"][0] . '", "value": "' . $consult[$i]["mail"][0] . '" }';
+                    }
+                }
+            }
+
+
+        }
+
+        $result .= "]";
+
+        return new Response($result, 200, ['content-type' => 'application/json']);
+
     }
 
 }

@@ -9,12 +9,11 @@ var App = App || {};
     $(document).ready(function () {
         $('#email').focus();
 
-        $( '#email' ).bind('keypress', function(e){
-            if ( e.keyCode == 13 ) {
+        $('#email').bind('keypress', function (e) {
+            if (e.keyCode == 13) {
                 $('#search').click();
             }
         });
-
 
 
         $("#search").click(function () {
@@ -39,6 +38,7 @@ var App = App || {};
                 }
             })
                 .done(function (msg) {
+                    $('#homeMenu').html('');
                     $('#report').html(App.templates.separation(msg));
                     $("#cancel").click(function () {
                         document.location = '/';
@@ -85,7 +85,7 @@ var App = App || {};
                 });
         });
 
-       $("#separation").submit(function () {
+        $("#separation").submit(function () {
             return validateSubmit();
         });
 
@@ -100,10 +100,13 @@ var App = App || {};
                 $('#termDateError').html('');
             }
 
-            if($('#hireStatus').val()==="empty"){
+            if ($('#hireStatus').val() === "empty") {
                 $('#hireStatusError').html('<span class="errorSpan"> * You have to choose a hire status before proceeding</span>');
                 cansubmit = false;
-            } else $('#hireStatusError').html('');
+            }
+            else {
+                $('#hireStatusError').html('');
+            }
 
             if ($('#ptoDays').val() === "") {
                 $('#ptoDaysError').html('<span class="errorSpan"> * You have to enter a PTO time before proceeding</span>');
@@ -121,12 +124,58 @@ var App = App || {};
             return cansubmit;
         }
 
+        $("#email").autocomplete({
+            source: "/autocomplete",
+            minLength: 2,
+            select: function (event, ui) {
+                $("#email").val(ui.item.label);
 
+
+                $("#errorDiv").html('');
+
+                $.ajax({
+                    type: "POST",
+                    url: "separation_search",
+                    data: {cmd: $(this).attr('id'), email: ui.item.value },
+                    beforeSend: function () {
+                        $('<img src="images/wait.gif" align="middle">').load(function () {
+                            $(this).width(52).height(52).appendTo('#report');
+                        });
+                        $('#report').html('Processing your request ...');
+                    }
+                })
+                    .done(function (msg) {
+                        $('#homeMenu').html('');
+                        $('#report').html(App.templates.separation(msg));
+                        $("#cancel").click(function () {
+                            document.location = '/';
+                        });
+
+                        $("#termDate,#effectiveDate,#effectiveDate1").datepicker({
+                            onSelect: function (dateText) {
+                                $("#startDateError").html("");
+                            }
+                        });
+
+                        $('#onTimePayment').keyup(function () {
+                            $('#onetime').prop("checked", true);
+                        });
+
+                        $('#severancePay,#overTime').keyup(function () {
+                            $('#severance').prop("checked", true);
+                        });
+
+                        $('#periodPaid').keyup(function () {
+                            $('#cobra').prop("checked", true);
+                        });
+
+                    });
+
+
+                return false;
+            }
+        });
 
     });
-
-}
-    (jQuery)
-    )
-;
+}(jQuery));
 

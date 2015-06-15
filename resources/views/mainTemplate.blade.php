@@ -6,8 +6,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
 
-    <link rel="stylesheet" href="jquery/smoothness/jquery-ui-1.10.4.custom.css" >
     <link rel="stylesheet" href="css/main.css" >
+    <link rel="stylesheet" href="vendor/jqueryui/themes/smoothness/theme.css" >
+    <link rel="stylesheet" href="vendor/jqueryui/themes/smoothness/jquery-ui.min.css" >
+
     @yield('css')
     <script src="vendor/jquery/dist/jquery.js" ></script >
     @yield('headJavascript')
@@ -29,8 +31,7 @@
     @yield('content')
 </div >
 
-
-<script src="js/jquery-ui.js" ></script >
+<script src="vendor/jqueryui/jquery-ui.min.js" ></script >
 <script src="vendor/handlebars/handlebars.js" ></script >
 <script src="js/templates.js" ></script >
 <script src="js/main.js" ></script >

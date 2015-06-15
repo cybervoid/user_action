@@ -189,4 +189,19 @@ class newHireController extends Controller
 
     }
 
+    public function checkEmail(Request $req)
+    {
+        //return $req->request->get('email');
+        $result = ActiveDirectory::getEmail($req->request->get('email'));
+        if (count($result) > 1)
+        {
+            return 'true';
+        }
+        else
+        {
+            return 'false';
+        }
+    }
+
+
 }

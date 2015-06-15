@@ -17,6 +17,8 @@ Route::post('login', 'LoginController@check_password');
 
 Route::get('newHire', 'newHireController@index');
 Route::post('add', 'newHireController@add');
+Route::post('chkeml', 'newHireController@checkEmail');
+Route::get('autocomplete', 'ActiveDirectory@autocomplete');
 
 //Route::get('report/{name}', 'newHireController@getReport')->where('name', '[a-zA-Z0-9 -]+\.pdf');
 Route::get('report/{reportType}/{name}', 'Reports@getReport')->where('name', '[a-zA-Z0-9 -]+\.pdf');
@@ -38,7 +40,8 @@ Route::post('separation_add', 'SeparationController@add');
 
 /*
 1- cuando la cookie está me deja entrar aunque no este en la VPN
-
+3- revisar el correo en la DB ante de guardar new hire
+2- en newHire hacer scroll hasta el componente cuando falla la validation
 
  4- en separation marcar los grupos a los que el usuario esta suscrito
 

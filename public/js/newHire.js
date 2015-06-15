@@ -94,11 +94,6 @@ var App = App || {};
             window.location.href = "/";
         });
 
-        $('#manager').keyup(function () {
-            $('#managerEmail').val($("#manager").val().toLowerCase().trim().replace(" ", ".") + "@illy.com");
-        });
-
-
         $('#newHire').submit(function (event) {
             // VALIDATION
             var cansubmit = true;
@@ -164,79 +159,9 @@ var App = App || {};
                 $('#errorDiv').html("* You have some errors in your form, Please check the fields in red.");
                 $("html, body").animate({ scrollTop: 0 }, "slow");
             }
-            //else {  // run ajax
-
-            // create the user
-            /*
-            $.ajax({
-                type: "POST",
-                url: "add",
-                data: $("#newHire").serialize()
-            })
-                .done(function (msg) {
-                    $('#newHireFrm').html(App.templates.newHire(msg));
-                    console.log(msg);
-                    //$('#report').html(msg);
-                });
-
-
-            // create word document with the form info
-
-            $.ajax({
-                type: "POST",
-                url: "newHire_export_ajax.php",
-                data: $("#newHire").serialize(),
-                start: function(){
-                    $("#content").html('Processing your request ...');
-                }
-            })
-                .done(function( msg ) {
-                    $("#errorDiv").html("");
-                    if(msg !="done"){
-                        $("#errorDiv").html("Unexpected error occurred while processing your request.");
-                        $("#content").html(msg);
-                    } else{
-
-                        donePage = '<br><br><p class="center">Your request has been processed successfully<p>';
-                        donePage = donePage + '<p>We have created two forms, one has been sent to Payroll and the other to service desk, these are the download links</p>';
-                        donePage = donePage + '<p>Employee: ' + $("#name").val() + ' ' + $("#lastName").val();
-
-                        donePage = donePage + '<ul>';
-                        donePage = donePage + '<li>Payroll form: <a target="_blank" href="files/docs/Action User Notification-' + $("#name").val() + ' ' + $('#lastName').val() + '.doc">pAYROLL User Notification-'+ $("#name").val() + ' ' + $("#lastName").val() + '.doc</a></li>';
-                        donePage = donePage + '<li>Service desk form: <a target="_blank" href="files/docs/User Notification-' + $("#name").val() + ' ' + $('#lastName').val() + '.doc">User Notification-'+ $("#name").val() + ' ' + $("#lastName").val() + '.doc</a></li>';
-                        donePage = donePage + '</ul>';
-
-                        donePage = donePage + '<p>The reports are being stored in the <strong>"Human Resources"</strong> shared drive, under a folder named <strong>"Employee Action Forms"</strong>.</p>';
-                        donePage = donePage + '<br><br><br><p class="subHeader">What\'s next: <br></p>';
-
-                        donePage = donePage + '<ul class="navigation" style="text-align: center"><li class="myNavigation navigationLink" id="home">Home Screen</a></li><li class="myNavigation navigationLink" id="another">Add another employee</li></ul>';
-
-                        $("#content").html(donePage);
-                    }
-
-                    activateMenu().on('click', function (e) {
-                        switch ($(this).attr('id')){
-                            case "home":
-                                window.location.href='mainPage.php';
-                                break;
-                            case "another":
-                                window.location.href='newHire.php';
-                                break;
-                        }
-                    });
-
-                });
-            */
-
-            //}
 
         });
-        /*
-        {
-            onSelect: function (dateText) {
-                $("#startDateError").html("");
-            },
-            */
+
 
         $("#startDate").datepicker({"dateFormat": "mm/dd/yy"});
 
@@ -274,6 +199,37 @@ var App = App || {};
             }
         });
 
-    });
 
+        /*
+        function validateEmail(email){
+            $.ajax({
+                type: "POST",
+                url: "chkeml",
+                data: {email: $("#managerEmail").val() },
+                beforeSend: function () {
+                    $('#emailValidation').html('');
+                    $('<img src="images/wait.gif" align="middle">').load(function () {
+                        $(this).width(23).height(23).appendTo('#emailValidation');
+                    });
+                }
+            })
+                .done(function (msg) {
+                    if(msg==='true')
+                    $("#emailValidation").html('<span class="signature">✔ verified</span>'); else
+                        $("#emailValidation").html('<span class="signature">(Not verified)</span>');
+                })
+        }
+        */
+
+        $("#manager").autocomplete({
+            source: "/autocomplete",
+            minLength: 2,
+            select: function (event, ui) {
+                $("#manager").val(ui.item.label);
+                $("#managerEmail").val(ui.item.value);
+                return false;
+            }
+        });
+
+    });
 }(jQuery));
