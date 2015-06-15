@@ -57,11 +57,13 @@ class newHireController extends Controller
 
         // generate newHire reports
         $newHireReport = \Config::get('app.newHireReportsPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName') . '.pdf';
+        $newHireReport = Reports::escapeReportName($newHireReport);
         Reports::generateReport($newHireReport, \Config::get('app.newHireReportsPath'), $req->request->get('reportType'), $req);
 
 
         //generate payroll Report
         $payrollReport = \Config::get('app.payrollReportsPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName') . '.pdf';
+        $payrollReport = Reports::escapeReportName($payrollReport);
         Reports::generateReport($payrollReport, \Config::get('app.payrollReportsPath'), 'payroll', $req);
 
         //send the email

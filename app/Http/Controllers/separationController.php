@@ -45,31 +45,39 @@ class SeparationController extends Controller
     }
 
 
-    /*
-     *
-     *     public static function  ldap_login_validate($userName, $password)
+    public function add(Request $req)
     {
-        $ldap = self::ldap_MyConnect();
 
-        $attributes = array( 'givenname', 'sn', 'sAMAccountName');
-        if (!$ldap){ return false; }
-        $result = ldap_search($ldap, "OU=North America,DC=ILLY-DOMAIN,DC=COM", "(&(sAMAccountName={$userName})(memberOf=CN=HR-Tool,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM))" , $attributes);
-        $entry = ldap_get_entries($ldap, $result);
-
-        if (isset($entry[0]["count"])){
-            //verify the password
-
-            if (@$bind = ldap_bind($ldap, $userName."@ILLY-DOMAIN.COM", $password)){
-                return $entry;
-            } // else password incorrect
-
-            ldap_close($ldap);
-        } else return false; // username incorrect or not allowed to login
+        // generate reports
+        $separationReport = \Config::get('app.separationReportsPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName') . '.pdf';
+        $separationReport = Reports::escapeReportName($separationReport);
+        Reports::generateReport($separationReport, \Config::get('app.separationReportsPath'), $req->request->get('reportType'), $req);
 
 
+        //send the email
+        $to = \Config::get('app.servicedesk'); //$to = 'rafael.gil@illy.com';
+        $ccRecipients = Mail::emailRecipients($req);
+        $subject = \Config::get('app.subjectPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName');
+//        Mail::send_mail($to, $ccRecipients, $subject, \Config::get('app.emailBody'), \Config::get('app.separationReportsPath') . $separationReport);
+        $ccRecipients[$to] = $to;
+        $ccRecipients = array_unique($ccRecipients);
+
+        //check if the user wants to disable AD user
+        $disableUser = $req->request->get('disableUser');
+        if (isset($disableUser))
+        {
+            $userName = $req->request->get('sAMAccountName');
+            //          $this->disableUser($userName);
+
+        }
 
 
-     */
+        return view('thankYou', ['name' => $req->request->get('name'), 'lastName' => $req->request->get('lastName'),
+            'separationReport' => $separationReport, 'reportType' => 'separation',
+            'separationRouteURL' => \Config::get('app.separationURL'), 'sendMail' => $ccRecipients]);
+
+    }
+
 
     public function separation_search(Request $req)
     {
@@ -80,23 +88,10 @@ class SeparationController extends Controller
             $email = $email . '@illy.com';
         }
         $email = preg_replace('/\s+/', '', $email);
-        $array['email'] = $email;
+        //$array['email'] = $email;
 
-        // fetch the info from AD
-        //$ldap = self::ldap_MyConnect();
-        $ldap = ActiveDirectory::ldap_MyConnect();
+        $entry = ActiveDirectory::getEmail($email);
 
-
-        $attributes = array('dn', 'title', 'givenname', 'sn', 'manager', 'company', 'department', "memberOf",
-            'samaccountname', 'mail');
-
-
-        if (!$ldap)
-        {
-            return false;
-        }
-        $result = ldap_search($ldap, "OU=North America,DC=ILLY-DOMAIN,DC=COM", "mail={$email}", $attributes);
-        $entry = ldap_get_entries($ldap, $result);
 
         $fromAD["givenname"] = $entry[0]["givenname"][0];
         $fromAD["sn"] = $entry[0]["sn"][0];
@@ -107,10 +102,8 @@ class SeparationController extends Controller
         $fromAD["sAMAccountName"] = $entry[0]["samaccountname"][0];
 
 
-        //echo 'rafag: ' . $entry[0]["sAMAccountName"][0];
-        //die;
-
         // get manager name and email
+        $ldap = ActiveDirectory::ldap_MyConnect();
         $consult = ldap_search($ldap, $entry[0]['manager'][0], "(objectclass=*)", ['mail', 'sn', 'givenname']);
         $managerInfo = ldap_get_entries($ldap, $consult);
         $fromAD["manager"] = $managerInfo[0]['givenname'][0] . ' ' . $managerInfo[0]['sn'][0];
@@ -144,39 +137,9 @@ class SeparationController extends Controller
 
         return $response;
 
-    }
-
-    public function add(Request $req)
-    {
-
-        // generate reports
-        $separationReport = \Config::get('app.separationReportsPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName') . '.pdf';
-        Reports::generateReport($separationReport, \Config::get('app.separationReportsPath'), $req->request->get('reportType'), $req);
-
-
-        //send the email
-        $to = \Config::get('app.servicedesk'); //$to = 'rafael.gil@illy.com';
-        $ccRecipients = Mail::emailRecipients($req);
-        $subject = \Config::get('app.subjectPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName');
-//        Mail::send_mail($to, $ccRecipients, $subject, \Config::get('app.emailBody'), \Config::get('app.separationReportsPath') . $separationReport);
-        $ccRecipients[$to] = $to;
-        $ccRecipients = array_unique($ccRecipients);
-
-        //check if the user wants to disable AD user
-        $disableUser = $req->request->get('disableUser');
-        if (isset($disableUser))
-        {
-            $userName = $req->request->get('sAMAccountName');
-            //          $this->disableUser($userName);
-
-        }
-
-
-        return view('thankYou', ['name' => $req->request->get('name'), 'lastName' => $req->request->get('lastName'),
-            'newHireReport' => $separationReport, 'reportType' => 'separation',
-            'routeURL' => \Config::get('app.separationURL'), 'sendMail' => $ccRecipients]);
 
     }
+
 
     private function disableUser($userName)
     {

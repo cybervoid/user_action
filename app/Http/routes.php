@@ -20,7 +20,7 @@ Route::post('add', 'newHireController@add');
 Route::post('chkeml', 'newHireController@checkEmail');
 Route::get('autocomplete', 'ActiveDirectory@autocomplete');
 
-//Route::get('report/{name}', 'newHireController@getReport')->where('name', '[a-zA-Z0-9 -]+\.pdf');
+//Route::get('report/{name}', 'newHireController@getReport')->where('name', '[a-zA-Z0-9 - \']+\.pdf');
 Route::get('report/{reportType}/{name}', 'Reports@getReport')->where('name', '[a-zA-Z0-9 -]+\.pdf');
 
 Route::get('separation', 'SeparationController@index');

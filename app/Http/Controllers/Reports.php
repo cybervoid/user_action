@@ -48,6 +48,14 @@ class Reports extends Controller
     }
 
 
+    static public function escapeReportName($param)
+    {
+        $text = str_replace("’", '', $param);
+        $text = str_replace("'", '', $text);
+
+        return $text;
+    }
+
     static public function generateReport($reportName, $location, $reportType, Request $req)
     {
 
