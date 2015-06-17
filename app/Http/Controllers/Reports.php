@@ -59,7 +59,7 @@ class Reports extends Controller
     static public function generateReport($reportName, $location, $reportType, Request $req)
     {
 
-        $myFile = sys_get_temp_dir() . "\\export.html";
+        $myFile = sys_get_temp_dir() . "/export.html";
         $toPDF = fopen($myFile, "w");
 
         //get the domain so I can load the image on the PDF
