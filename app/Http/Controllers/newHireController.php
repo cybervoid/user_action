@@ -74,7 +74,6 @@ class newHireController extends Controller
         $ccRecipients[$to] = $to;
         $ccRecipients = array_unique($ccRecipients);
 
-
         //create the username in the AD
         $this->createUserAD($req);
 

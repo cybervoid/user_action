@@ -137,7 +137,7 @@
     <div class="left" >
         Start Date
         <input type="text" class="inputRender" name="startDate" id="startDate" readonly style="width: 100px"
-               required="" >
+               required="" value="06/16/2015" >
         <br ><span id="startDateError" class="errorSpan" ></span >
     </div >
     <div class="left" >

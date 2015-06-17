@@ -62,6 +62,9 @@ class SeparationController extends Controller
         $ccRecipients[$to] = $to;
         $ccRecipients = array_unique($ccRecipients);
 
+        //remove user from groups
+        $this->removeFromGroups($req->request->get('iTDeptEmail'), $req->request->get('sAMAccountName'));
+
         //check if the user wants to disable AD user
         $disableUser = $req->request->get('disableUser');
         if (isset($disableUser))
@@ -119,19 +122,9 @@ class SeparationController extends Controller
             for ($i = 0; $i < $entry[0]["memberof"]["count"]; $i++)
             {
                 $fromAD["groups"][] = substr($entry[0]["memberof"][$i], 3, strpos($entry[0]["memberof"][$i], ',') - 3);
+
             }
         }
-
-        //print_r($fromAD["groups"]);
-
-
-        //$fromAD["memberOf"] = $managerInfo[0]['memberof'][0];
-        //echo 'contador: ' . $managerInfo[0]['memberof']['count'];
-
-        // get member info for this user
-        //$consult = ldap_search($ldap, $entry[0]['manager'][0], "(objectclass=*)" , ['mail','sn','givenname']);
-        $managerInfo = ldap_get_entries($ldap, $consult);
-
 
         $response = new Response(json_encode($fromAD), 200, ['Content-Type' => 'application/json']);
 
@@ -155,6 +148,28 @@ class SeparationController extends Controller
         $userdata = array();
         $userdata["useraccountcontrol"][0] = $disable;
         ldap_modify($ldap, $dn, $userdata); //change state
+
+    }
+
+    private function removeFromGroups($groups, $user)
+    {
+
+        if (count($groups) > 1)
+        {
+            $ldap = ActiveDirectory::ldap_MyConnect();
+
+            // get user's dn
+            $result = ActiveDirectory::query("sAMAccountName={$user}");
+            $group_info['member'] = $result[0]['dn'];
+
+            // get group dn
+            foreach ($groups as $item)
+            {
+                $result = ActiveDirectory::query("sAMAccountName={$item}");
+                $group_dn = $result[0]['dn'];
+                @ldap_mod_del($ldap, $group_dn, $group_info);
+            }
+        }
 
     }
 }
