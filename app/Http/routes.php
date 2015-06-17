@@ -20,7 +20,6 @@ Route::post('add', 'newHireController@add');
 Route::post('chkeml', 'newHireController@checkEmail');
 Route::get('autocomplete', 'ActiveDirectory@autocomplete');
 
-//Route::get('report/{name}', 'newHireController@getReport')->where('name', '[a-zA-Z0-9 - \']+\.pdf');
 Route::get('report/{reportType}/{name}', 'Reports@getReport')->where('name', '[a-zA-Z0-9 -]+\.pdf');
 
 Route::get('separation', 'SeparationController@index');
@@ -40,17 +39,9 @@ Route::post('separation_add', 'SeparationController@add');
 
 /*
 1- cuando la cookie está me deja entrar aunque no este en la VPN
-3- revisar el correo en la DB ante de guardar new hire
-2- en newHire hacer scroll hasta el componente cuando falla la validation
 
- 4- en separation marcar los grupos a los que el usuario esta suscrito
-
-5- en new hire autocompletar el manager para los new hires
 
 6- aplicar el estilo de newhire a separation (el required que no funciona en separation)
-
-7- si accedo directamente a los reportes me deja pasar sin redireccionar al login screen
-http://user_action.com/report/Action%20User%20Notification-Donald%20Duck.pdf
 
 8-         REVISAR COMO CAPTURAR LOS ERRORES SI EL EMAIL NO SE PUEDE ENVIAR POR ALGUN MOTIVO
 

@@ -41,6 +41,24 @@ class ActiveDirectory extends Controller
         }
     }
 
+    public static function query($search)
+    {
+        // fetch the info from AD
+        $ldap = ActiveDirectory::ldap_MyConnect();
+
+        $attributes = array('dn', 'title', 'givenname', 'sn', 'manager', 'company', 'department', "memberOf",
+            'samaccountname', 'mail');
+
+        if (!$ldap)
+        {
+            return false;
+        }
+
+        $result = ldap_search($ldap, "OU=North America,DC=ILLY-DOMAIN,DC=COM", $search, $attributes);
+
+        return ldap_get_entries($ldap, $result);
+    }
+
     public static function getEmail($email)
     {
 

@@ -86,7 +86,13 @@ var App = App || {};
         });
 
         $("#separation").submit(function () {
-            return validateSubmit();
+
+            var result = validateSubmit();
+
+            if (result) {
+                $("#submit").attr('disabled', 'disabled');
+            }
+            return result;
         });
 
         function validateSubmit() {
@@ -94,6 +100,7 @@ var App = App || {};
 
             if ($('#termDate').val().length < 2) {
                 $('#termDateError').html('<span class="errorSpan"> * You have to choose a termination date before proceeding</span>');
+                errorValidation($('#termDate'), cansubmit);
                 cansubmit = false;
             }
             else {
@@ -102,6 +109,7 @@ var App = App || {};
 
             if ($('#hireStatus').val() === "empty") {
                 $('#hireStatusError').html('<span class="errorSpan"> * You have to choose a hire status before proceeding</span>');
+                errorValidation($('#hireStatus'), cansubmit);
                 cansubmit = false;
             }
             else {
@@ -110,26 +118,55 @@ var App = App || {};
 
             if ($('#ptoDays').val() === "") {
                 $('#ptoDaysError').html('<span class="errorSpan"> * You have to enter a PTO time before proceeding</span>');
+                errorValidation($('#ptoDays'), cansubmit);
                 cansubmit = false;
             }
             else {
                 $('#ptoDaysError').html('');
             }
 
+            return cansubmit;
+        }
+
+        function errorValidation(obj, cansubmit) {
+            $('#errorDiv').html("* You have some errors in your form, Please check the fields in red.");
             if (!cansubmit) {
-                $('#errorDiv').html("* You have some errors in your form, Please check the fields in red.");
-                $("html, body").animate({ scrollTop: 0 }, "slow");
+                return false;
+            }
+            var offset = obj.offset();
+            $("html, body").animate({ scrollTop: offset.top }, "slow");
+        }
+
+        function findGroupMatch(groups) {
+
+            if (groups != undefined) {
+                var index;
+                for (index = 0; index < groups.length; ++index) {
+                    $('#itChecklist li').each(function (i) {
+                        console.log($(this).find('input[type="checkbox"]').text());
+                        if ($(this).text() == groups[index]) {
+                            $(this).find('input[type="checkbox"]').prop('checked', true)
+                        }
+                    });
+                }
             }
 
-            return cansubmit;
         }
 
         $("#email").autocomplete({
             source: "/autocomplete",
             minLength: 2,
+            search: function (event, ui) {
+                $("#searchProgress").html("");
+                $('<img src="images/wait.gif" align="middle">').load(function () {
+                    $(this).width(23).height(23).appendTo('#searchProgress');
+                });
+            },
+            response: function (event, ui) {
+                $("#searchProgress").html("");
+            },
             select: function (event, ui) {
                 $("#email").val(ui.item.label);
-
 
                 $("#errorDiv").html('');
 
@@ -147,6 +184,8 @@ var App = App || {};
                     .done(function (msg) {
                         $('#homeMenu').html('');
                         $('#report').html(App.templates.separation(msg));
+
+                        findGroupMatch(msg["groups"]);
                         $("#cancel").click(function () {
                             document.location = '/';
                         });
@@ -170,8 +209,6 @@ var App = App || {};
                         });
 
                     });
-
-
                 return false;
             }
         });

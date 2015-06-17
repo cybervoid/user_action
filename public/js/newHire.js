@@ -101,6 +101,7 @@ var App = App || {};
             if ($('#company').val() == "empty") {
                 $('#company').toggleClass('inputRender validateError')
                 $('#companyError').html('<span class="errorSpan"> * You have to choose a department before proceeding</span>');
+                errorValidation($('#company'), cansubmit);
                 cansubmit = false;
             }
             else {
@@ -110,6 +111,7 @@ var App = App || {};
             if ($('#department').val() == "empty") {
                 $('#department').toggleClass('inputRender validateError')
                 $('#departmentError').html('<span class="errorSpan"> * You have to choose a department before proceeding</span>');
+                errorValidation($('#department'), cansubmit);
                 cansubmit = false;
             }
             else {
@@ -119,6 +121,7 @@ var App = App || {};
             if ($('#hireStatus').val() == "empty") {
                 $('#hireStatus').toggleClass('inputRender validateError')
                 $('#hireStatusError').html('<span class="errorSpan"> * You have to choose a hire status before proceeding</span>');
+                errorValidation($('#hireStatus'), cansubmit);
                 cansubmit = false;
             }
             else {
@@ -129,6 +132,7 @@ var App = App || {};
             if ($('#startDate').val().length < 2) {
                 $('#startDate').toggleClass('inputRender validateError')
                 $('#startDateError').html('<span class="errorSpan"> * You have to choose a start date before proceeding</span>');
+                errorValidation($('#startDate'), cansubmit);
                 cansubmit = false;
             }
             else {
@@ -139,6 +143,7 @@ var App = App || {};
             if ($('#payrollDate').val().length < 2) {
                 $('#payrollDate').toggleClass('inputRender validateError')
                 $('#payrollDateError').html('<span class="errorSpan"> * You have to choose a payroll start date before proceeding</span>');
+                errorValidation($('#payrollDate'), cansubmit);
                 cansubmit = false;
             }
             else {
@@ -148,20 +153,30 @@ var App = App || {};
             if ($('#location').val() == "empty") {
                 $('#location').toggleClass('inputRender validateError')
                 $('#locationError').html('<span class="errorSpan"> * You must choose a location before proceeding</span>');
+                errorValidation($('#location'), cansubmit);
                 cansubmit = false;
             }
             else {
                 $('#locationError').html('<span class="errorSpan"> * </span>');
             }
 
-
-            if (cansubmit == false) {
-                $('#errorDiv').html("* You have some errors in your form, Please check the fields in red.");
-                $("html, body").animate({ scrollTop: 0 }, "slow");
+            if (cansubmit) {
+                $("#submit").attr('disabled', 'disabled');
             }
+
+            return cansubmit
 
         });
 
+
+        function errorValidation(obj, cansubmit) {
+            $('#errorDiv').html("* You have some errors in your form, Please check the fields in red.");
+            if (!cansubmit) {
+                return false;
+            }
+            var offset = obj.offset();
+            $("html, body").animate({ scrollTop: offset.top }, "slow");
+        }
 
         $("#startDate").datepicker({"dateFormat": "mm/dd/yy"});
 

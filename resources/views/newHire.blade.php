@@ -136,8 +136,8 @@
 <li >
     <div class="left" >
         Start Date
-        <input type="text" class="inputRender" name="startDate" id="startDate" readonly style="width: 100px" required=""
-               value="05/14/2015" >
+        <input type="text" class="inputRender" name="startDate" id="startDate" readonly style="width: 100px"
+               required="" >
         <br ><span id="startDateError" class="errorSpan" ></span >
     </div >
     <div class="left" >
@@ -282,16 +282,16 @@
 
             <p ></p >
 
-            <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]" id="illyusaNA"
-                                value="illyusaNorth America" checked > illyusaNorth America</label ></li >
-            <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]" id="illyryebrook"
-                                value="illyryebrook" > illyryebrook</label ></li >
-            <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]" id="illynycteam"
-                                value="illyusa NYC Team" > illyusa NYC Team</label ></li >
+            <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]" id="illyusaTeam"
+                                value="illyusaNorth America" checked >illyusaTeam Distribution Group</label ></li >
+            <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]" id="illyRyeBrook"
+                                value="illyryebrook" >illyusa Rye Brook Distribution Group</label ></li >
+            <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]" id="illyNYCTeam"
+                                value="illyusa NYC Team" >illy NYC Team Distribution Group</label ></li >
             <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]" id="illyManagers"
-                                value="illyManagers" > illyManagers</label ></li >
+                                value="illyManagers" >illyusa Managers Distribution Group</label ></li >
             <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]" id="illySales"
-                                value="illySales" > illySales</label ></li >
+                                value="illySales" >illyusa Sales Team Distribution Group</label ></li >
             <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]" id="citrix"
                                 value="Sales Center/Citrix and Genesys ID. (applicable for Customer Care)" > Sales
                     Center/Citrix and Genesys ID. (applicable for Customer Care)</label ></li >
@@ -387,7 +387,7 @@ Aditional Instructions if applicable: <br >
 <textarea class="inputRender" cols="40" rows="6" id="comments" name="comments" ></textarea >
 
     <br ><br >
-    <input type="submit" class="inputRender" >
+    <input type="submit" class="inputRender" name="submit" id="submit" >
     <input type="button" class="inputRender" id="cancel" value="Cancel" >
 
 </div >

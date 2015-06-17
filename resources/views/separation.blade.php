@@ -18,8 +18,8 @@
 <form method="post" action="/separation_add" name="separation" id="separation" >
     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>" >
     <label >Search user</label >
-    <input type="text" id="email" name="email" placeholder="name.lastname@illy.com" class="inputRender"
-           value="donald.duck@illy.com" >
+    <input type="text" id="email" name="email" placeholder="name.lastname@illy.com" class="inputRender" > <span
+        id="searchProgress" ></span >
     <br ><br >
 
     <div class="report" id="report" ></div >
