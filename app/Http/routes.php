@@ -20,11 +20,18 @@ Route::post('add', 'newHireController@add');
 Route::post('chkeml', 'newHireController@checkEmail');
 Route::get('autocomplete', 'ActiveDirectory@autocomplete');
 
+
 Route::get('report/{reportType}/{name}', 'Reports@getReport')->where('name', '[a-zA-Z0-9 -]+\.pdf');
 
 Route::get('separation', 'SeparationController@index');
 Route::post('separation_search', 'SeparationController@separation_search');
 Route::post('separation_add', 'SeparationController@add');
+
+
+Route::get('change_org', 'Change_OrgController@index');
+Route::get('lookup_chng_org', 'ActiveDirectory@lookup_chng_org');
+//Route::get('lookup/{uname}', 'Change_OrgController@lookup')->where('name', '[a-zA-Z0-9 -]');
+Route::post('lookup', 'Change_OrgController@lookup');
 
 
 
@@ -40,7 +47,16 @@ Route::post('separation_add', 'SeparationController@add');
 /*
 1- cuando la cookie está me deja entrar aunque no este en la VPN
 
+- al crear un nuevo usuario enviar un recordatorio al correo  con el start date y con un checklist of TODO like:
+        - cnhange the password to Illy2014
+        - check the groups were appliend correctly
+        -prepare the computer to be ready a week before
 
+
+
+- an ActiveDirectory ver como irganizar el json de una mejor forma
+
+- poner todos los label en negrita y pasar todo a labels
 6- aplicar el estilo de newhire a separation (el required que no funciona en separation)
 
 8-         REVISAR COMO CAPTURAR LOS ERRORES SI EL EMAIL NO SE PUEDE ENVIAR POR ALGUN MOTIVO
@@ -49,6 +65,10 @@ Route::post('separation_add', 'SeparationController@add');
 
 10- validar todas las pags por si los campos no estan llenos
 
+- organizacion change, al cambiar la compania mandar un correo
+automatizado para cmabiar la signature y actualizar info en AD
+
+- enviar a maren los forms samples
 #######################################################
 Desghabilitar en testing
 newHireController

@@ -1,26 +1,27 @@
 @extends('mainTemplate')
 
 @section('javascript')
-<script src="js/groupsAD.js" ></script >
-<script src="js/separation.js" ></script >
 <script src="js/menu.js" ></script >
-<script src="js/thankYou.js" ></script >
+<script src="js/groupsAD.js" ></script >
+<script src="js/change_org.js" ></script >
+
 @endsection
 
 @section('css')
 <link rel="stylesheet" href="css/navigation.css" >
 <link rel="stylesheet" href="css/theForms.css" >
+
 @endsection
 
 
 @section('content')
 
-<p class="subHeader">Employee Separation Section</p>
+<p class="subHeader">Change Organization Section</p>
 <br>
-<form method="post" action="/separation_add" name="separation" id="separation" >
+<form method="post" action="/lookup" name="org_change" id="org_change" >
     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>" >
     <label >Search user</label >
-    <input type="text" id="email" name="email" class="inputRender" > <span
+    <input type="text" id="user" name="user"class="inputRender" > <span
         id="searchProgress" ></span >
     <br ><br >
 

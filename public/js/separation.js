@@ -62,26 +62,6 @@ var App = App || {};
                         $('#cobra').prop("checked", true);
                     });
 
-
-                    // set the groups where the user is registered
-
-
-                    /*
-                    $('#report').html('');
-                    $('#report').html(msg);
-                    $('#submit').show();
-
-
-                    $('#other').click(function () {
-                        if ($('#other').is(':checked')) {
-                            $('#otherComments').html('<p></p><textarea class="inputRender" cols="40" rows="6" id="inputOtherComments" name="inputOtherComments"></textarea>');
-                        }
-                        else {
-                            $('#otherComments').html('');
-                        }
-
-                    });
-                    */
                 });
         });
 
@@ -137,21 +117,6 @@ var App = App || {};
             $("html, body").animate({ scrollTop: offset.top }, "slow");
         }
 
-        function findGroupMatch(groups) {
-
-            if (groups != undefined) {
-                var index;
-                for (index = 0; index < groups.length; ++index) {
-                    $('#itChecklist li').each(function (i) {
-                        console.log($(this).find('input[type="checkbox"]').text());
-                        if ($(this).text() == groups[index]) {
-                            $(this).find('input[type="checkbox"]').prop('checked', true)
-                        }
-                    });
-                }
-            }
-
-        }
 
         $("#email").autocomplete({
             source: "/autocomplete",

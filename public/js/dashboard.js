@@ -13,8 +13,7 @@ $(document).ready(function () {
                 window.location.href = 'separation';
                 break;
             case "org_change":
-                //window.location.href='change_org.php';
-                alert('Under Construction')
+                window.location.href='change_org';
                 break;
         }
     });

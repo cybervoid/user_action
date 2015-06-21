@@ -85,7 +85,7 @@ class ActiveDirectory extends Controller
 
         // fetch the info from AD
         $ldap = ActiveDirectory::ldap_MyConnect();
-        $attributes = array('givenname', 'sn', 'mail');
+        $attributes = array('givenname', 'sn', 'mail', 'samaccountname');
 
         if (!$ldap)
         {
@@ -97,6 +97,42 @@ class ActiveDirectory extends Controller
         return ldap_get_entries($ldap, $result);
 
     }
+
+
+    public function lookup_chng_org(Request $req)
+    {
+
+        $consult = $this->lookupUser($req->request->get('term') . '*');
+
+        $result = "[";
+
+        $first = true;
+        for ($i = 0; $i < $consult["count"]; $i++)
+        {
+
+            if (isset($consult[$i]["givenname"][0]) && isset($consult[$i]["sn"][0]) && isset($consult[$i]["samaccountname"][0]))
+            {
+                    if ($first)
+                    {
+                        $result .= '{ "label": "' . $consult[$i]["givenname"][0] . ' ' . $consult[$i]["sn"][0] . '", "value": "' . $consult[$i]["samaccountname"][0] . '" }';
+                        $first = false;
+                    }
+                    else
+                    {
+                        $result .= ',{ "label": "' . $consult[$i]["givenname"][0] . ' ' . $consult[$i]["sn"][0] . '", "value": "' . $consult[$i]["samaccountname"][0] . '" }';
+                    }
+            }
+
+
+        }
+
+        $result .= "]";
+
+        return new Response($result, 200, ['content-type' => 'application/json']);
+
+    }
+
+
 
     public function autocomplete(Request $req)
     {

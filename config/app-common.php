@@ -7,15 +7,6 @@ $settings = [
     'payrollReportsPrefix' => 'Payroll Notification-',
 
     // location for the reports
-    /*
-    'newHireReportsPath' => storage_path() . '\\reports\\New_Hires\\', 'newHireURL' => '/report/newhire/',
-
-    'separationReportsPath' => storage_path() . '\\reports\\Separations\\', 'separationURL' => '/report/separation/',
-
-    'payrollReportsPath' => storage_path() . '\\reports\\Payroll\\', 'payrollURL' => '/report/payroll/',
-
-    'pdfCreator' => '"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe"',
-*/
 
     'newHireReportsPath' => storage_path() . '/reports/New_Hires/', 'newHireURL' => '/report/newhire/',
 
@@ -23,8 +14,11 @@ $settings = [
 
     'payrollReportsPath' => storage_path() . '/reports/Payroll/', 'payrollURL' => '/report/payroll/',
 
-    'pdfCreator' => '/usr/local/bin/wkhtmltopdf',
+    'pdfCreator' => '"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe"',
 
+    /*
+    'pdfCreator' => '/usr/local/bin/wkhtmltopdf',
+*/
 
     /*
      * Email settings

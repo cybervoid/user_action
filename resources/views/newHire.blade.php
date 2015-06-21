@@ -73,12 +73,12 @@
         <label >Department</label >
         <select class="inputRender" name="department" id="department" >
             <option value="empty" >Select</option >
-            <option selected >Sales</option >
+            <option >Sales</option >
             <option >Customer Care</option >
             <option >Finance</option >
-            <option >IT</option >
+            <option >Information Technology</option >
             <option >Marketing</option >
-            <option >HR</option >
+            <option >Human Resources</option >
             <option >Quality and Tech</option >
         </select ><span id="departmentError" class="errorSpan" >*</span ><br >
     </div >

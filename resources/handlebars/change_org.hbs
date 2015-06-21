@@ -1,0 +1,131 @@
+<br >
+<div class="theForm" >
+
+    <input type="hidden" name="reportType" id="reportType" value="change_org" >
+
+    <div class="left" ><span class="bold" >Name: </span >
+        <label >Name</label >
+        <input type="text" class="inputRender" name="name" id="name" value="{{ givenname }}" >
+    </div >
+    <div class="left" >
+        <label >Last Name</label >
+        <input type="text" class="inputRender" name="lastName" id="lastName" value="{{ sn }}" >
+    </div >
+
+    <br >
+
+    <p ></p ><br >
+
+    <div class="left" >
+        <label >Employee ID #:</label >
+        <input class="inputRender" name="employeeID" style="width: 80px" >
+    </div >
+    <div class="left" >
+        <label >NickName</label >
+        <input type="text" class="inputRender" name="nickname" id="nickname" >
+    </div >
+
+    <p ></p ><br ><br >
+
+    <div >
+        <label >Title:</label >
+        <input type="text" size="50%" name="title" class="inputRender" value="{{ title }}" required="" >
+    </div >
+
+    <p ></p ><br >
+
+    <div class="left" >
+        <label >Department</label >
+        <select class="inputRender" name="department" id="department" >
+            <option value="empty" >Select</option >
+            <option >Sales</option >
+            <option >Customer Care</option >
+            <option >Finance</option >
+            <option >Information Technology</option >
+            <option >Marketing</option >
+            <option >Human Resources</option >
+            <option >Quality and Tech</option >
+        </select ><span id="departmentError" class="errorSpan" >*</span >
+    </div >
+    <div class="left" >
+
+        <label >Company</label >
+        <select class="inputRender" name="company" id="company" >
+            <option value="empty" >Select</option >
+            <option >illy caffè North America, Inc.</option >
+            <option >Espressamente illy</option >
+            <option >illy Espresso Canada</option >
+        </select ><span id="companyError" class="errorSpan" >*</span >
+    </div >
+
+    <p ></p ><br >
+
+    <div class="left" >
+        <label >Manager</label >
+        <input type="text" name="manager" class="inputRender" value="{{ manager }}" required="" >
+    </div >
+    <div class="left" >
+        <input type="hidden" name="managerEmail" id="managerEmail" value="{{ managerEmail }}" >
+    </div >
+
+    <p ></p ><br >
+
+    <div class="left" >
+        <label >
+            Effective Date</label >
+        <input class="inputRender" name="effectiveDate" id="effectiveDate" style="width: 100px"
+               required="" value="06/03/2015" placeholder="mm/dd/yyyy" >
+        <span class="errorSpan" >*</span >
+
+        <div id="termDateError" class="errorSpan" ></div >
+    </div >
+    <div class="left" >
+        <label >Employee Status</label >
+        <select class="inputRender" name="hireStatus" id="hireStatus" >
+            <option value="empty" >Select</option >
+            <option value="Full-time" selected >Full-time</option >
+            <option value="Temporary" >Temporary</option >
+        </select >
+
+        <div id="hireStatusError" class="errorSpan" >*</div >
+    </div >
+
+
+    <p ></p ><br ><br >
+<span class="subHeader" >
+                IT Service Desk E-Mail Distribution List:
+               </span >
+    <hr >
+
+    <p ></p ><br >
+    E-Mail Distribution List:
+    <ul id="itChecklist" style="text-align: left; list-style: none" >
+        <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]"
+                            value="illyusaTeam Distribution Group"
+                >illyusaTeam Distribution Group</label ></li >
+        <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]"
+                            value="illyusa Rye Brook Distribution Group"
+                >illyusa Rye Brook Distribution Group</label ></li >
+        <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]"
+                            value="illy NYC Team Distribution Group"
+                >illy NYC Team Distribution Group</label ></li >
+        <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]"
+                            value="illyusa Managers Distribution Group"
+                >illyusa Managers Distribution Group</label ></li >
+        <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]"
+                            value="illyusa Sales Team Distribution Group" >illyusa Sales Team Distribution Group</label >
+        </li >
+    </ul >
+
+
+    <p ></p ><br >
+    What are the specific assets and or functionalities needed:<br >
+    <textarea class="inputRender" cols="40" rows="6" id="itComments" name="itComments" ></textarea >
+
+
+    <div >
+        <input type="submit" id="submit" name="submit" class="inputRender" value="Submit" >
+        <input type="button" id="cancel" class="inputRender" value="Cancel" >
+
+    </div >
+</div >
