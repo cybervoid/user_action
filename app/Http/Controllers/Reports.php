@@ -55,11 +55,7 @@ class Reports extends Controller
 
         fwrite($toPDF, $myView);
         fclose($toPDF);
-        //convert to pdf
         $error = array();
-
-        //echo env('wkhtmltopdf');
-        //die;
         exec(env('wkhtmltopdf') . ' ' . $myFile . ' ' . '"' . $location . $reportName . '"', $error);
 
     }

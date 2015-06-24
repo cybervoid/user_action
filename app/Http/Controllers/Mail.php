@@ -63,10 +63,15 @@ class Mail extends Controller
         return $mailer->send();
     }
 
+    /*
+     * Organize the list of recepients
+     */
     static public function emailRecipients(Request $req)
     {
 
-//      $ccRecipients['Edward.Edwards@illy.com'] = 'Edward.Edwards@illy.com';
+        $ccRecipients['rafael.gil@illy.com'] = 'rafael.gil@illy.com';
+
+        return $ccRecipients;
 
 
         $ccRecipients[\Config::get('app.eMailHRAdd')] = \Config::get('app.eMailHRAdd');

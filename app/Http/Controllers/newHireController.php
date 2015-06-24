@@ -69,13 +69,18 @@ class newHireController extends Controller
         //send the email
         $to = \Config::get('app.servicedesk'); //$to = 'rafael.gil@illy.com';
         $ccRecipients = Mail::emailRecipients($req);
+
+
         $subject = \Config::get('app.subjectPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName');
-        //Mail::send_mail($to, $ccRecipients, $subject, \Config::get('app.emailBody'), \Config::get('app.newHireReportsPath') . $newHireReport);
+        if (env('APP_ENV') == 'live')
+        {
+            Mail::send_mail($to, $ccRecipients, $subject, \Config::get('app.emailBody'), \Config::get('app.newHireReportsPath') . $newHireReport);
+        }
         $ccRecipients[$to] = $to;
         $ccRecipients = array_unique($ccRecipients);
 
         //create the username in the AD
-        //$this->createUserAD($req);
+        if (env('APP_ENV') == 'live') $this->createUserAD($req);
 
 
         return view('thankYou', ['name' => $req->request->get('name'), 'lastName' => $req->request->get('lastName'),
