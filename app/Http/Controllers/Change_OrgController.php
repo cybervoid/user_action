@@ -40,9 +40,6 @@ class Change_OrgController extends Controller
 
         $user = User::current();
 
-
-        $batchCmds['cmd'] = ''
-        die;
         return view('change_org', ['user' => $user]);
 
     }
@@ -60,7 +57,7 @@ class Change_OrgController extends Controller
         $fromAD["department"] = $result[0]['department'][0];
         $fromAD["company"] = $result[0]['company'][0];
         $manager = $result[0]['manager'][0];
-        $manager= substr($manager, 3, strpos($manager,',')-3);
+        $manager = substr($manager, 3, strpos($manager, ',') - 3);
         $fromAD["manager"] = $manager;
 
         // get the group info
@@ -76,6 +73,7 @@ class Change_OrgController extends Controller
         }
 
         $response = new Response(json_encode($fromAD), 200, ['Content-Type' => 'application/json']);
+
         return $response;
 
 
