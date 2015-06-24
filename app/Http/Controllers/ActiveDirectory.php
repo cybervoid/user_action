@@ -1,4 +1,5 @@
 <?php namespace App\Http\Controllers;
+
 /**
  * Created by PhpStorm.
  * User: rafag
@@ -92,7 +93,8 @@ class ActiveDirectory extends Controller
             return false;
         }
 
-        $result = ldap_search($ldap, "OU=North America,DC=ILLY-DOMAIN,DC=COM", "(|(givenname={$param})(sn={$param}))", $attributes);
+        //$result = ldap_search($ldap, "OU=North America,DC=ILLY-DOMAIN,DC=COM", "(|(givenname={$param})(sn={$param}))", $attributes);
+        $result = ldap_search($ldap, "OU=North America,DC=ILLY-DOMAIN,DC=COM", "(&(!(userAccountControl:1.2.840.113556.1.4.803:=2))(|(givenname={$param})(sn={$param})))", $attributes);
 
         return ldap_get_entries($ldap, $result);
 
@@ -101,37 +103,19 @@ class ActiveDirectory extends Controller
 
     public function lookup_chng_org(Request $req)
     {
-
         $consult = $this->lookupUser($req->request->get('term') . '*');
-
-        $result = "[";
-
-        $first = true;
+        $result = [];
         for ($i = 0; $i < $consult["count"]; $i++)
         {
-
             if (isset($consult[$i]["givenname"][0]) && isset($consult[$i]["sn"][0]) && isset($consult[$i]["samaccountname"][0]))
             {
-                    if ($first)
-                    {
-                        $result .= '{ "label": "' . $consult[$i]["givenname"][0] . ' ' . $consult[$i]["sn"][0] . '", "value": "' . $consult[$i]["samaccountname"][0] . '" }';
-                        $first = false;
-                    }
-                    else
-                    {
-                        $result .= ',{ "label": "' . $consult[$i]["givenname"][0] . ' ' . $consult[$i]["sn"][0] . '", "value": "' . $consult[$i]["samaccountname"][0] . '" }';
-                    }
+                $result[] = array("label" => $consult[$i]["givenname"][0] . ' ' . $consult[$i]["sn"][0],
+                    "value" => $consult[$i]["samaccountname"][0]);
             }
-
-
         }
 
-        $result .= "]";
-
         return new Response($result, 200, ['content-type' => 'application/json']);
-
     }
-
 
 
     public function autocomplete(Request $req)
@@ -139,36 +123,23 @@ class ActiveDirectory extends Controller
 
         $consult = $this->lookupUser($req->request->get('term') . '*');
 
-        $result = "[";
-
-        $first = true;
+        $result = [];
         for ($i = 0; $i < $consult["count"]; $i++)
         {
-
-            //  if (isset($consult[$i]["givenname"][0])) echo '<p>'.$consult[$i]["givenname"][0] . ' ' . $consult[$i]["sn"][0] .'</p>';
             if (isset($consult[$i]["givenname"][0]) && isset($consult[$i]["sn"][0]) && isset($consult[$i]["mail"][0]))
             {
                 if (preg_match("/@illy.com/", $consult[$i]["mail"][0]))
                 {
-                    if ($first)
-                    {
-                        $result .= '{ "label": "' . $consult[$i]["givenname"][0] . ' ' . $consult[$i]["sn"][0] . '", "value": "' . $consult[$i]["mail"][0] . '" }';
-                        $first = false;
-                    }
-                    else
-                    {
-                        $result .= ',{ "label": "' . $consult[$i]["givenname"][0] . ' ' . $consult[$i]["sn"][0] . '", "value": "' . $consult[$i]["mail"][0] . '" }';
-                    }
+                    $result[] = array("label" => $consult[$i]["givenname"][0] . ' ' . $consult[$i]["sn"][0],
+                        "value" => $consult[$i]["mail"][0]);
                 }
             }
 
-
         }
 
-        $result .= "]";
+        $result = json_encode($result);
 
         return new Response($result, 200, ['content-type' => 'application/json']);
-
     }
 
 }

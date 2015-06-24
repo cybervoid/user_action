@@ -239,6 +239,17 @@ var App = App || {};
         $("#manager").autocomplete({
             source: "/autocomplete",
             minLength: 2,
+            search: function (event, ui) {
+                $("#searchProgress").html("");
+                $("#managerEmail").val("");
+                console.log("entro aqui");
+                $('<img src="images/wait.gif" align="middle">').load(function () {
+                    $(this).width(23).height(23).appendTo('#searchProgress');
+                });
+            },
+            response: function (event, ui) {
+                $("#searchProgress").html("");
+            },
             select: function (event, ui) {
                 $("#manager").val(ui.item.label);
                 $("#managerEmail").val(ui.item.value);

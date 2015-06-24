@@ -99,12 +99,12 @@
     <div >
             <span class="left" >
                 <label >Manager</label >
-                <input type="text" class="inputRender" name="manager" id="manager" required="" value="Rafael Gil" >
+                <input type="text" class="inputRender" name="manager" id="manager" required="">
+                <span id="searchProgress"></span>
             </span >
             <span class="left" >
                 <label >Manager's Email</label >
-                <input type="text" class="inputRender" name="managerEmail" id="managerEmail" required=""
-                       value="rafael.gil@illy.com" >
+                <input type="text" class="inputRender" name="managerEmail" id="managerEmail" required="">
             </span >
 
         <p >&nbsp;</p >

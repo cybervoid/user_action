@@ -54,8 +54,6 @@ Route::post('lookup', 'Change_OrgController@lookup');
 
 
 
-- an ActiveDirectory ver como irganizar el json de una mejor forma
-
 - poner todos los label en negrita y pasar todo a labels
 6- aplicar el estilo de newhire a separation (el required que no funciona en separation)
 
@@ -69,6 +67,17 @@ Route::post('lookup', 'Change_OrgController@lookup');
 automatizado para cmabiar la signature y actualizar info en AD
 
 - enviar a maren los forms samples
+
+//// separation schedule
+date
+	save samaccountname
+	deactivate user
+	group separation
+	remove title
+	remove manager
+
+
+
 #######################################################
 Desghabilitar en testing
 newHireController

@@ -22,7 +22,7 @@ gulp.task('templates', function () {
                 // Allow nesting based on path using gulp-declare's processNameByPath()
                 // You can remove this option completely if you aren't using nested folders
                 // Drop the client/templates/ folder from the namespace path by removing it from the filePath
-                return declare.processNameByPath(filePath.replace('resources\\handlebars\\', ''));
+                return declare.processNameByPath(filePath.replace(/resources[\\/]handlebars[\\/]/gi, ''));
             }
         }))
         // Concatenate down to a single file
