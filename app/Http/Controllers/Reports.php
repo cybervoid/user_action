@@ -32,22 +32,6 @@ class Reports extends Controller
         $this->middleware('auth');
     }
 
-
-    /**
-     * Show the new hire form
-     *
-     * @return Response
-     */
-    public function index()
-    {
-
-        $user = User::current();
-
-        return view('separation', ['user' => $user]);
-
-    }
-
-
     static public function escapeReportName($param)
     {
         $text = str_replace("’", '', $param);
@@ -74,7 +58,9 @@ class Reports extends Controller
         //convert to pdf
         $error = array();
 
-        exec(\Config::get('app.pdfCreator') . ' ' . $myFile . ' ' . '"' . $location . $reportName . '"', $error);
+        //echo env('wkhtmltopdf');
+        //die;
+        exec(env('wkhtmltopdf') . ' ' . $myFile . ' ' . '"' . $location . $reportName . '"', $error);
 
     }
 
@@ -116,6 +102,20 @@ class Reports extends Controller
 
         return new Response($content, Response::HTTP_OK, ["content-type" => "application/pdf",
             "content-length" => filesize($filePath), "content-disposition" => "attachment; filename=\"$name\""]);
+
+    }
+
+    /**
+     * Show the new hire form
+     *
+     * @return Response
+     */
+    public function index()
+    {
+
+        $user = User::current();
+
+        return view('separation', ['user' => $user]);
 
     }
 }
