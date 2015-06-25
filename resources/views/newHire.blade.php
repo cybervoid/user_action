@@ -36,12 +36,12 @@
     <li >
         <label >Name</label >
 
-        <input type="text" class="inputRender" name="name" id="name" required="" value="Donald" >
+        <input type="text" class="inputRender" name="name" id="name" required="" value="" >
 
     </li >
     <li >
         <label >Last Name</label >
-        <input type="text" class="inputRender" name="lastName" id="lastName" required="" value="Duck" >
+        <input type="text" class="inputRender" name="lastName" id="lastName" required="" value="" >
     </li >
     <li >
         <label >Buddy Name:</label >
@@ -58,7 +58,7 @@
     <label >Will be working for</label >
     <select class="inputRender" name="company" id="company" >
         <option value="empty" >Select</option >
-        <option selected >illy caffè North America, Inc.</option >
+        <option >illy caffè North America, Inc.</option >
         <option >Espressamente illy</option >
         <option >illy Espresso Canada</option >
     </select ><span id="companyError" class="errorSpan" >*</span ><br >
@@ -97,7 +97,7 @@
 </li >
 <li >
     <label >Title</label >
-    <input type="text" class="inputRender" name="title" id="title" required="" value="Actor" >
+    <input type="text" class="inputRender" name="title" id="title" required="" value="" >
 </li >
 <li >
     <div >
@@ -141,7 +141,7 @@
     <div class="left" >
         Start Date
         <input type="text" class="inputRender" name="startDate" id="startDate" readonly style="width: 100px"
-               required="" value="06/16/2015" >
+               required="" value="" >
         <br ><span id="startDateError" class="errorSpan" ></span >
     </div >
     <div class="left" >
@@ -171,7 +171,7 @@
         <p style="text-align: center" >
             Date: Hire Date (1 and 16th where applicable):
             <input type="text" class="inputRender" name="payrollDate" id="payrollDate" readonly style="width: 100px"
-                   required="" value="05/14/2015" >
+                   required="" value="" >
             <br ><span id="payrollDateError" class="errorSpan" ></span >
         </p >
     </li >
@@ -227,7 +227,7 @@
 <!-- Employee Benefits Section: -->
 <p >
 
-<div class="subHeader" >Employee Benefits Section:</div >
+    <div class="subHeader" >New Hire HRIS entry:</div >
 </p>
 <hr >
 
@@ -252,7 +252,7 @@
         <option value="empty" >Select</option >
         <option value="Rye Brook" >Rye Brook</option >
         <option value="New York City" >NYC</option >
-        <option value="Canada" selected >Canada</option >
+        <option value="Canada" >Canada</option >
         <option value="Scottsdale" >Scottsdale</option >
         <option value="Remote Users" >Other</option >
     </select ><span id="locationError" class="errorSpan" >*</span >
@@ -331,8 +331,8 @@
 <div class="subHeader" >IT Oracle Specialist</div >
 <label >
     <input type="checkbox" class="inputRender" name="oracle" id="oracle"
-           value="Oracle Access/Oracle (HR) Number Approval (Sales, Finance, Logistics, Customer Care, IT, Tech Svcs)"
-           checked > Oracle Access/Oracle (HR) Number Approval (Sales, Finance, Logistics, Customer Care, IT, Tech Svcs)</label >
+           value="Oracle Access/Oracle (HR) Number Approval (Sales, Finance, Logistics, Customer Care, IT, Tech Svcs)" >
+    Oracle Access/Oracle (HR) Number Approval (Sales, Finance, Logistics, Customer Care, IT, Tech Svcs)</label >
 
     <br ><br >
 <div class="subHeader" >Administration Office</div >
@@ -340,7 +340,7 @@
     <ul >
         <li >
             <label ><input type="checkbox" class="inputRender" name="oManager[]" id="accessCard"
-                           value="Access Card, if applicable" checked > Access Card, if applicable</label >
+                           value="Access Card, if applicable" > Access Card, if applicable</label >
         </li >
         <li >
             <label ><input type="checkbox" class="inputRender" name="oManager[]" id="seat"
@@ -370,15 +370,18 @@
     </div >
 
         <label ><input type="checkbox" class="inputRender" name="newDriver" id="newDriver"
-                       value="Form to Hiring Manager" checked > Form to Hiring Manager</label >
+                       value="Form to Hiring Manager" > Form to Hiring Manager</label >
     <p ></p >
-    <div class="subHeader" >COMPANY CREDIT CARD-Marjorie Guthrie (if applicable)-included in new hires and separation
-        notices
+    <div class="subHeader" >
+        Finance - Marjorie Guthrie<br >
+        (Credit Card and Concur Access Requests) *new hires and separation
+
+
     </div >
     <ul >
         <li >
             <label ><input type="checkbox" class="inputRender" name="creditCard[]" id="creditCard"
-                           value="COMPANY CREDIT CARD" checked > COMPANY CREDIT CARD</label >
+                           value="COMPANY CREDIT CARD" > COMPANY CREDIT CARD</label >
         </li >
         <li >
             <label ><input type="checkbox" class="inputRender" name="creditCard[]" id="concur" value="Concur Access" >

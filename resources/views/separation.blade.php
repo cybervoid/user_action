@@ -32,7 +32,7 @@
 
         <p class="subHeader" >Other options: <br ></p >
         <ul class="navigation" style="text-align: center" >
-            <li class="myNavigation navigationLink" id="home" >Home Screen</a></li >
+            <li class="myNavigation navigationLink" id="home" >Home Screen</li >
         </ul >
 
     </div >

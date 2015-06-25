@@ -120,7 +120,9 @@
 
 
 @if(isset($req["creditCard"]))
-<p ><span >COMPANY CREDIT CARD-Marjorie Guthrie (if applicable)-included in new hires and separation notices</span >
+    <p ><span >        Finance - Marjorie Guthrie<br >
+        (Credit Card and Concur Access Requests) *new hires and separation
+</span >
 </p >
 <ul >
     @foreach($req["creditCard"] as $item)
