@@ -10,68 +10,17 @@
 
 use Illuminate\Http\Request;
 
-class Mail extends Controller
+class MyMail extends Controller
 {
 
-    /**
-     * Prepare email basic params to send email
-     *
-     * @param $to
-     * @param $ccRecipients
-     * @param $subject
-     * @param $body
-     * @param $attachment
-     *
-     * @internal param int $id
-     * @return Response
-     */
-
-    static public function send_mail($to, $ccRecipients, $subject, $body, $attachment)
-    {
-
-        $mailer = new \PHPMailer(true);
-        //$mailer->IsSMTP();
-        $mailer->Host = "10.44.1.73"; // SMTP server
-        $mailer->SMTPDebug = 2; // enables SMTP debug information (for testing)
-        $mailer->Debugoutput = 'html';
-
-        $mailer->SMTPAuth = true; // enable SMTP authentication
-        $mailer->Port = 25; // set the SMTP port for the GMAIL server
-        $mailer->Username = "illy\hrdept"; // SMTP account username // $mailer->Username =
-        $mailer->Password = "Illy4559"; // SMTP account password
-        $mailer->SMTPSecure = 'tls';
-        $mailer->SMTPAuth = true;
-        $mailer->CharSet = "UTF-8";
-        $mailer->Timeout = 60;
-        $mailer->setFrom("hrdeptnorthamerica@illy.com", "illy NA HR Notifications");
-        $mailer->addAddress($to);
-        if ($ccRecipients != '')
-        {
-            foreach ($ccRecipients as $email => $name)
-            {
-                $mailer->AddCC($email, $name);
-            }
-        }
-
-        $mailer->Subject = $subject;
-        $mailer->Body = $body;
-        if ($attachment != '')
-        {
-            $mailer->addAttachment($attachment);
-        }
-
-        return $mailer->send();
-    }
 
     /*
-     * Organize the list of recepients
-     */
+ * Organize the list of recepients
+ */
     static public function emailRecipients(Request $req)
     {
 
-        $ccRecipients['rafael.gil@illy.com'] = 'rafael.gil@illy.com';
-
-        return $ccRecipients;
+        //       $ccRecipients['rafael.gil@illy.com'] = 'rafael.gil@illy.com';
 
 
         $ccRecipients[\Config::get('app.eMailHRAdd')] = \Config::get('app.eMailHRAdd');
@@ -125,6 +74,64 @@ class Mail extends Controller
         }
 
         return $ccRecipients;
+    }
+
+    /**
+     * Prepare email basic params to send email
+     *
+     * @param $to
+     * @param $ccRecipients
+     * @param $subject
+     * @param $body
+     * @param $attachment
+     *
+     * @internal param int $id
+     * @return Response
+     */
+
+    static public function send_mail($to, $ccRecipients, $subject, $body, $attachment)
+    {
+
+        $mailer = new \PHPMailer(true);
+        //$mailer->IsSMTP();
+        $mailer->Host = "10.44.1.73"; // SMTP server
+        if (env('APP_ENV' != 'live'))
+        {
+            $mailer->SMTPDebug = 2; // enables SMTP debug information (for testing)
+        }
+        else
+        {
+            $mailer->SMTPDebug = 0;
+        } // enables SMTP debug information (for testing)
+        $mailer->Debugoutput = 'html';
+
+        $mailer->SMTPAuth = true; // enable SMTP authentication
+        $mailer->Port = 25; // set the SMTP port for the GMAIL server
+        $mailer->Username = "illy\hrdept"; // SMTP account username // $mailer->Username =
+        $mailer->Password = "Illy4559"; // SMTP account password
+        $mailer->SMTPSecure = 'tls';
+        $mailer->SMTPAuth = true;
+        $mailer->CharSet = "UTF-8";
+        $mailer->Timeout = 60;
+        $mailer->setFrom("hrdeptnorthamerica@illy.com", "illy NA HR Notifications");
+        $mailer->addAddress($to);
+        if ($ccRecipients != '')
+        {
+            foreach ($ccRecipients as $email => $name)
+            {
+                $mailer->AddCC($email, $name);
+            }
+        }
+
+        $mailer->Subject = $subject;
+        $mailer->Body = $body;
+        if ($attachment != '')
+        {
+            $mailer->addAttachment($attachment);
+        }
+
+        return $mailer->send();
+
     }
 
 

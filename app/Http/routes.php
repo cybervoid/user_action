@@ -53,7 +53,7 @@ Route::post('lookup', 'Change_OrgController@lookup');
         -prepare the computer to be ready a week before
 
 
-
+- para los nombres eliminar espacios en los titulos, nombres, etc
 - poner todos los label en negrita y pasar todo a labels
 6- aplicar el estilo de newhire a separation (el required que no funciona en separation)
 

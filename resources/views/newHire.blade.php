@@ -43,6 +43,10 @@
         <label >Last Name</label >
         <input type="text" class="inputRender" name="lastName" id="lastName" required="" value="Duck" >
     </li >
+    <li >
+        <label >Buddy Name:</label >
+        <input type="text" class="inputRender" name="buddy" id="buddy" >
+    </li >
 </ul >
 
 <p >
@@ -280,6 +284,10 @@
             <p > *Upon user notification request, IT provides customer service to hiring manager and new hire. Hiring
                 managers will be contacted before new hire begins.</p >
 
+            <p >Laptop needs to be shipped to an outside location, please contact Human Resources Manager for address.
+                Computer and or other equipment will be delivered 3 days prior to hire date. An email confirmation
+                notification
+                will be sent to Hiring manager, Associate and Human Resources Manager.</p >
             <p ></p >
 
             <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]" id="illyusaTeam"

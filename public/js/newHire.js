@@ -33,7 +33,7 @@ var App = App || {};
 
         $('#location').change(function () {
             if ($('#location').val() == 'empty') {
-                $('#location').toggleClass('inputRender', true)
+                $('#location').toggleClass('inputRender', true);
                 $('#locationError').html('*');
             }
             else {
@@ -57,7 +57,7 @@ var App = App || {};
         $('#laptop').click(function () {  // add/remove li element to the list
             if ($('#laptop').is(":checked")) {
                 $("#prepareLaptop").after('<li id="deliveryDateli" style="margin: 0px 0px 0px 30px">Delivery Date <input type="text" class="inputRender" name="deliveryDate" id="deliveryDate" style="width: 100px"></li>');
-                $("#prepareLaptop").after('<li id="ship" style="margin: 0px 0px 0px 20px"><label><input type="checkbox" class="inputRender" name="iTDept[]" id="laptopShipping" value="Laptop needs to be shipped to an outside location, please contact hiring manager for address"> Laptop needs to be shipped to an outside location, please contact hiring manager for address</label></li>');
+                $("#prepareLaptop").after('<li id="ship" style="margin: 0px 0px 0px 20px"><label><input type="checkbox" class="inputRender" name="iTDept[]" id="laptopShipping" value="Laptop needs to be shipped to an outside location, please contact HR Manager for address if delivery necessary">Laptop needs to be shipped to an outside location, please contact HR Manager for address if delivery necessary</label></li>');
 
                 if ($('#startDate').val() != '') {
                     var d = new Date($('#startDate').val());
@@ -99,7 +99,7 @@ var App = App || {};
             var cansubmit = true;
 
             if ($('#company').val() == "empty") {
-                $('#company').toggleClass('inputRender validateError')
+                $('#company').toggleClass('inputRender validateError');
                 $('#companyError').html('<span class="errorSpan"> * You have to choose a department before proceeding</span>');
                 errorValidation($('#company'), cansubmit);
                 cansubmit = false;
@@ -109,7 +109,7 @@ var App = App || {};
             }
 
             if ($('#department').val() == "empty") {
-                $('#department').toggleClass('inputRender validateError')
+                $('#department').toggleClass('inputRender validateError');
                 $('#departmentError').html('<span class="errorSpan"> * You have to choose a department before proceeding</span>');
                 errorValidation($('#department'), cansubmit);
                 cansubmit = false;
@@ -119,7 +119,7 @@ var App = App || {};
             }
 
             if ($('#hireStatus').val() == "empty") {
-                $('#hireStatus').toggleClass('inputRender validateError')
+                $('#hireStatus').toggleClass('inputRender validateError');
                 $('#hireStatusError').html('<span class="errorSpan"> * You have to choose a hire status before proceeding</span>');
                 errorValidation($('#hireStatus'), cansubmit);
                 cansubmit = false;
@@ -130,7 +130,7 @@ var App = App || {};
 
 
             if ($('#startDate').val().length < 2) {
-                $('#startDate').toggleClass('inputRender validateError')
+                $('#startDate').toggleClass('inputRender validateError');
                 $('#startDateError').html('<span class="errorSpan"> * You have to choose a start date before proceeding</span>');
                 errorValidation($('#startDate'), cansubmit);
                 cansubmit = false;
@@ -141,7 +141,7 @@ var App = App || {};
 
 
             if ($('#payrollDate').val().length < 2) {
-                $('#payrollDate').toggleClass('inputRender validateError')
+                $('#payrollDate').toggleClass('inputRender validateError');
                 $('#payrollDateError').html('<span class="errorSpan"> * You have to choose a payroll start date before proceeding</span>');
                 errorValidation($('#payrollDate'), cansubmit);
                 cansubmit = false;
@@ -151,7 +151,7 @@ var App = App || {};
             }
 
             if ($('#location').val() == "empty") {
-                $('#location').toggleClass('inputRender validateError')
+                $('#location').toggleClass('inputRender validateError');
                 $('#locationError').html('<span class="errorSpan"> * You must choose a location before proceeding</span>');
                 errorValidation($('#location'), cansubmit);
                 cansubmit = false;
@@ -191,7 +191,7 @@ var App = App || {};
             onSelect: function (dateText) {
                 $("#startDateError").html("");
             }
-        })
+        });
 
         $("#benefitDate").datepicker({
             "dateFormat": "mm/dd/yy",
@@ -213,28 +213,6 @@ var App = App || {};
                 $("#startDateError").html("");
             }
         });
-
-
-        /*
-        function validateEmail(email){
-            $.ajax({
-                type: "POST",
-                url: "chkeml",
-                data: {email: $("#managerEmail").val() },
-                beforeSend: function () {
-                    $('#emailValidation').html('');
-                    $('<img src="images/wait.gif" align="middle">').load(function () {
-                        $(this).width(23).height(23).appendTo('#emailValidation');
-                    });
-                }
-            })
-                .done(function (msg) {
-                    if(msg==='true')
-                    $("#emailValidation").html('<span class="signature">✔ verified</span>'); else
-                        $("#emailValidation").html('<span class="signature">(Not verified)</span>');
-                })
-        }
-        */
 
         $("#manager").autocomplete({
             source: "/autocomplete",

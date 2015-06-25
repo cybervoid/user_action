@@ -56,21 +56,35 @@ class SeparationController extends Controller
 
         //send the email
         $to = \Config::get('app.servicedesk'); //$to = 'rafael.gil@illy.com';
-        $ccRecipients = Mail::emailRecipients($req);
+        $ccRecipients = MyMail::emailRecipients($req);
         $subject = \Config::get('app.subjectPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName');
-//        Mail::send_mail($to, $ccRecipients, $subject, \Config::get('app.emailBody'), \Config::get('app.separationReportsPath') . $separationReport);
+
+        if (env('APP_ENV') == 'live')
+        {
+            MyMail::send_mail($to, $ccRecipients, $subject, \Config::get('app.emailBody'), \Config::get('app.separationReportsPath') . $separationReport);
+        }
         $ccRecipients[$to] = $to;
         $ccRecipients = array_unique($ccRecipients);
 
-        //remove user from groups
-        $this->removeFromGroups($req->request->get('iTDeptEmail'), $req->request->get('sAMAccountName'));
+        //$today = date('Y-m-d');
+        $today = date('m/d/Y');
 
-        //check if the user wants to disable AD user
-        $disableUser = $req->request->get('disableUser');
-        if (isset($disableUser))
+        if ($today == $req->request->get('termDate'))
         {
-            $userName = $req->request->get('sAMAccountName');
-            //          $this->disableUser($userName);
+            //remove user from groups
+            $this->removeFromGroups($req->request->get('iTDeptEmail'), $req->request->get('sAMAccountName'));
+
+            //check if the user wants to disable AD user
+            $disableUser = $req->request->get('disableUser');
+            if (isset($disableUser))
+            {
+                $userName = $req->request->get('sAMAccountName');
+                $this->disableUser($userName);
+
+            }
+        }
+        else
+        {
 
         }
 
@@ -81,6 +95,44 @@ class SeparationController extends Controller
 
     }
 
+    private function removeFromGroups($groups, $user)
+    {
+
+        if (count($groups) > 1)
+        {
+            $ldap = ActiveDirectory::ldap_MyConnect();
+
+            // get user's dn
+            $result = ActiveDirectory::query("sAMAccountName={$user}");
+            $group_info['member'] = $result[0]['dn'];
+
+            // get group dn
+            foreach ($groups as $item)
+            {
+                $result = ActiveDirectory::query("sAMAccountName={$item}");
+                $group_dn = $result[0]['dn'];
+                @ldap_mod_del($ldap, $group_dn, $group_info);
+            }
+        }
+
+    }
+
+    private function disableUser($userName)
+    {
+        $attributes = array('dn', 'useraccountcontrol');
+        $ldap = ActiveDirectory::ldap_MyConnect();
+        $myDN = "OU=North America,DC=ILLY-DOMAIN,DC=COM";
+        $txtSearch = "samaccountname={$userName}";
+        $result = ldap_search($ldap, $myDN, $txtSearch, $attributes);
+        $entry = ldap_get_entries($ldap, $result);
+        $dn = $entry[0]["dn"];
+        $ac = $entry[0]["useraccountcontrol"][0];
+        $disable = ($ac | 2); // set all bits plus bit 1 (=dec2)
+        $userdata = array();
+        $userdata["useraccountcontrol"][0] = $disable;
+        ldap_modify($ldap, $dn, $userdata); //change state
+
+    }
 
     public function separation_search(Request $req)
     {
@@ -130,46 +182,6 @@ class SeparationController extends Controller
 
         return $response;
 
-
-    }
-
-
-    private function disableUser($userName)
-    {
-        $attributes = array('dn', 'useraccountcontrol');
-        $ldap = ActiveDirectory::ldap_MyConnect();
-        $myDN = "OU=North America,DC=ILLY-DOMAIN,DC=COM";
-        $txtSearch = "samaccountname={$userName}";
-        $result = ldap_search($ldap, $myDN, $txtSearch, $attributes);
-        $entry = ldap_get_entries($ldap, $result);
-        $dn = $entry[0]["dn"];
-        $ac = $entry[0]["useraccountcontrol"][0];
-        $disable = ($ac | 2); // set all bits plus bit 1 (=dec2)
-        $userdata = array();
-        $userdata["useraccountcontrol"][0] = $disable;
-        ldap_modify($ldap, $dn, $userdata); //change state
-
-    }
-
-    private function removeFromGroups($groups, $user)
-    {
-
-        if (count($groups) > 1)
-        {
-            $ldap = ActiveDirectory::ldap_MyConnect();
-
-            // get user's dn
-            $result = ActiveDirectory::query("sAMAccountName={$user}");
-            $group_info['member'] = $result[0]['dn'];
-
-            // get group dn
-            foreach ($groups as $item)
-            {
-                $result = ActiveDirectory::query("sAMAccountName={$item}");
-                $group_dn = $result[0]['dn'];
-                @ldap_mod_del($ldap, $group_dn, $group_info);
-            }
-        }
 
     }
 }

@@ -14,6 +14,24 @@ use Illuminate\Http\Response;
 class ActiveDirectory extends Controller
 {
 
+    public static function query($search)
+    {
+        // fetch the info from AD
+        $ldap = ActiveDirectory::ldap_MyConnect();
+
+        $attributes = array('dn', 'title', 'givenname', 'sn', 'manager', 'company', 'department', "memberOf",
+            'samaccountname', 'mail');
+
+        if (!$ldap)
+        {
+            return false;
+        }
+
+        $result = ldap_search($ldap, "OU=North America,DC=ILLY-DOMAIN,DC=COM", $search, $attributes);
+
+        return ldap_get_entries($ldap, $result);
+    }
+
     public static function ldap_MyConnect()
     {
         $ldap = ldap_connect("ldap://DCUSA2.ILLY-DOMAIN.COM");
@@ -42,24 +60,6 @@ class ActiveDirectory extends Controller
         }
     }
 
-    public static function query($search)
-    {
-        // fetch the info from AD
-        $ldap = ActiveDirectory::ldap_MyConnect();
-
-        $attributes = array('dn', 'title', 'givenname', 'sn', 'manager', 'company', 'department', "memberOf",
-            'samaccountname', 'mail');
-
-        if (!$ldap)
-        {
-            return false;
-        }
-
-        $result = ldap_search($ldap, "OU=North America,DC=ILLY-DOMAIN,DC=COM", $search, $attributes);
-
-        return ldap_get_entries($ldap, $result);
-    }
-
     public static function getEmail($email)
     {
 
@@ -80,6 +80,21 @@ class ActiveDirectory extends Controller
 
     }
 
+    public function lookup_chng_org(Request $req)
+    {
+        $consult = $this->lookupUser($req->request->get('term') . '*');
+        $result = [];
+        for ($i = 0; $i < $consult["count"]; $i++)
+        {
+            if (isset($consult[$i]["givenname"][0]) && isset($consult[$i]["sn"][0]) && isset($consult[$i]["samaccountname"][0]))
+            {
+                $result[] = array("label" => $consult[$i]["givenname"][0] . ' ' . $consult[$i]["sn"][0],
+                    "value" => $consult[$i]["samaccountname"][0]);
+            }
+        }
+
+        return new Response($result, 200, ['content-type' => 'application/json']);
+    }
 
     private static function lookupUser($param)
     {
@@ -99,24 +114,6 @@ class ActiveDirectory extends Controller
         return ldap_get_entries($ldap, $result);
 
     }
-
-
-    public function lookup_chng_org(Request $req)
-    {
-        $consult = $this->lookupUser($req->request->get('term') . '*');
-        $result = [];
-        for ($i = 0; $i < $consult["count"]; $i++)
-        {
-            if (isset($consult[$i]["givenname"][0]) && isset($consult[$i]["sn"][0]) && isset($consult[$i]["samaccountname"][0]))
-            {
-                $result[] = array("label" => $consult[$i]["givenname"][0] . ' ' . $consult[$i]["sn"][0],
-                    "value" => $consult[$i]["samaccountname"][0]);
-            }
-        }
-
-        return new Response($result, 200, ['content-type' => 'application/json']);
-    }
-
 
     public function autocomplete(Request $req)
     {

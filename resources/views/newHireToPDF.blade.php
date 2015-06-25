@@ -9,8 +9,8 @@
 <p ><span >Name: </span >{{ $req['name'] }} {{ $req['lastName'] }}</p >
 
 
-@if (isset($req["nickname"]))
-<p ><span >Nickname (if applicable): </span >{{ $req["nickname"] }}</p >
+@if (isset($req["buddy"]))
+    <p ><span >Nickname (if applicable): </span >{{ $req["buddy"] }}</p >
 @endif
 
 
@@ -60,6 +60,10 @@
 <p > *Upon user notification request, IT provides customer service to hiring manager and new hire. Hiring managers will
     be contacted before new hire begins.</p >
 
+<p >Laptop needs to be shipped to an outside location, please contact Human Resources Manager for address.
+    Computer and or other equipment will be delivered 3 days prior to hire date. An email confirmation notification
+    will be sent to Hiring manager, Associate and Human Resources Manager.</p >
+
 <p ><span >E-Mail Distribution List:</span ></p >
 <ul >
 
@@ -71,7 +75,12 @@
 @endif
 
 @if (isset($req["iTDept"]))
+
 <p ><span >Assets:</span ></p >
+
+@if (isset($req["deliveryDate"]))
+    <p >Delivery Date: {{ $req["deliveryDate"] }}</p >
+@endif
 <ul >
     @foreach($req["iTDept"] as $item)
     <li >{{ $item }}</li >

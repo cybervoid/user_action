@@ -14,11 +14,8 @@ $settings = [
 
     'payrollReportsPath' => storage_path() . '/reports/Payroll/', 'payrollURL' => '/report/payroll/',
 
-    'pdfCreator' => '"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe"',
-
-    /*
-    'pdfCreator' => '/usr/local/bin/wkhtmltopdf',
-*/
+    // filepath for the schedule batch file
+    'schedule_batch' => storage_path() . '/scheduled_batch',
 
     /*
      * Email settings
