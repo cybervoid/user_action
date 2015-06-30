@@ -20,9 +20,9 @@ class MyMail extends Controller
     static public function emailRecipients(Request $req)
     {
 
-        $ccRecipients['rafael.gil@illy.com'] = 'rafael.gil@illy.com';
+        //$ccRecipients['rafael.gil@illy.com'] = 'rafael.gil@illy.com';
 
-        return $ccRecipients;
+        //return $ccRecipients;
 
 
         $ccRecipients[\Config::get('app.eMailHRAdd')] = \Config::get('app.eMailHRAdd');
@@ -96,7 +96,7 @@ class MyMail extends Controller
 
 
         $mailer = new \PHPMailer(true);
-        if (env('APP_ENV' != 'live'))
+        if (env('APP_ENV' != 'local'))
         {
             $mailer->IsSMTP();
         }
