@@ -49,7 +49,7 @@ class Change_OrgController extends Controller
         {
             $attachment = $taskInfo['attachment'];
         }
-        MyMail::send_mail('rafael.gil@illy.com', '', $subject, $body, $attachment);
+        MyMail::send_mail('rafael.gil@illy.com', array(), $subject, $body, $attachment);
 
 
 
