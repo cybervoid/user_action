@@ -41,51 +41,18 @@ class Change_OrgController extends Controller
         $user = User::current();
 
 
-        Schedule::checkDueDate();
-
-        //        $myFile = \Config::get('app.schedule_batch');
-        //var_dump($myFile); die();
-
-        ///$result = file_get_contents($myFile);
-        //echo $result;
-        //if(!$result) echo 'action failed'; else echo $result;
-        //print_r(error_get_last());
-
-        $today = date('m/d/Y');
-        //Schedule::addSchedule($today, 'gilra', false, []);
-        //echo Schedule::checkDueDate();
-        /*
-                $dueDate = '6-23-2015';
-                $schedule[$dueDate][] = ['samaccountname' => 'gilra', 'deactivate' => true,
-                    'groups' => array('group1', 'group2', 'group3')];
+        $taskInfo = Schedule::checkDueDate();
+        $body = 'The following event has taken place for the HR Tool today ' . date('m/d/Y H:i') . ' for the user ' . $taskInfo['name'] . ' and the request is a ' . $taskInfo['action'] . '<br>reference document is attached.';
+        $subject = 'HR Tool Action taken for ' . $taskInfo['action'] . ' - ' . $taskInfo['name'];
+        $attachment = '';
+        if (file_exists($taskInfo['attachment']))
+        {
+            $attachment = $taskInfo['attachment'];
+        }
+        MyMail::send_mail('rafael.gil@illy.com', '', $subject, $body, $attachment);
 
 
-                $dueDate = '6-40-2015';
-                $schedule[$dueDate][] = ['samaccountname' => 'forstro', 'deactivate' => false,
-                    'groups' => array('group1', 'group3')];
 
-
-                $toSave = json_encode($schedule);
-
-                $schedule1 = json_decode($toSave, true);
-
-
-                //$today = date('Y-m-d');
-                $today = '6-40-2015';
-                if (isset($schedule1[$today]))
-                {
-                    foreach ($schedule1[$today] as $todo)
-                    {
-                        echo $todo['samaccountname'] . '<br>';
-                    }
-
-                }
-
-                unset($schedule1[$today]);
-                var_dump($schedule1);
-
-        //        $batchCmds['cmd'] = ''
-        */
         die;
 
         return view('change_org', ['user' => $user]);

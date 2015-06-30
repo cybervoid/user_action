@@ -14,8 +14,9 @@ use Illuminate\Http\Response;
 class ActiveDirectory extends Controller
 {
 
-    public static function query($search)
+    public static function getEmail($email)
     {
+
         // fetch the info from AD
         $ldap = ActiveDirectory::ldap_MyConnect();
 
@@ -27,9 +28,10 @@ class ActiveDirectory extends Controller
             return false;
         }
 
-        $result = ldap_search($ldap, "OU=North America,DC=ILLY-DOMAIN,DC=COM", $search, $attributes);
+        $result = ldap_search($ldap, "OU=North America,DC=ILLY-DOMAIN,DC=COM", "mail={$email}", $attributes);
 
         return ldap_get_entries($ldap, $result);
+
     }
 
     public static function ldap_MyConnect()
@@ -60,9 +62,49 @@ class ActiveDirectory extends Controller
         }
     }
 
-    public static function getEmail($email)
+    public static function disableUser($userName)
+    {
+        $attributes = array('dn', 'useraccountcontrol');
+        $ldap = ActiveDirectory::ldap_MyConnect();
+        $myDN = "OU=North America,DC=ILLY-DOMAIN,DC=COM";
+        $txtSearch = "samaccountname={$userName}";
+        $result = ldap_search($ldap, $myDN, $txtSearch, $attributes);
+        $entry = ldap_get_entries($ldap, $result);
+        $dn = $entry[0]["dn"];
+        $ac = $entry[0]["useraccountcontrol"][0];
+        $disable = ($ac | 2); // set all bits plus bit 1 (=dec2)
+        $userdata = array();
+        $userdata["useraccountcontrol"][0] = $disable;
+        return ldap_modify($ldap, $dn, $userdata); //change state
+
+    }
+
+    public static function removeFromGroups($groups, $user)
     {
 
+        $errorFound = true;
+        if (count($groups) > 0)
+        {
+            $ldap = ActiveDirectory::ldap_MyConnect();
+
+            // get user's dn
+            $result = ActiveDirectory::query("sAMAccountName={$user}");
+            $group_info['member'] = $result[0]['dn'];
+
+            // get group dn
+            foreach ($groups as $item)
+            {
+                $result = ActiveDirectory::query("sAMAccountName={$item}");
+                $group_dn = $result[0]['dn'];
+                $errorFound= ldap_mod_del($ldap, $group_dn, $group_info);
+            }
+            return $errorFound;
+        }
+        $result = false;
+    }
+
+    public static function query($search)
+    {
         // fetch the info from AD
         $ldap = ActiveDirectory::ldap_MyConnect();
 
@@ -74,9 +116,28 @@ class ActiveDirectory extends Controller
             return false;
         }
 
-        $result = ldap_search($ldap, "OU=North America,DC=ILLY-DOMAIN,DC=COM", "mail={$email}", $attributes);
+        $result = ldap_search($ldap, "OU=North America,DC=ILLY-DOMAIN,DC=COM", $search, $attributes);
 
         return ldap_get_entries($ldap, $result);
+    }
+
+    public static function removeUserInfo($userName)
+    {
+        $attributes = array('dn', 'Description', 'title', 'manager');
+        $ldap= ActiveDirectory::ldap_MyConnect();
+        $myDN = "OU=North America,DC=ILLY-DOMAIN,DC=COM";
+        $txtSearch = "samaccountname={$userName}";
+        $result = ldap_search($ldap, $myDN, $txtSearch, $attributes);
+        $entry = ldap_get_entries($ldap, $result);
+        $dn = $entry[0]["dn"];
+
+        if(isset($entry[0]["description"])) $userdata['Description']= array();
+        if(isset($entry[0]["title"])) $userdata['title']= array();
+        if(isset($entry[0]["manager"])) $userdata['manager']= array();
+
+        if(isset($userdata))
+            return ldap_mod_del($ldap, $dn, $userdata);
+
 
     }
 
@@ -131,11 +192,8 @@ class ActiveDirectory extends Controller
                         "value" => $consult[$i]["mail"][0]);
                 }
             }
-
         }
-
         $result = json_encode($result);
-
         return new Response($result, 200, ['content-type' => 'application/json']);
     }
 

@@ -66,6 +66,9 @@ Route::post('lookup', 'Change_OrgController@lookup');
 - organizacion change, al cambiar la compania mandar un correo
 automatizado para cmabiar la signature y actualizar info en AD
 
+- remove from gorups no esta funcionando
+- verificar si el separation date is antes de la fecha de hoy, ejecutarlo right away
+- si tiene en el nombre un acento, no incluirlo en el nombre de usuario
 - enviar a maren los forms samples
 
 //// separation schedule

@@ -122,7 +122,7 @@
         <label >Employee New Hire Status</label >
         <select class="inputRender" name="hireStatus" id="hireStatus" >
             <option value="empty" >Select</option >
-            <option value="Full-time" selected >Full-time</option >
+            <option value="Full-time" >Full-time</option >
             <option value="Part-Time" >Part-Time</option >
         </select ><span id="hireStatusError" class="errorSpan" >*</span >
         <br >

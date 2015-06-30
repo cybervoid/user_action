@@ -56,7 +56,7 @@
 
 <div class="left" >
     Separation Date: <input class="inputRender" name="termDate" id="termDate" style="width: 100px"
-                            required="" value="06/03/2015" placeholder="mm/dd/yyyy" >
+                            required="" placeholder="mm/dd/yyyy" >
     <span class="errorSpan" >*</span >
 
     <div id="termDateError" class="errorSpan" ></div >
@@ -78,11 +78,10 @@
     <label >Employee Status</label >
     <select class="inputRender" name="hireStatus" id="hireStatus" >
         <option value="empty" >Select</option >
-        <option value="Full-time" selected >Full-time</option >
+        <option value="Full-time" >Full-time</option >
         <option value="Temporary" >Temporary</option >
     </select >
-
-    <div id="hireStatusError" class="errorSpan" >*</div >
+    <span id="hireStatusError" class="errorSpan" >*</span >
 </div >
 <div class="left" >
     Location: <input type="text" class="inputRender" name="location" id="location" value="" >
@@ -112,7 +111,7 @@
 
 
 <p ></p >
-P.TO days/Hours: <input class="inputRender" name="ptoDays" id="ptoDays" value="this is the PTO" >
+    P.TO days/Hours: <input class="inputRender" name="ptoDays" id="ptoDays" >
 <span class="errorSpan" >*</span >
 
 <div class="errorSpan" id="ptoDaysError" ></div >
@@ -143,7 +142,8 @@ P.TO days/Hours: <input class="inputRender" name="ptoDays" id="ptoDays" value="t
 <p ></p >
 <br >
 
-E-Mail Distribution List:
+    E-Mail Distribution List:<br >
+    (Check groups to remove the user form)
 
 
 <ul id="itChecklist" style="text-align: left; list-style: none" >
@@ -251,7 +251,7 @@ Aditional Instructions if applicable: <br >
 <ul >
     <li >
         <label ><input type="checkbox" class="inputRender" name="creditCard[]" id="creditCard"
-                       value="COMPANY CREDIT CARD" checked > COMPANY CREDIT CARD</label >
+                       value="COMPANY CREDIT CARD" > COMPANY CREDIT CARD</label >
     </li >
     <li >
         <label ><input type="checkbox" class="inputRender" name="creditCard[]" id="concur" value="Concur Access" >

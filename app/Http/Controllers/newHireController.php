@@ -112,7 +112,7 @@ class newHireController extends Controller
         $ldaprecord['sAMAccountName'] = strtolower(substr($lastName, 0, 5) . substr($name, 0, 2));
         $ldaprecord['UserPrincipalName'] = $ldaprecord['sAMAccountName'] . "@ILLY-DOMAIN.COM";
         $ldaprecord['displayName'] = ucfirst(strtolower($lastName)) . " " . ucfirst(strtolower($name));
-        //    $req->request->get('')
+
         $ldaprecord['department'] = $req->request->get('department');
         $ldaprecord['company'] = $req->request->get('company');
 
@@ -165,7 +165,6 @@ class newHireController extends Controller
         if ($req->request->get('managerEmail') != '')
         {
             $ldap = ActiveDirectory::ldap_MyConnect();
-            //$managerEmail= $req->request->get('managerEmail');
             $consult = ldap_search($ldap, "OU=North America,DC=ILLY-DOMAIN,DC=COM", "mail={$req->request->get('managerEmail')}", ['distinguishedName']);
             $managerInfo = ldap_get_entries($ldap, $consult);
             if (isset($managerInfo[0]['distinguishedname'][0]))
