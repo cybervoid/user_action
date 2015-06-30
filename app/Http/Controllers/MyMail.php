@@ -100,7 +100,6 @@ class MyMail extends Controller
         }
 
         $mailer->Host = "10.44.1.73"; // SMTP server
-        $mailer->SMTPDebug = 2; // enables SMTP debug information (for testing)
 
         if (env('APP_ENV' != 'live'))
         {
