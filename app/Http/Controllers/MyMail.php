@@ -95,6 +95,9 @@ class MyMail extends Controller
         $mailer = new \PHPMailer(true);
         //$mailer->IsSMTP();
         $mailer->Host = "10.44.1.73"; // SMTP server
+        $mailer->SMTPDebug = 2; // enables SMTP debug information (for testing)
+
+        /*
         if (env('APP_ENV' != 'live'))
         {
             $mailer->SMTPDebug = 2; // enables SMTP debug information (for testing)
@@ -103,6 +106,7 @@ class MyMail extends Controller
         {
             $mailer->SMTPDebug = 0;
         } // enables SMTP debug information (for testing)
+        */
         $mailer->Debugoutput = 'html';
 
         $mailer->SMTPAuth = true; // enable SMTP authentication
