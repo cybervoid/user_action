@@ -1,6 +1,6 @@
 <?php
 
-$settings = [
+return $settings = [
 
 
     'newHireReportsPrefix' => 'Action User Notification-', 'separationReportsPrefix' => 'Separation Notification-',
