@@ -20,7 +20,9 @@ class MyMail extends Controller
     static public function emailRecipients(Request $req)
     {
 
-        //       $ccRecipients['rafael.gil@illy.com'] = 'rafael.gil@illy.com';
+        $ccRecipients['rafael.gil@illy.com'] = 'rafael.gil@illy.com';
+
+        return $ccRecipients;
 
 
         $ccRecipients[\Config::get('app.eMailHRAdd')] = \Config::get('app.eMailHRAdd');

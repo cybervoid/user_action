@@ -67,9 +67,19 @@ class newHireController extends Controller
         Reports::generateReport($payrollReport, \Config::get('app.payrollReportsPath'), 'payroll', $req);
 
         //send the email
-        $to = \Config::get('app.servicedesk');
-        //$to = 'rafael.gil@illy.com';
-        $ccRecipients = MyMail::emailRecipients($req);
+
+        if (env('APP_ENV') == 'testlive')
+        {
+            $to = 'rafael.gil@illy.com';
+            $ccRecipients = [];
+        }
+        else
+        {
+            $to = \Config::get('app.servicedesk');
+            $ccRecipients = MyMail::emailRecipients($req);
+        }
+
+
 
         $subject = \Config::get('app.subjectPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName');
         if (env('APP_ENV') == 'live')
