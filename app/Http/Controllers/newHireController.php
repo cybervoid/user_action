@@ -68,24 +68,22 @@ class newHireController extends Controller
 
         //send the email
 
-        if (env('APP_ENV') == 'testlive')
-        {
-            $to = 'rafael.gil@illy.com';
-            $ccRecipients = [];
-        }
-        else
+        if (env('APP_ENV') == 'live')
         {
             $to = \Config::get('app.servicedesk');
             $ccRecipients = MyMail::emailRecipients($req);
+        }
+        else
+        {
+            $to = 'rafael.gil@illy.com';
+            $ccRecipients = [];
         }
 
 
 
         $subject = \Config::get('app.subjectPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName');
-        if (env('APP_ENV') == 'live')
-        {
-            MyMail::send_mail($to, $ccRecipients, $subject, \Config::get('app.emailBody'), \Config::get('app.newHireReportsPath') . $newHireReport);
-        }
+        MyMail::send_mail($to, $ccRecipients, $subject, \Config::get('app.emailBody'), \Config::get('app.newHireReportsPath') . $newHireReport);
+
 
 
         $ccRecipients[$to] = $to;
