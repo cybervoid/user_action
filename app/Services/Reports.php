@@ -1,4 +1,4 @@
-<?php namespace App\Http\Controllers;
+<?php namespace App\Services;
 
 /**
  * Created by PhpStorm.
@@ -11,26 +11,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class Reports extends Controller
+class Reports
 {
 
-    /**
-     * Prepare email basic params to send email
-     *
-     * @param $reportName
-     * @param $location
-     * @param Request $req
-     *
-     *
-     * @internal param int $id
-     * @return Response
-     */
-
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     static public function escapeReportName($param)
     {

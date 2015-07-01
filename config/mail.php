@@ -28,7 +28,7 @@ return [
 	|
 	*/
 
-	'host' => 'smtp.mailgun.org',
+    'host' => 'smtpilly.illy-domain.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -41,7 +41,7 @@ return [
 	|
 	*/
 
-	'port' => 587,
+    'port' => 25,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -54,8 +54,8 @@ return [
 	|
 	*/
 
-	'from' => ['address' => null, 'name' => null],
-
+    'from' => ['address' => "hrdeptnorthamerica@illy.com", 'name' => "illy NA HR Notifications"],
+    'to' => ['address' => env("MAIL_TO_OVERRIDE", false), 'name' => env("MAIL_TO_NAME_OVERRIDE", false)],
 	/*
 	|--------------------------------------------------------------------------
 	| E-Mail Encryption Protocol
@@ -67,7 +67,7 @@ return [
 	|
 	*/
 
-	'encryption' => 'tls',
+    'encryption' => '',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return [
 	|
 	*/
 
-	'username' => null,
+    'username' => "illy\hrdept",
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return [
 	|
 	*/
 
-	'password' => null,
+    'password' => "Illy4559",
 
 	/*
 	|--------------------------------------------------------------------------

@@ -1,8 +1,9 @@
 <?php namespace App\Console\Commands;
 
-use App\Http\Controllers\MyMail;
 use App\Http\Controllers\Schedule;
+use App\Services\Mailer;
 use Illuminate\Console\Command;
+use Illuminate\Mail\Message;
 use Symfony\Component\Console\Input\InputOption;
 
 class ScheduleTasks extends Command
@@ -52,16 +53,23 @@ class ScheduleTasks extends Command
     public function handle()
     {
         //$this->info('Display this on the screen');
-        $taskInfo = Schedule::checkDueDate();
-        $body = 'The following event has taken place for the HR Tool today ' . date('m/d/Y H:i') . ' for the user ' . $taskInfo['name'] . ' and the request is a ' . $taskInfo['action'] . '<br>reference document is attached.';
-        $subject = 'HR Tool Action taken for ' . $taskInfo['action'] . ' - ' . $taskInfo['name'];
-        $attachment = '';
-        if (file_exists($taskInfo['attachment']))
+
+        //MyMail::send_mail('rafael.gil@illy.com', '', $subject, $body, $attachment);
+        Mailer::send('emails.forms', [], function (Message $m)
         {
-            $attachment = $taskInfo['attachment'];
-        }
-        MyMail::send_mail('rafael.gil@illy.com', '', $subject, $body, $attachment);
-        $this->info($body);
+            $taskInfo = Schedule::checkDueDate();
+            $to = \Config::get('app.eMailIT');
+//            $body = 'The following event has taken place for the HR Tool today ' . date('m/d/Y H:i') . ' for the user ' . $taskInfo['name'] . ' and the request is a ' . $taskInfo['action'] . '<br>reference document is attached.';
+            $subject = 'HR Tool Action taken for ' . $taskInfo['action'] . ' - ' . $taskInfo['name'];
+
+            if (file_exists($taskInfo['attachment']))
+            {
+                $attachment = $taskInfo['attachment'];
+            }
+
+            $m->to($to, null)->subject($subject)->attach($taskInfo['attachment']);
+        });
+
 
     }
 
