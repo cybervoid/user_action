@@ -68,7 +68,7 @@ class newHireController extends Controller
 
         //send the email
 
-        /*
+
         if (env('APP_ENV') == 'live')
         {
             $to = \Config::get('app.servicedesk');
@@ -79,10 +79,6 @@ class newHireController extends Controller
             $to = 'rafael.gil@illy.com';
             $ccRecipients = [];
         }
-        */
-        $to = 'rafael.gil@illy.com';
-        $ccRecipients['Maren.Gizicki@illy.com'] = 'Maren.Gizicki@illy.com';
-
 
         $subject = \Config::get('app.subjectPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName');
         MyMail::send_mail($to, $ccRecipients, $subject, \Config::get('app.emailBody'), \Config::get('app.newHireReportsPath') . $newHireReport);
