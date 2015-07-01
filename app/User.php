@@ -36,23 +36,22 @@ class User implements AuthenticatableContract, CanResetPasswordContract
 
         if (isset($result[0]["count"]))
         {
-            //$_SESSION['userName'] = $row[0]["cn"][0];
+            //$_SESSION['userName'] = $result[0]["cn"][0];
             $user = new User();
-            $user->id = 'gilra';
-            $user->givenName = 'Rafael';
-            $user->sn = 'Gil';
+            $user->givenName = $result[0]["givenname"][0];
+            $user->id = $result[0]["samaccountname"][0];
 
+            /*
+            $user->id = 'gilra';
+
+            $user->sn = 'Gil';
+            */
             Session::put('user_id', $user->id);
             Session::put('givenName', $user->givenName);
 
             return $user;
         } else return false;
 
-    }
-
-    public function is_guest()
-    {
-        return !isset($this->id);
     }
 
     /**
@@ -66,6 +65,11 @@ class User implements AuthenticatableContract, CanResetPasswordContract
         $user->givenName = Session::get('givenName');
 
         return $user;
+    }
+
+    public function is_guest()
+    {
+        return !isset($this->id);
     }
 
 }
