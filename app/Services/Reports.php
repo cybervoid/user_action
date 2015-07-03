@@ -36,10 +36,25 @@ class Reports
             'server' => $parse['scheme'] . '://' . $parse['host'] . '/',]);
 
 
-        fwrite($toPDF, $myView);
+        if (!fwrite($toPDF, $myView))
+        {
+            return false;
+        }
         fclose($toPDF);
-        $error = array();
-        exec(env('wkhtmltopdf') . ' ' . $myFile . ' ' . '"' . $location . $reportName . '"', $error);
+        $returnvar = array();
+
+        if (env('APP_ENV') == 'windowsLocal')
+        {
+            $wkhtmltopdf = '"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe"';
+        }
+        else
+        {
+            $wkhtmltopdf = env('wkhtmltopdf');
+        }
+
+
+        exec($wkhtmltopdf . ' ' . $myFile . ' ' . '"' . $location . $reportName . '"', $returnvar);
+
 
     }
 

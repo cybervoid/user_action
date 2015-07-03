@@ -1,8 +1,10 @@
 <?php namespace App\Http\Controllers;
 
+use App\Services\ActiveDirectory;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+
 
 class SeparationController extends Controller
 {

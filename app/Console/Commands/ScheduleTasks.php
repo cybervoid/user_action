@@ -54,22 +54,30 @@ class ScheduleTasks extends Command
     {
         //$this->info('Display this on the screen');
 
-        //MyMail::send_mail('rafael.gil@illy.com', '', $subject, $body, $attachment);
-        Mailer::send('emails.forms', [], function (Message $m)
+
+        $taskInfo = Schedule::checkDueDate();
+
+        $attachment = isset($taskInfo['attachment']) ?
+            file_exists($taskInfo['attachment']) ? $taskInfo['attachment'] : false : null;
+
+        if ($taskInfo)
         {
-            $taskInfo = Schedule::checkDueDate();
-            $to = \Config::get('app.eMailIT');
-//            $body = 'The following event has taken place for the HR Tool today ' . date('m/d/Y H:i') . ' for the user ' . $taskInfo['name'] . ' and the request is a ' . $taskInfo['action'] . '<br>reference document is attached.';
-            $subject = 'HR Tool Action taken for ' . $taskInfo['action'] . ' - ' . $taskInfo['name'];
-
-            if (file_exists($taskInfo['attachment']))
+            Mailer::send('emails.batch_confirmation', ['name' => $taskInfo['name'], 'action' => $taskInfo['action'],
+                'attachment' => $attachment], function (Message $m) use ($taskInfo, $attachment)
             {
-                $attachment = $taskInfo['attachment'];
-            }
-
-            $m->to($to, null)->subject($subject)->attach($taskInfo['attachment']);
-        });
-
+                $to = \Config::get('app.eMailIT');
+                $subject = \Config::get('app.subjectBatchPrefix') . $taskInfo['action'] . ' - ' . $taskInfo['name'];
+                $m->to($to, null)->subject($subject);
+                if ($attachment)
+                {
+                    $m->attach($attachment);
+                }
+            });
+        }
+        else
+        {
+            echo 'no info to process';
+        }
 
     }
 

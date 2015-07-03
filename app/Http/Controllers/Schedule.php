@@ -6,6 +6,7 @@
  * Time: 15:35
  */
 
+use App\Services\ActiveDirectory;
 
 class Schedule extends Controller
 {
@@ -22,10 +23,9 @@ class Schedule extends Controller
                 'attachment' => $savedSchedules[$today][0]['attachment']);
             Schedule::processScheduleTasks($savedSchedules);
             unset($savedSchedules[$today]);
-            Schedule::saveFile($savedSchedules);
 
+//            Schedule::saveFile($savedSchedules);
             return $result;
-
         }
 
         return false;
@@ -47,20 +47,59 @@ class Schedule extends Controller
         }
     }
 
+    /**
+     * @param $content
+     */
     private static function processScheduleTasks($content)
     {
-
         $today = date('m/d/Y');
+        echo $content[$today][0]['action'];
+        switch ($content[$today][0]['action'])
+        {
+            case "reminder":
+                Schedule::reminders($content);
+                break;
+            case "separation":
+                Schedule::separations($content);
+                break;
+        }
+        die;
+
+    }
+
+    private static function reminders($content)
+    {
+        $today = date('m/d/Y');
+
+    }
+
+    private static function separations($content)
+    {
+        $today = date('m/d/Y');
+
         foreach ($content[$today] as $item)
         {
-            ActiveDirectory::disableUser($item['samaccountname']);
-            ActiveDirectory::removeUserInfo($item['samaccountname']);
+            $ad = ActiveDirectory::get_connection();
+            $ad->disableUser($item['samaccountname']);
+            $ad->removeUserInfo($item['samaccountname']);
 
             if (count($item['groups']) > 0)
             {
                 ActiveDirectory::removeFromGroups($item['groups'], $item['samaccountname']);
             }
         }
+    }
+
+    public static function addSchedule($dueDate, $samaccountname, $name, $action, $deactivate, $reportPath, $groups)
+    {
+        //load the file
+        $schedule = Schedule::readScheduleFile();
+
+
+        $schedule[$dueDate][] = ['samaccountname' => $samaccountname, 'name' => $name, 'action' => $action,
+            'deactivate' => $deactivate, 'attachment' => $reportPath, 'groups' => $groups];
+
+        return Schedule::saveFile($schedule);
 
     }
 
@@ -73,18 +112,5 @@ class Schedule extends Controller
 
         fwrite($fileHandle, json_encode($content));
         fclose($fileHandle);
-    }
-
-    public static function addSchedule($dueDate, $samaccountname, $name, $action, $deactivate, $reportPath, $groups)
-    {
-        //load the file
-        $schedule = Schedule::readScheduleFile();
-
-        $schedule[$dueDate][] = ['samaccountname' => $samaccountname, 'name' => $name, 'action' => $action,
-            'deactivate' => $deactivate, 'attachment' => $reportPath, 'groups' => $groups];
-
-
-        return Schedule::saveFile($schedule);
-
     }
 }

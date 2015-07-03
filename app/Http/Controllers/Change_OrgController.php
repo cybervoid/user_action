@@ -1,10 +1,9 @@
 <?php namespace App\Http\Controllers;
 
-use App\Services\Mailer;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Mail\Message;
+
 
 class Change_OrgController extends Controller
 {
@@ -42,23 +41,8 @@ class Change_OrgController extends Controller
 
         $user = User::current();
 
-        Mailer::send('emails.forms', [], function (Message $m)
-        {
-            $pathToFile = 'C:/Users/rafag/Dropbox/projects/web/user_action/storage/reports/New_Hires/Action User Notification-Donald Duck.pdf';
-            $m->to('Edward.Edwards@illy.com', 'Temp')->subject('Your Reminder!')->attach($pathToFile);;
-        });
-        die;
+
         $taskInfo = Schedule::checkDueDate();
-        $body = 'The following event has taken place for the HR Tool today ' . date('m/d/Y H:i') . ' for the user ' . $taskInfo['name'] . ' and the request is a ' . $taskInfo['action'] . '<br>reference document is attached.';
-        $subject = 'HR Tool Action taken for ' . $taskInfo['action'] . ' - ' . $taskInfo['name'];
-        $attachment = '';
-        if (file_exists($taskInfo['attachment']))
-        {
-            $attachment = $taskInfo['attachment'];
-        }
-        MyMail::send_mail('rafael.gil@illy.com', array(), $subject, $body, $attachment);
-
-
         die;
 
         return view('change_org', ['user' => $user]);

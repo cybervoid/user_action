@@ -60,38 +60,55 @@ class newHireController extends Controller
         // generate newHire reports
         $newHireReport = \Config::get('app.newHireReportsPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName') . '.pdf';
         $newHireReport = Reports::escapeReportName($newHireReport);
-        Reports::generateReport($newHireReport, \Config::get('app.newHireReportsPath'), $req->request->get('reportType'), $req);
+        //$result = Reports::generateReport($newHireReport, \Config::get('app.newHireReportsPath'), $req->request->get('reportType'), $req);
 
 
         //generate payroll Report
         $payrollReport = \Config::get('app.payrollReportsPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName') . '.pdf';
         $payrollReport = Reports::escapeReportName($payrollReport);
-        Reports::generateReport($payrollReport, \Config::get('app.payrollReportsPath'), 'payroll', $req);
+        //Reports::generateReport($payrollReport, \Config::get('app.payrollReportsPath'), 'payroll', $req);
 
         //send the email
-
-        if (env('APP_ENV') == 'testlive')
-        {
-            $to = 'rafael.gil@illy.com';
-            $ccRecipients = [];
-        }
-        else
-        {
-            $to = \Config::get('app.servicedesk');
-            $ccRecipients = MyMail::emailRecipients($req);
-        }
-
-
-
+        $to = \Config::get('app.servicedesk');
+        $ccRecipients = MyMail::emailRecipients($req);
         $subject = \Config::get('app.subjectPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName');
-        if (env('APP_ENV') == 'live')
-        {
-            MyMail::send_mail($to, $ccRecipients, $subject, \Config::get('app.emailBody'), \Config::get('app.newHireReportsPath') . $newHireReport);
-        }
 
+        $attachment = \Config::get('app.newHireReportsPath') . $newHireReport;
+
+        $attachment = isset($attachment) ? file_exists($attachment) ? $attachment : false : null;
+
+        /*
+           Mailer::send('emails.forms', [], function (Message $m) use ($to, $ccRecipients, $subject, $attachment)
+           {
+               $m->to($to, null)->subject($subject);
+               if($attachment) $m->attach($attachment);
+           });
+        */
 
         $ccRecipients[$to] = $to;
         $ccRecipients = array_unique($ccRecipients);
+
+        //create batch job
+
+        $illyGroups['illyusaNorth America'] = 'CN=illyusaTeam Distribution Group,OU=Distribution Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM';
+        $illyGroups['illyryebrook'] = 'CN=illyusa Rye Brook Distribution Group,OU=Distribution Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM';
+        $illyGroups['illyusa NYC Team'] = 'CN=illy NYC Team Distribution Group,OU=Distribution Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM';
+        $illyGroups['illyManagers'] = 'CN=illyusa Managers Distribution Group,OU=Distribution Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM';
+        $illyGroups['illySales'] = 'CN=illyusa Sales Team Distribution Group,OU=Distribution Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM';
+
+        $groupsToAdd = $req->request->get('iTDeptEmail');
+        if (isset($groupsToAdd))
+        {
+            foreach ($groupsToAdd as $group)
+            {
+                $groups[] = $illyGroups[$group];
+            }
+        }
+
+
+        $samaacountname = strtolower(substr($req->request->get('lastName'), 0, 5) . substr($req->request->get('name'), 0, 2));
+
+        Schedule::addSchedule($req->request->get('startDate'), $samaacountname, $req->request->get('name') . ' ' . $req->request->get('lastName'), 'newHire', null, $attachment, $groups);
 
         //create the username in the AD
         if (env('APP_ENV') == 'live')

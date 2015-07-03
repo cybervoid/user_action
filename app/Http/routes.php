@@ -69,6 +69,7 @@ automatizado para cmabiar la signature y actualizar info en AD
 - remove from gorups no esta funcionando
 - verificar si el separation date is antes de la fecha de hoy, ejecutarlo right away
 - si tiene en el nombre un acento, no incluirlo en el nombre de usuario
+- en los emails templates poner stylo para los nombres en negrita
 - enviar a maren los forms samples
 
 //// separation schedule

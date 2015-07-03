@@ -70,7 +70,7 @@
 <br ><br ><br ><p class="subHeader" >What's next: <br ></p >
 
 <ul class="navigation" style="text-align: center" >
-    <li class="myNavigation navigationLink" id="home" >Home Screen</a></li >
+    <li class="myNavigation navigationLink" id="home" >Home Screen</li >
 
     @if($reportType=='separation')
     <li class="myNavigation navigationLink" id="separation" >Enter another separation</li >

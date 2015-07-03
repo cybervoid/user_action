@@ -25,7 +25,7 @@ return $settings = [
     'eMailManagement' => 'Suzanne.Schwab@illy.com', 'eMailManagement1' => 'stephanie.brush@illy.com',
     'eMailFinanceCreditCard' => 'Marjorie.Guthrie@illy.com', 'eMailFinanceDrivers' => 'Erik.Tellone@illy.com',
 
-    'subjectPrefix' => 'User Action Notification for ', 'emailBody' => 'Hi Team, please see attached.',
+    'subjectPrefix' => 'User Action Notification for ', 'subjectBatchPrefix' => 'HR Tool Action taken for ',
 
 
     'adUserName' => 'adm_gilra', 'adPassword' => 'R4f43lg1l', 'adDomain' => 'ILLY-DOMAIN.COM', /*
