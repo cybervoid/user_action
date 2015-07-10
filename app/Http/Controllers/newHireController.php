@@ -74,21 +74,24 @@ class newHireController extends Controller
         $subject = \Config::get('app.subjectPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName');
 
         $attachment = \Config::get('app.newHireReportsPath') . $newHireReport;
-
         $attachment = isset($attachment) ? file_exists($attachment) ? $attachment : false : null;
 
-        /*
            Mailer::send('emails.forms', [], function (Message $m) use ($to, $ccRecipients, $subject, $attachment)
            {
                $m->to($to, null)->subject($subject);
                if($attachment) $m->attach($attachment);
            });
-        */
+
 
         $ccRecipients[$to] = $to;
         $ccRecipients = array_unique($ccRecipients);
 
         //create batch job
+
+
+        echo $req->request->get('startDate');
+        die;
+
 
         $illyGroups['illyusaNorth America'] = 'CN=illyusaTeam Distribution Group,OU=Distribution Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM';
         $illyGroups['illyryebrook'] = 'CN=illyusa Rye Brook Distribution Group,OU=Distribution Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM';

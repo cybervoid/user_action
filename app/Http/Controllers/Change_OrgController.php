@@ -42,7 +42,7 @@ class Change_OrgController extends Controller
         $user = User::current();
 
 
-        $taskInfo = Schedule::checkDueDate();
+        //$taskInfo = Schedule::checkDueDate();
         die;
 
         return view('change_org', ['user' => $user]);

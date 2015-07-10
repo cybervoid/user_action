@@ -91,3 +91,37 @@ class ScheduleTasks extends Command
         return [['example', null, InputOption::VALUE_OPTIONAL, 'An example option.', null],];
     }
 }
+
+
+/*
+ *         $domain = 'illy-domain.com';
+        $from_address = "Illy Roaming Service Desk <user1@illy.com>";
+        $from_name = "Illy Roaming Service Desk";
+        $attendee = "Rafael Gil <rafael.gil@illy.com> , Forster Roy <Roy.Forster@illy.com>";
+        $description = 'This is a test';
+        $subject = 'This is the subject';
+        $location = "Rye Brook Office";
+
+
+        $startTime = date('m/d/Y') . " 10:30:00";
+        $endTime = date('m/d/Y') . " 10:45:00";
+
+        //Create Email Headers
+        $mime_boundary = "----Meeting Booking----".MD5(TIME());
+
+
+        Mailer::send('emails.ical', ['mime_boundary' => $mime_boundary], function (Message $m) use ($mime_boundary)
+        {
+            $subject = 'This is the subject';
+            $m->to('rafael.gil@illy.com', null)->subject($subject);
+            $m->getSwiftMessage()->getHeaders()->addTextHeader("From: Rafael Gil\n");
+            $m->getSwiftMessage()->getHeaders()->addTextHeader("Reply-To: rafael.gil@illy.com\n");
+            $m->getSwiftMessage()->getHeaders()->addTextHeader("MIME-Version: 1.0\n");
+            $m->getSwiftMessage()->getHeaders()->addTextHeader("Content-Type: multipart/alternative; boundary=\"$mime_boundary\"\n");
+            $m->getSwiftMessage()->getHeaders()->addTextHeader("Content-class: urn:content-classes:calendarmessage\n");
+
+
+
+
+        });
+ */

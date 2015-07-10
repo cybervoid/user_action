@@ -249,18 +249,13 @@ class ActiveDirectory
     {
 
         // fetch the info from AD
-        $ldap = ActiveDirectory::get_connection();
         $attributes = array('givenname', 'sn', 'mail', 'samaccountname');
 
-        if (!$ldap)
-        {
-            return false;
-        }
 
         //$result = ldap_search($ldap, "OU=North America,DC=ILLY-DOMAIN,DC=COM", "(|(givenname={$param})(sn={$param}))", $attributes);
-        $result = ldap_search($ldap, "OU=North America,DC=ILLY-DOMAIN,DC=COM", "(&(!(userAccountControl:1.2.840.113556.1.4.803:=2))(|(givenname={$param})(sn={$param})))", $attributes);
+        $result = ldap_search(static::$conn, "OU=North America,DC=ILLY-DOMAIN,DC=COM", "(&(!(userAccountControl:1.2.840.113556.1.4.803:=2))(|(givenname={$param})(sn={$param})))", $attributes);
 
-        return ldap_get_entries($ldap, $result);
+        return ldap_get_entries(static::$conn, $result);
 
     }
 
@@ -281,8 +276,8 @@ class ActiveDirectory
                 }
             }
         }
-        $result = json_encode($result);
-        return new Response($result, 200, ['content-type' => 'application/json']);
+
+        return json_encode($result);
     }
 
     private function __clone() { }

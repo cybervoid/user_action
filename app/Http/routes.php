@@ -18,7 +18,8 @@ Route::post('login', 'LoginController@check_password');
 Route::get('newHire', 'newHireController@index');
 Route::post('add', 'newHireController@add');
 Route::post('chkeml', 'newHireController@checkEmail');
-Route::get('autocomplete', 'ActiveDirectory@autocomplete');
+//Route::get('autocomplete', 'ActiveDirectory@autocomplete');
+Route::get('autocomplete', 'LdapController@autocomplete');
 
 
 Route::get('report/{reportType}/{name}', 'Reports@getReport')->where('name', '[a-zA-Z0-9 -]+\.pdf');
