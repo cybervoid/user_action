@@ -1,10 +1,12 @@
 <?php namespace App\Http\Controllers;
 
 use App\Services\ActiveDirectory;
+use App\Services\Mailer;
 use App\Services\Reports;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Mail\Message;
 
 
 class newHireController extends Controller
@@ -60,13 +62,13 @@ class newHireController extends Controller
         // generate newHire reports
         $newHireReport = \Config::get('app.newHireReportsPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName') . '.pdf';
         $newHireReport = Reports::escapeReportName($newHireReport);
-        //$result = Reports::generateReport($newHireReport, \Config::get('app.newHireReportsPath'), $req->request->get('reportType'), $req);
+        $result = Reports::generateReport($newHireReport, \Config::get('app.newHireReportsPath'), $req->request->get('reportType'), $req);
 
 
         //generate payroll Report
         $payrollReport = \Config::get('app.payrollReportsPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName') . '.pdf';
         $payrollReport = Reports::escapeReportName($payrollReport);
-        //Reports::generateReport($payrollReport, \Config::get('app.payrollReportsPath'), 'payroll', $req);
+        Reports::generateReport($payrollReport, \Config::get('app.payrollReportsPath'), 'payroll', $req);
 
         //send the email
         $to = \Config::get('app.servicedesk');
@@ -85,12 +87,6 @@ class newHireController extends Controller
 
         $ccRecipients[$to] = $to;
         $ccRecipients = array_unique($ccRecipients);
-
-        //create batch job
-
-
-        echo $req->request->get('startDate');
-        die;
 
 
         $illyGroups['illyusaNorth America'] = 'CN=illyusaTeam Distribution Group,OU=Distribution Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM';
@@ -111,14 +107,26 @@ class newHireController extends Controller
 
         $samaacountname = strtolower(substr($req->request->get('lastName'), 0, 5) . substr($req->request->get('name'), 0, 2));
 
-        Schedule::addSchedule($req->request->get('startDate'), $samaacountname, $req->request->get('name') . ' ' . $req->request->get('lastName'), 'newHire', null, $attachment, $groups);
+        //send request to si_infra to add the user to VPN and WIFI group
+
+        Mailer::send('emails.joinGroups', ['userName' => $samaacountname,
+            'name' => $req->request->get('name') . ' ' . $req->request->get('lastName'),
+            'manager' => $req->request->get('manager')], function (Message $m) use ($samaacountname)
+        {
+            $m->to(\Config::get('app.si_infra'), null)->subject('new user settings - ' . $samaacountname);
+
+        });
+
+
+        //Schedule::addSchedule($req->request->get('startDate'), $samaacountname, $req->request->get('name') . ' ' . $req->request->get('lastName'), 'newHire', null, $attachment, $groups);
 
         //create the username in the AD
-        if (env('APP_ENV') == 'live')
-        {
+//        if (env('APP_ENV') == 'live')
+//        {
             $ad = ActiveDirectory::get_connection();
             $ad->createUserAD($req);
-        }
+
+//        }
 
 
         return view('thankYou', ['name' => $req->request->get('name'), 'lastName' => $req->request->get('lastName'),

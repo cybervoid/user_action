@@ -48,6 +48,9 @@ Route::post('lookup', 'Change_OrgController@lookup');
 /*
 1- cuando la cookie está me deja entrar aunque no este en la VPN
 
+- para los new hires enviar una noificacion recordando preparar la pc una semana antes
+- en new hires detectar location y predefinir los grupos a los que pertenece
+
 - al crear un nuevo usuario enviar un recordatorio al correo  con el start date y con un checklist of TODO like:
         - cnhange the password to Illy2014
         - check the groups were appliend correctly
