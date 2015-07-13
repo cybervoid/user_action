@@ -65,37 +65,10 @@ class Reports
      *
      * @return Response
      */
-    static public function getReport(Request $req)
+    static public function getReport($filePath)
     {
 
-        $name = $req->route('name');
-        $reportType = $req->route('reportType');
-
-        if ($reportType == 'newhire')
-        {
-            $filePath = \Config::get('app.newHireReportsPath') . $name;
-        }
-
-        if ($reportType == 'payroll')
-        {
-            $filePath = \Config::get('app.payrollReportsPath') . $name;
-        }
-
-        if ($reportType == 'separation')
-        {
-            $filePath = \Config::get('app.separationReportsPath') . $name;
-        }
-
-
-        $content = file_get_contents($filePath);
-
-        /*
-        return new Response($content, Response::HTTP_OK, ["content-type" => "application/pdf",
-            "content-length" => filesize($filePath), "content-disposition" => "inline; filename=\"$name\""]);
-        */
-
-        return new Response($content, Response::HTTP_OK, ["content-type" => "application/pdf",
-            "content-length" => filesize($filePath), "content-disposition" => "attachment; filename=\"$name\""]);
+        return file_get_contents($filePath);
 
     }
 
