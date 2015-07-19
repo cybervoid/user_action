@@ -9,8 +9,7 @@ function findGroupMatch(groups) {
         for (index = 0; index < groups.length; ++index) {
             $('#itChecklist li').each(function (i) {
                 if('illyusa Sales Team Distribution Group'=== $(this).text()){
-                    console.log('aqui');
-                } else console.log($(this).text() + 'failed');
+                }
                 if ($(this).text() == groups[index]){
                     $(this).find('input[type="checkbox"]').prop('checked', true)
                 }

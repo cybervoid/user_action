@@ -1,9 +1,12 @@
 <?php namespace App\Http\Controllers;
 
 use App\Services\ActiveDirectory;
+use App\Services\Reports;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Services\Mailer;
+use Illuminate\Mail\Message;
 
 
 class SeparationController extends Controller
@@ -53,16 +56,19 @@ class SeparationController extends Controller
         // generate reports
         $separationReport = \Config::get('app.separationReportsPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName') . '.pdf';
         $separationReport = Reports::escapeReportName($separationReport);
-        Reports::generateReport($separationReport, \Config::get('app.separationReportsPath'), $req->request->get('reportType'), $req);
+        //Reports::generateReport($separationReport, \Config::get('app.separationReportsPath'), $req->request->get('reportType'), $req);
 
 
         //send the email
         $to = \Config::get('app.servicedesk'); //$to = 'rafael.gil@illy.com';
         $ccRecipients = MyMail::emailRecipients($req);
         $subject = \Config::get('app.subjectPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName');
-        $attachment = \Config::get('app.newHireReportsPath') . $separationReport;
+        $attachment = \Config::get('app.separationReportsPath') . $separationReport;
         $attachment = isset($attachment) ? file_exists($attachment) ? $attachment : false : null;
 
+        $attachment = '/home/rafag/Documents/projects/web/human_resources/storage/reports/New_Hires/Action User Notification-Mickey Mouse.pdf';
+//        echo $attachment;
+//        die;
 
         Mailer::send('emails.forms', [], function (Message $m) use ($to, $ccRecipients, $subject, $attachment)
         {
@@ -71,6 +77,8 @@ class SeparationController extends Controller
             {
                 $m->attach($attachment);
             }
+
+
         });
 
 

@@ -62,13 +62,13 @@ class newHireController extends Controller
         // generate newHire reports
         $newHireReport = \Config::get('app.newHireReportsPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName') . '.pdf';
         $newHireReport = Reports::escapeReportName($newHireReport);
-        $result = Reports::generateReport($newHireReport, \Config::get('app.newHireReportsPath'), $req->request->get('reportType'), $req);
+        //$result = Reports::generateReport($newHireReport, \Config::get('app.newHireReportsPath'), $req->request->get('reportType'), $req);
 
 
         //generate payroll Report
         $payrollReport = \Config::get('app.payrollReportsPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName') . '.pdf';
         $payrollReport = Reports::escapeReportName($payrollReport);
-        Reports::generateReport($payrollReport, \Config::get('app.payrollReportsPath'), 'payroll', $req);
+        //Reports::generateReport($payrollReport, \Config::get('app.payrollReportsPath'), 'payroll', $req);
 
         //send the email
         $to = \Config::get('app.servicedesk');
@@ -77,7 +77,6 @@ class newHireController extends Controller
 
         $attachment = \Config::get('app.newHireReportsPath') . $newHireReport;
         $attachment = isset($attachment) ? file_exists($attachment) ? $attachment : false : null;
-
 
         Mailer::send('emails.forms', [], function (Message $m) use ($to, $ccRecipients, $subject, $attachment)
            {

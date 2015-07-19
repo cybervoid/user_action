@@ -129,6 +129,7 @@ var App = App || {};
             },
             response: function (event, ui) {
                 $("#searchProgress").html("");
+                console.log('response triggered');
             },
             select: function (event, ui) {
                 $("#email").val(ui.item.label);

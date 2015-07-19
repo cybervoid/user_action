@@ -76,6 +76,7 @@ automatizado para cmabiar la signature y actualizar info en AD
 - si tiene en el nombre un acento, no incluirlo en el nombre de usuario
 - en los emails templates poner stylo para los nombres en negrita
 - enviar a maren los forms samples
+- para el separation detectar si el campo de cellphone tiene algún valor is most likely the user has a cellphone.
 
 //// separation schedule
 date
