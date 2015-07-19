@@ -13,11 +13,17 @@ use Illuminate\Routing\Controller;
 class ReportsController extends Controller
 {
 
-    public static function getReport(Request $req)
+    public function __construct()
     {
+        $this->middleware('auth');
+    }
 
-        $name = $req->route('name');
+
+    public function getReport(Request $req)
+    {
         $reportType = $req->route('reportType');
+        $name = $req->route('name');
+
 
         if ($reportType == 'newhire')
         {
@@ -34,11 +40,11 @@ class ReportsController extends Controller
             $filePath = \Config::get('app.separationReportsPath') . $name;
         }
 
+
         $result = Reports::loadReport($filePath);
 
         return new Response($result, Response::HTTP_OK, ["content-type" => "application/pdf",
             "content-length" => filesize($filePath), "content-disposition" => "attachment; filename=\"$name\""]);
 
-    }
 
 }
