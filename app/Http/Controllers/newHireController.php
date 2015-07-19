@@ -78,7 +78,8 @@ class newHireController extends Controller
         $attachment = \Config::get('app.newHireReportsPath') . $newHireReport;
         $attachment = isset($attachment) ? file_exists($attachment) ? $attachment : false : null;
 
-           Mailer::send('emails.forms', [], function (Message $m) use ($to, $ccRecipients, $subject, $attachment)
+
+        Mailer::send('emails.forms', [], function (Message $m) use ($to, $ccRecipients, $subject, $attachment)
            {
                $m->to($to, null)->subject($subject);
                if($attachment) $m->attach($attachment);
@@ -108,7 +109,6 @@ class newHireController extends Controller
         $samaacountname = strtolower(substr($req->request->get('lastName'), 0, 5) . substr($req->request->get('name'), 0, 2));
 
         //send request to si_infra to add the user to VPN and WIFI group
-
         Mailer::send('emails.joinGroups', ['userName' => $samaacountname,
             'name' => $req->request->get('name') . ' ' . $req->request->get('lastName'),
             'manager' => $req->request->get('manager')], function (Message $m) use ($samaacountname)

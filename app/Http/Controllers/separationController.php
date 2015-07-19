@@ -60,14 +60,25 @@ class SeparationController extends Controller
         $to = \Config::get('app.servicedesk'); //$to = 'rafael.gil@illy.com';
         $ccRecipients = MyMail::emailRecipients($req);
         $subject = \Config::get('app.subjectPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName');
+        $attachment = \Config::get('app.newHireReportsPath') . $separationReport;
+        $attachment = isset($attachment) ? file_exists($attachment) ? $attachment : false : null;
 
-        if (env('APP_ENV') == 'live')
+
+        Mailer::send('emails.forms', [], function (Message $m) use ($to, $ccRecipients, $subject, $attachment)
         {
-            MyMail::send_mail($to, $ccRecipients, $subject, \Config::get('app.emailBody'), \Config::get('app.separationReportsPath') . $separationReport);
-        }
+            $m->to($to, null)->subject($subject);
+            if ($attachment)
+            {
+                $m->attach($attachment);
+            }
+        });
+
+
         $ccRecipients[$to] = $to;
         $ccRecipients = array_unique($ccRecipients);
 
+
+        // execute proper actions for a separation or schedule one9
         $today = date('m/d/Y');
         $userName = $req->request->get('sAMAccountName');
         $disableUser = $req->request->get('disableUser');
@@ -106,9 +117,11 @@ class SeparationController extends Controller
             $email = $email . '@illy.com';
         }
         $email = preg_replace('/\s+/', '', $email);
-        //$array['email'] = $email;
 
-        $entry = ActiveDirectory::getEmail($email);
+
+        $ad = ActiveDirectory::get_connection();
+        $entry = $ad->getEmail($email);
+        //$entry = ActiveDirectory::getEmail($email);
 
 
         $fromAD["givenname"] = $entry[0]["givenname"][0];
@@ -128,9 +141,8 @@ class SeparationController extends Controller
         // get manager name and email
         if (isset($entry[0]['manager'][0]))
         {
-            $ldap = ActiveDirectory::ldap_MyConnect();
-            $consult = ldap_search($ldap, $entry[0]['manager'][0], "(objectclass=*)", ['mail', 'sn', 'givenname']);
-            $managerInfo = ldap_get_entries($ldap, $consult);
+
+            $managerInfo = $ad->getManager($entry[0]['manager'][0]);
             $fromAD["manager"] = $managerInfo[0]['givenname'][0] . ' ' . $managerInfo[0]['sn'][0];
             $fromAD["managerEmail"] = $managerInfo[0]['mail'][0];
         }

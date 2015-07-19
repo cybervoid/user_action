@@ -17,6 +17,7 @@ class LdapController extends Controller
         $ad = ActiveDirectory::get_connection();
         $result = $ad->autocomplete($req);
 
+
         return new Response($result, 200, ['content-type' => 'application/json']);
     }
 }

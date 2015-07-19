@@ -220,7 +220,6 @@ var App = App || {};
             search: function (event, ui) {
                 $("#searchProgress").html("");
                 $("#managerEmail").val("");
-                console.log("entro aqui");
                 $('<img src="images/wait.gif" align="middle">').load(function () {
                     $(this).width(23).height(23).appendTo('#searchProgress');
                 });

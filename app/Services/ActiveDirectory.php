@@ -229,6 +229,14 @@ class ActiveDirectory
         }
     }
 
+    public function getManager($manager)
+    {
+        $consult = ldap_search(static::$conn, $manager, "(objectclass=*)", ['mail', 'sn', 'givenname']);
+
+        return ldap_get_entries(static::$conn, $consult);
+
+    }
+
     public function lookup_chng_org(Request $req)
     {
         $consult = $this->lookupUser($req->request->get('term') . '*');

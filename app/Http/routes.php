@@ -22,7 +22,7 @@ Route::post('chkeml', 'newHireController@checkEmail');
 Route::get('autocomplete', 'LdapController@autocomplete');
 
 
-Route::get('report/{reportType}/{name}', 'Reports@getReport')->where('name', '[a-zA-Z0-9 -]+\.pdf');
+Route::get('report/{reportType}/{name}', 'ReportsController@getReport')->where('name', '[a-zA-Z0-9 -]+\.pdf');
 
 Route::get('separation', 'SeparationController@index');
 Route::post('separation_search', 'SeparationController@separation_search');
@@ -69,6 +69,8 @@ Route::post('lookup', 'Change_OrgController@lookup');
 
 - organizacion change, al cambiar la compania mandar un correo
 automatizado para cmabiar la signature y actualizar info en AD
+
+- para los separation, calcular 6 meses despues del separation date y enviar una notification para remover el user from AD
 
 - remove from gorups no esta funcionando
 - verificar si el separation date is antes de la fecha de hoy, ejecutarlo right away

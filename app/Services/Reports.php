@@ -26,8 +26,8 @@ class Reports
     static public function generateReport($reportName, $location, $reportType, Request $req)
     {
 
-        $myFile = sys_get_temp_dir() . "/export.html";
-        $toPDF = fopen($myFile, "w");
+        $myFile = storage_path() . "/export.html";
+        $toPDF = fopen($myFile, "w+");
 
         //get the domain so I can load the image on the PDF
         $parse = parse_url($req->url());
@@ -41,7 +41,7 @@ class Reports
             return false;
         }
         fclose($toPDF);
-        $returnvar = array();
+
 
         if (env('APP_ENV') == 'windowsLocal')
         {
@@ -52,9 +52,7 @@ class Reports
             $wkhtmltopdf = env('wkhtmltopdf');
         }
 
-
         exec($wkhtmltopdf . ' ' . $myFile . ' ' . '"' . $location . $reportName . '"', $returnvar);
-
 
     }
 
@@ -65,37 +63,10 @@ class Reports
      *
      * @return Response
      */
-    static public function getReport(Request $req)
+    static public function loadReport($filePath)
     {
 
-        $name = $req->route('name');
-        $reportType = $req->route('reportType');
-
-        if ($reportType == 'newhire')
-        {
-            $filePath = \Config::get('app.newHireReportsPath') . $name;
-        }
-
-        if ($reportType == 'payroll')
-        {
-            $filePath = \Config::get('app.payrollReportsPath') . $name;
-        }
-
-        if ($reportType == 'separation')
-        {
-            $filePath = \Config::get('app.separationReportsPath') . $name;
-        }
-
-
-        $content = file_get_contents($filePath);
-
-        /*
-        return new Response($content, Response::HTTP_OK, ["content-type" => "application/pdf",
-            "content-length" => filesize($filePath), "content-disposition" => "inline; filename=\"$name\""]);
-        */
-
-        return new Response($content, Response::HTTP_OK, ["content-type" => "application/pdf",
-            "content-length" => filesize($filePath), "content-disposition" => "attachment; filename=\"$name\""]);
+        return file_get_contents($filePath);
 
     }
 
