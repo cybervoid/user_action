@@ -66,17 +66,15 @@ class SeparationController extends Controller
         $attachment = \Config::get('app.separationReportsPath') . $separationReport;
         $attachment = isset($attachment) ? file_exists($attachment) ? $attachment : false : null;
 
-        $attachment = '/home/rafag/Documents/projects/web/human_resources/storage/reports/New_Hires/Action User Notification-Mickey Mouse.pdf';
-//        echo $attachment;
-//        die;
+//        $attachment = '/home/rafag/Documents/projects/web/human_resources/storage/reports/New_Hires/Action User Notification-Mickey Mouse.pdf';
 
         Mailer::send('emails.forms', [], function (Message $m) use ($to, $ccRecipients, $subject, $attachment)
         {
             $m->to($to, null)->subject($subject);
-            if ($attachment)
+            /*if ($attachment)
             {
                 $m->attach($attachment);
-            }
+            }*/
 
 
         });
@@ -94,13 +92,14 @@ class SeparationController extends Controller
         if ((strtotime($today) >= strtotime($req->request->get('termDate'))))
         {
             //remove user from groups
-            ActiveDirectory::removeFromGroups($req->request->get('iTDeptEmail'), $req->request->get('sAMAccountName'));
+
+            //ActiveDirectory::removeFromGroups($req->request->get('iTDeptEmail'), $req->request->get('sAMAccountName'));
 
             //check if the user wants to disable AD user
             if (isset($disableUser))
             {
-                ActiveDirectory::disableUser($userName);
-                ActiveDirectory::removeUserInfo($userName);
+                //ActiveDirectory::disableUser($userName);
+                //ActiveDirectory::removeUserInfo($userName);
             }
         }
         else
