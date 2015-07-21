@@ -96,14 +96,14 @@ class MyMail extends Controller
 
 
         $mailer = new \PHPMailer(true);
-        if (env('APP_ENV' != 'local'))
+        if (env('APP_ENV') != 'local')
         {
             $mailer->IsSMTP();
         }
 
         $mailer->Host = "10.44.1.73"; // SMTP server
 
-        if (env('APP_ENV' != 'live'))
+        if (env('APP_ENV') != 'live')
         {
             $mailer->SMTPDebug = 2; // enables SMTP debug information (for testing)
         }
