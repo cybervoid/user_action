@@ -305,7 +305,7 @@
 
             <p ></p >
             <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="cellphone"
-                                value="Cell Phone (Samsung Galaxy) <br>*Cell phone number and company, will be updated in outlook upon receipt." >
+                                value="Cell Phone (Samsung Galaxy) *Cell phone number and company, will be updated in outlook upon receipt." >
                     Cell Phone (Samsung Galaxy) *Cell phone number and company, will be updated in outlook upon
                     receipt.</label ></li >
             <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="phone" value="Phone extension" >

@@ -136,7 +136,7 @@ namespace {
          * @param string $path
          *
          * @return $this
-         * @static
+         * @static 
          */
         public static function useDatabasePath($path){
             return \Illuminate\Foundation\Application::useDatabasePath($path);
@@ -456,7 +456,7 @@ namespace {
          * Get the path to the cached "compiled.php" file.
          *
          * @return string
-         * @static
+         * @static 
          */
         public static function getCachedCompilePath(){
             return \Illuminate\Foundation\Application::getCachedCompilePath();
@@ -466,7 +466,7 @@ namespace {
          * Get the path to the cached services.json file.
          *
          * @return string
-         * @static
+         * @static 
          */
         public static function getCachedServicesPath(){
             return \Illuminate\Foundation\Application::getCachedServicesPath();
@@ -476,7 +476,7 @@ namespace {
          * Determine if vendor path is writable.
          *
          * @return bool
-         * @static
+         * @static 
          */
         public static function vendorIsWritableForOptimizations(){
             return \Illuminate\Foundation\Application::vendorIsWritableForOptimizations();
@@ -488,7 +488,7 @@ namespace {
          * @param bool $value
          *
          * @return $this
-         * @static
+         * @static 
          */
         public static function useStoragePathForOptimizations($value = true){
             return \Illuminate\Foundation\Application::useStoragePathForOptimizations($value);
@@ -564,7 +564,7 @@ namespace {
          * Get the application's deferred services.
          *
          * @return array
-         * @static
+         * @static 
          */
         public static function getDeferredServices(){
             return \Illuminate\Foundation\Application::getDeferredServices();
@@ -587,7 +587,7 @@ namespace {
          * @param array $services
          *
          * @return void
-         * @static
+         * @static 
          */
         public static function addDeferredServices($services){
             \Illuminate\Foundation\Application::addDeferredServices($services);
@@ -2637,7 +2637,7 @@ namespace {
          * @param array $columns
          *
          * @return \Illuminate\Database\Eloquent\Collection
-         * @static
+         * @static 
          */
         public static function findMany($ids, $columns = array()){
             return \Illuminate\Database\Eloquent\Builder::findMany($ids, $columns);
@@ -3690,7 +3690,7 @@ namespace {
          * @param array $columns
          *
          * @return int
-         * @static
+         * @static 
          */
         public static function getCountForPagination($columns = array()){
             return \Illuminate\Database\Query\Builder::getCountForPagination($columns);
@@ -5226,7 +5226,6 @@ namespace {
          *
          * @param string $key The header key
          * @param string $value The header name
-         *
          * @throws \InvalidArgumentException
          * @static 
          */
@@ -6187,7 +6186,7 @@ namespace {
             //Method inherited from \Illuminate\Support\NamespacedItemResolver            
             \Illuminate\Translation\Translator::setParsedKey($key, $parsed);
         }
-
+        
     }
 
 
@@ -6211,7 +6210,6 @@ namespace {
          *
          * @param string $message The log message
          * @param array $context The log context
-         *
          * @return Boolean Whether the record has been processed
          * @static
          */
@@ -6224,7 +6222,6 @@ namespace {
          *
          * @param string $message The log message
          * @param array $context The log context
-         *
          * @return Boolean Whether the record has been processed
          * @static
          */
@@ -6237,7 +6234,6 @@ namespace {
          *
          * @param string $message The log message
          * @param array $context The log context
-         *
          * @return Boolean Whether the record has been processed
          * @static
          */
@@ -6250,7 +6246,6 @@ namespace {
          *
          * @param string $message The log message
          * @param array $context The log context
-         *
          * @return Boolean Whether the record has been processed
          * @static
          */
@@ -6263,7 +6258,6 @@ namespace {
          *
          * @param string $message The log message
          * @param array $context The log context
-         *
          * @return Boolean Whether the record has been processed
          * @static
          */
@@ -10710,7 +10704,7 @@ namespace {
         /**
          * Get all of the shared data for the environment.
          *
-         * @return array
+         * @return array 
          * @static 
          */
         public static function getShared(){
