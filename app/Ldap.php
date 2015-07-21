@@ -1,10 +1,12 @@
 <?php namespace App;
 
 
+use App\Services\ActiveDirectory;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+
 
 class Ldap implements AuthenticatableContract, CanResetPasswordContract
 {
@@ -59,32 +61,10 @@ class Ldap implements AuthenticatableContract, CanResetPasswordContract
      */
     public static function  ldap_login_validate($userName, $password)
     {
-        $ldap = self::ldap_MyConnect();
 
-        $attributes = array('givenname', 'sn', 'sAMAccountName');
-        if (!$ldap)
-        {
-            return false;
-        }
-        $result = ldap_search($ldap, "OU=North America,DC=ILLY-DOMAIN,DC=COM", "(&(sAMAccountName={$userName})(memberOf=CN=HR-Tool,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM))", $attributes);
-        $entry = ldap_get_entries($ldap, $result);
+        $ad = ActiveDirectory::get_connection();
 
-        if (isset($entry[0]["count"]))
-        {
-            //verify the password
-
-            if (@$bind = ldap_bind($ldap, $userName . "@ILLY-DOMAIN.COM", $password))
-            {
-                return $entry;
-            } // else password incorrect
-
-            ldap_close($ldap);
-        }
-        else
-        {
-            return false;
-        } // username incorrect or not allowed to login
-
+        return $ad->validateLogin($userName, $password);
 
     }
 

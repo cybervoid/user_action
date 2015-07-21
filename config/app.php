@@ -29,7 +29,7 @@ return $settings = [
     'subjectPrefix' => 'User Action Notification for ', 'subjectBatchPrefix' => 'HR Tool Action taken for ',
 
 
-    'adUserName' => 'adm_gilra', 'adPassword' => 'R4f43lg1l', 'adDomain' => 'ILLY-DOMAIN.COM', /*
+    /*
 	|--------------------------------------------------------------------------
 	| Application Debug Mode
 	|--------------------------------------------------------------------------
@@ -105,7 +105,7 @@ return $settings = [
     |
     */
 
-    'key' => env('APP_KEY', 'SomeRandomString'),
+    'key' => env('APP_KEY', 'iy3pooBPABFeR5nJ45gBsLrMHIOIOCDv'),
 
     'cipher' => MCRYPT_RIJNDAEL_128,
 

@@ -281,6 +281,29 @@ class ActiveDirectory
         return json_encode($result);
     }
 
+    public function validateLogin($userName, $password)
+    {
+        $attributes = array('givenname', 'sn', 'sAMAccountName');
+        $result = ldap_search(static::$conn, "OU=North America,DC=ILLY-DOMAIN,DC=COM", "(&(sAMAccountName={$userName})(memberOf=CN=HR-Tool,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM))", $attributes);
+        $entry = ldap_get_entries(static::$conn, $result);
+
+        if (isset($entry[0]["count"]))
+        {
+            //verify the password
+            if (@$bind = ldap_bind(static::$conn, $userName . "@" . env('LDAP_DOMAIN'), $password))
+            {
+                return $entry;
+            } // else password incorrect
+
+            ldap_close(static::$conn);
+        }
+        else
+        {
+            return false;
+        } // username incorrect or not allowed to login
+
+    }
+
     private function __clone() { }
 
     private function __wakeup() { }
