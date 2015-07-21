@@ -21,7 +21,7 @@ class ActiveDirectory
     {
         if (!ActiveDirectory::$conn)
         {
-            ActiveDirectory::$conn = ldap_connect("ldap://" . env('DCUSA2.ILLY-DOMAIN.COM'));
+            ActiveDirectory::$conn = ldap_connect("ldap://" . env('LDAP_HOST'));
 
             if (!ActiveDirectory::$conn)
             {
