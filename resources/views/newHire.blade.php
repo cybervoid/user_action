@@ -300,19 +300,13 @@
                                 value="illyManagers" >illyusa Managers Distribution Group</label ></li >
             <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]" id="illySales"
                                 value="illySales" >illyusa Sales Team Distribution Group</label ></li >
-            <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]" id="citrix"
-                                value="Sales Center/Citrix and Genesys ID. (applicable for Customer Care)" > Sales
-                    Center/Citrix and Genesys ID. (applicable for Customer Care)</label ></li >
 
-
-            <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="email"
-                                value="e-mail Scanner (if applicable)" > e-mail Scanner (if applicable)</label ></li >
             <p ></p >
 
             <p ></p >
             <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="cellphone"
                                 value="Cell Phone (Samsung Galaxy) <br>*Cell phone number and company, will be updated in outlook upon receipt." >
-                    Cell Phone (Samsung Galaxy) <br >*Cell phone number and company, will be updated in outlook upon
+                    Cell Phone (Samsung Galaxy) *Cell phone number and company, will be updated in outlook upon
                     receipt.</label ></li >
             <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="phone" value="Phone extension" >
                     Phone extension/Voice mail</label ></li >
@@ -321,6 +315,12 @@
             <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="outlook"
                                 value="Add title and contact information in Outlook" > Add title and contact information
                     in Outlook</label ></li >
+            <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="citrix"
+                                value="Sales Center/Citrix and Genesys ID. (applicable for Customer Care)" > Sales
+                    Center/Citrix and Genesys ID. (applicable for Customer Care)</label ></li >
+            <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="email"
+                                value="e-mail Scanner (if applicable)" > e-mail Scanner (if applicable)</label ></li >
+
         </ul >
 
 <br >
@@ -356,7 +356,8 @@
         </li >
         <li >
             <label ><input type="checkbox" class="inputRender" name="oManager[]" id="businessCard"
-                           value="Business Cards" > Business Cards, if need to ship to outside location please contact
+                           value="Business Cards, if need to ship to outside location please contact
+                hiring manager for address" > Business Cards, if need to ship to outside location please contact
                 hiring manager for address</label >
         </li >
         <li >

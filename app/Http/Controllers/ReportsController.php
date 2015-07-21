@@ -47,4 +47,5 @@ class ReportsController extends Controller
             "content-length" => filesize($filePath), "content-disposition" => "attachment; filename=\"$name\""]);
 
 
+    }
 }

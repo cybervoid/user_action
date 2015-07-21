@@ -27,7 +27,6 @@ class ScheduleTasks extends Command
     /**
      * Create a new command instance.
      *
-     * @return void
      */
     public function __construct()
     {
@@ -52,33 +51,43 @@ class ScheduleTasks extends Command
 
     public function handle()
     {
-        //$this->info('Display this on the screen');
+        $today = date('m/d/Y');
 
 
-        $taskInfo = Schedule::checkDueDate();
+        $storedSchedules = Schedule::readScheduleFile();
+        $theDates = array_keys($storedSchedules);
 
-        $attachment = isset($taskInfo['attachment']) ?
-            file_exists($taskInfo['attachment']) ? $taskInfo['attachment'] : false : null;
-
-        if ($taskInfo)
+        foreach ($theDates as $date)
         {
-            echo 'aqui';
-            die;
-            Mailer::send('emails.bathumch_confirmation', ['name' => $taskInfo['name'], 'action' => $taskInfo['action'],
-                'attachment' => $attachment], function (Message $m) use ($taskInfo, $attachment)
+            $current = date('m/d/Y', strtotime($date));
+            if ($current == $today)
             {
-                $to = \Config::get('app.eMailIT');
-                $subject = \Config::get('app.subjectBatchPrefix') . $taskInfo['action'] . ' - ' . $taskInfo['name'];
-                $m->to($to, null)->subject($subject);
-                if ($attachment)
+                // execute the task
+                Schedule::processScheduleTasks($storedSchedules[$date][0]);
+
+
+                // send notification email
+                $attachment = isset($storedSchedules[$date][0]['attachment']) ?
+                    file_exists($storedSchedules[$date][0]['attachment']) ? $storedSchedules[$date][0]['attachment'] :
+                        false : null;
+
+                Mailer::send('emails.batch_confirmation', ['name' => $storedSchedules[$date][0]['name'],
+                    'action' => $storedSchedules[$date][0]['action'],
+                    'attachment' => $attachment], function (Message $m) use ($storedSchedules, $attachment, $date)
                 {
-                    $m->attach($attachment);
-                }
-            });
-        }
-        else
-        {
-            echo 'no info to process';
+                    $to = \Config::get('app.eMailIT');
+                    $subject = \Config::get('app.subjectBatchPrefix') . $storedSchedules[$date][0]['action'] . ' - ' . $storedSchedules[$date][0]['name'];
+                    $m->to($to, null)->subject($subject);
+                    if ($attachment)
+                    {
+                        $m->attach($attachment);
+                    }
+                });
+
+                // delete the task
+                unset($storedSchedules[$date]);
+                Schedule::saveFile($storedSchedules);
+            }
         }
 
     }

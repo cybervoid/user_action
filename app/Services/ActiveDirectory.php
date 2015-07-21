@@ -17,6 +17,37 @@ class ActiveDirectory
 
     private function __construct() { }
 
+    public static function get_connection()
+    {
+        if (!ActiveDirectory::$conn)
+        {
+            ActiveDirectory::$conn = ldap_connect("ldap://" . env('DCUSA2.ILLY-DOMAIN.COM'));
+
+            if (!ActiveDirectory::$conn)
+            {
+                error_log(ldap_error(ActiveDirectory::$conn));
+
+                return null;
+            }
+            else
+            {
+                $adUserName = env('LDAP_USER');
+                $adPassword = env('LDAP_PASSWORD');
+                $adDomain = env('LDAP_DOMAIN');
+
+                ldap_set_option(ActiveDirectory::$conn, LDAP_OPT_PROTOCOL_VERSION, 3);
+                ldap_set_option(ActiveDirectory::$conn, LDAP_OPT_REFERRALS, 0);
+                ldap_set_option(ActiveDirectory::$conn, LDAP_OPT_SIZELIMIT, 1000); //this is just for speed.
+                if (!ldap_bind(ActiveDirectory::$conn, $adUserName . "@" . $adDomain, $adPassword))
+                {
+                    return null;
+                }
+            }
+        }
+
+        return new ActiveDirectory();
+    }
+
     public function disableUser($userName)
     {
         $attributes = array('dn', 'useraccountcontrol');
@@ -49,7 +80,7 @@ class ActiveDirectory
             {
                 $result = ActiveDirectory::query("sAMAccountName={$item}");
                 $group_dn = $result[0]['dn'];
-                $errorFound = ldap_mod_del(static::$conn, $group_dn, $group_info);
+                $errorFound = @ldap_mod_del(static::$conn, $group_dn, $group_info);
             }
 
             return $errorFound;
@@ -60,50 +91,12 @@ class ActiveDirectory
     public static function query($search)
     {
         // fetch the info from AD
-        $ldap = ActiveDirectory::get_connection();
-
         $attributes = array('dn', 'title', 'givenname', 'sn', 'manager', 'company', 'department', "memberOf",
             'samaccountname', 'mail');
 
-        if (!$ldap)
-        {
-            return false;
-        }
+        $result = ldap_search(static::$conn, "OU=North America,DC=ILLY-DOMAIN,DC=COM", $search, $attributes);
 
-        $result = ldap_search($ldap, "OU=North America,DC=ILLY-DOMAIN,DC=COM", $search, $attributes);
-
-        return ldap_get_entries($ldap, $result);
-    }
-
-    public static function get_connection()
-    {
-        if (!ActiveDirectory::$conn)
-        {
-            ActiveDirectory::$conn = ldap_connect("ldap://DCUSA2.ILLY-DOMAIN.COM");
-
-            if (!ActiveDirectory::$conn)
-            {
-                error_log(ldap_error(ActiveDirectory::$conn));
-
-                return null;
-            }
-            else
-            {
-                $adUserName = \Config::get('app.adUserName');
-                $adPassword = \Config::get('app.adPassword');
-                $adDomain = \Config::get('app.adDomain');
-
-                ldap_set_option(ActiveDirectory::$conn, LDAP_OPT_PROTOCOL_VERSION, 3);
-                ldap_set_option(ActiveDirectory::$conn, LDAP_OPT_REFERRALS, 0);
-                ldap_set_option(ActiveDirectory::$conn, LDAP_OPT_SIZELIMIT, 1000); //this is just for speed.
-                if (!ldap_bind(ActiveDirectory::$conn, $adUserName . "@" . $adDomain, $adPassword))
-                {
-                    return null;
-                }
-            }
-        }
-
-        return new ActiveDirectory();
+        return ldap_get_entries(static::$conn, $result);
     }
 
     public function removeUserInfo($userName)

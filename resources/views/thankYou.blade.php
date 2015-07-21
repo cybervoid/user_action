@@ -38,7 +38,7 @@
     </li >
     @endif
     @if(isset($separationReport))
-    <li >Payroll Form: <a target="_blank" href="{{ $separationRouteURL }}{{ $separationReport }}" >{{ $separationReport
+            <li >Separation Form: <a target="_blank" href="{{ $separationRouteURL }}{{ $separationReport }}" >{{ $separationReport
             }}</a >
     </li >
     @endif

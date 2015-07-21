@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.0.33 on 2015-06-30.
+ * Generated for Laravel 5.0.33 on 2015-07-21.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -50,7 +50,7 @@ namespace {
          * @param string $bootstrapper
          * @param \Closure $callback
          *
-*@return void
+         * @return void
          * @static 
          */
         public static function beforeBootstrapping($bootstrapper, $callback){
@@ -134,11 +134,11 @@ namespace {
          * Set the database directory.
          *
          * @param string $path
+         *
          * @return $this
          * @static
          */
-        public static function useDatabasePath($path)
-        {
+        public static function useDatabasePath($path){
             return \Illuminate\Foundation\Application::useDatabasePath($path);
         }
 
@@ -458,8 +458,7 @@ namespace {
          * @return string
          * @static
          */
-        public static function getCachedCompilePath()
-        {
+        public static function getCachedCompilePath(){
             return \Illuminate\Foundation\Application::getCachedCompilePath();
         }
 
@@ -469,8 +468,7 @@ namespace {
          * @return string
          * @static
          */
-        public static function getCachedServicesPath()
-        {
+        public static function getCachedServicesPath(){
             return \Illuminate\Foundation\Application::getCachedServicesPath();
         }
 
@@ -480,8 +478,7 @@ namespace {
          * @return bool
          * @static
          */
-        public static function vendorIsWritableForOptimizations()
-        {
+        public static function vendorIsWritableForOptimizations(){
             return \Illuminate\Foundation\Application::vendorIsWritableForOptimizations();
         }
 
@@ -493,8 +490,7 @@ namespace {
          * @return $this
          * @static
          */
-        public static function useStoragePathForOptimizations($value = true)
-        {
+        public static function useStoragePathForOptimizations($value = true){
             return \Illuminate\Foundation\Application::useStoragePathForOptimizations($value);
         }
 
@@ -570,8 +566,7 @@ namespace {
          * @return array
          * @static
          */
-        public static function getDeferredServices()
-        {
+        public static function getDeferredServices(){
             return \Illuminate\Foundation\Application::getDeferredServices();
         }
 
@@ -594,8 +589,7 @@ namespace {
          * @return void
          * @static
          */
-        public static function addDeferredServices($services)
-        {
+        public static function addDeferredServices($services){
             \Illuminate\Foundation\Application::addDeferredServices($services);
         }
 
@@ -2645,8 +2639,7 @@ namespace {
          * @return \Illuminate\Database\Eloquent\Collection
          * @static
          */
-        public static function findMany($ids, $columns = array())
-        {
+        public static function findMany($ids, $columns = array()){
             return \Illuminate\Database\Eloquent\Builder::findMany($ids, $columns);
         }
         
@@ -3696,11 +3689,10 @@ namespace {
          *
          * @param array $columns
          *
-*@return int
+         * @return int
          * @static
          */
-        public static function getCountForPagination($columns = array())
-        {
+        public static function getCountForPagination($columns = array()){
             return \Illuminate\Database\Query\Builder::getCountForPagination($columns);
         }
         
@@ -3778,7 +3770,7 @@ namespace {
          *
          * @param string $column
          *
-         * @return float|int
+         *@return float|int
          * @static 
          */
         public static function avg($column){
@@ -3791,7 +3783,7 @@ namespace {
          * @param string $function
          * @param array $columns
          *
-         *@return float|int
+*@return float|int
          * @static 
          */
         public static function aggregate($function, $columns = array()){
@@ -4435,7 +4427,7 @@ namespace {
         public static function macro($name, $macro){
             \Illuminate\Filesystem\Filesystem::macro($name, $macro);
         }
-
+        
         /**
          * Checks if macro is registered.
          *
@@ -4505,18 +4497,16 @@ namespace {
 
 
     class Input extends \Illuminate\Support\Facades\Input{
-
+        
         /**
          * Retrieve an input item from the request.
          *
          * @param string $key
          * @param mixed $default
-         *
          * @return string|array
          * @static
          */
-        public static function input($key = null, $default = null)
-        {
+        public static function input($key = null, $default = null){
             return \Illuminate\Http\Request::input($key, $default);
         }
         
@@ -4605,7 +4595,6 @@ namespace {
          *
          * @param int $index
          * @param mixed $default
-         *
          * @return string
          * @static
          */
@@ -4627,7 +4616,6 @@ namespace {
          * Determine if the current request URI matches a pattern.
          *
          * @param mixed  string
-         *
          * @return bool
          * @static
          */
@@ -4689,7 +4677,6 @@ namespace {
          * Determine if the request contains a given input item key.
          *
          * @param string|array $key
-         *
          * @return bool
          * @static
          */
@@ -4701,7 +4688,6 @@ namespace {
          * Determine if the request contains a non-empty value for an input item.
          *
          * @param string|array $key
-         *
          * @return bool
          * @static
          */
@@ -5241,7 +5227,7 @@ namespace {
          * @param string $key The header key
          * @param string $value The header name
          *
-*@throws \InvalidArgumentException
+         * @throws \InvalidArgumentException
          * @static 
          */
         public static function setTrustedHeaderName($key, $value){
@@ -6201,25 +6187,22 @@ namespace {
             //Method inherited from \Illuminate\Support\NamespacedItemResolver            
             \Illuminate\Translation\Translator::setParsedKey($key, $parsed);
         }
-        
+
     }
 
 
-    class Log extends \Illuminate\Support\Facades\Log
-    {
-
+    class Log extends \Illuminate\Support\Facades\Log{
+        
         /**
          * Log a message to the logs.
          *
          * @param string $level
          * @param string $message
          * @param array $context
-         *
          * @return void
          * @static
          */
-        public static function log($level, $message, $context = array())
-        {
+        public static function log($level, $message, $context = array()){
             \Illuminate\Log\Writer::log($level, $message, $context);
         }
         
@@ -6229,7 +6212,7 @@ namespace {
          * @param string $message The log message
          * @param array $context The log context
          *
-*@return Boolean Whether the record has been processed
+         * @return Boolean Whether the record has been processed
          * @static
          */
         public static function debug($message, $context = array()){
@@ -6242,7 +6225,7 @@ namespace {
          * @param string $message The log message
          * @param array $context The log context
          *
-*@return Boolean Whether the record has been processed
+         * @return Boolean Whether the record has been processed
          * @static
          */
         public static function info($message, $context = array()){
@@ -6255,7 +6238,7 @@ namespace {
          * @param string $message The log message
          * @param array $context The log context
          *
-*@return Boolean Whether the record has been processed
+         * @return Boolean Whether the record has been processed
          * @static
          */
         public static function notice($message, $context = array()){
@@ -6268,7 +6251,7 @@ namespace {
          * @param string $message The log message
          * @param array $context The log context
          *
-*@return Boolean Whether the record has been processed
+         * @return Boolean Whether the record has been processed
          * @static
          */
         public static function warning($message, $context = array()){
@@ -6281,7 +6264,7 @@ namespace {
          * @param string $message The log message
          * @param array $context The log context
          *
-* @return Boolean Whether the record has been processed
+         * @return Boolean Whether the record has been processed
          * @static
          */
         public static function error($message, $context = array()){
@@ -6293,7 +6276,6 @@ namespace {
          *
          * @param string $message The log message
          * @param array $context The log context
-         *
          * @return Boolean Whether the record has been processed
          * @static
          */
@@ -6306,7 +6288,6 @@ namespace {
          *
          * @param string $message The log message
          * @param array $context The log context
-         *
          * @return Boolean Whether the record has been processed
          * @static
          */
@@ -6319,7 +6300,6 @@ namespace {
          *
          * @param string $message The log message
          * @param array $context The log context
-         *
          * @return Boolean Whether the record has been processed
          * @static
          */
@@ -6389,7 +6369,7 @@ namespace {
         public static function useErrorLog($level = 'debug', $messageType = 0){
             \Illuminate\Log\Writer::useErrorLog($level, $messageType);
         }
-
+        
         /**
          * Register a new callback handler for when a log event is triggered.
          *
@@ -6421,7 +6401,7 @@ namespace {
         public static function getEventDispatcher(){
             return \Illuminate\Log\Writer::getEventDispatcher();
         }
-
+        
         /**
          * Set the event dispatcher instance.
          *
@@ -9103,7 +9083,7 @@ namespace {
         public static function pattern($key, $pattern){
             \Illuminate\Routing\Router::pattern($key, $pattern);
         }
-
+        
         /**
          * Set a group of global where patterns on all routes.
          *
@@ -10730,21 +10710,20 @@ namespace {
         /**
          * Get all of the shared data for the environment.
          *
-         * @return array 
+         * @return array
          * @static 
          */
-        public static function getShared()
-        {
+        public static function getShared(){
             return \Illuminate\View\Factory::getShared();
         }
-
+        
         /**
          * Check if section exists.
          *
          * @param string $name
          *
-         * @return bool
-         * @static
+*@return bool
+         * @static 
          */
         public static function hasSection($name){
             return \Illuminate\View\Factory::hasSection($name);

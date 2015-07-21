@@ -31,7 +31,7 @@
     @endif
 
 
-    <p ><span >Employee #: </span >{{ $req["employee"] or 'TBD' }}</p >
+    <p ><span >Employee #: </span >{{ $req["employeeID"] or 'TBD' }}</p >
 
 
     <div class="left3" ><span >Separation Date: </span > {{ $req["termDate"] }}</div >

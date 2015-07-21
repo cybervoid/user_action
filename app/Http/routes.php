@@ -46,7 +46,8 @@ Route::post('lookup', 'Change_OrgController@lookup');
 
 /*
 1- cuando la cookie está me deja entrar aunque no este en la VPN
-
+todo cuando se llenan todos los campos en new hire el pdf se divide en varias pags, jugar con los settigns de htmltopdf para evitar esto
+todo para separation el grupo de illyusa Sales no está funcionando para salir autodetectado, problemas con el javascript
 - para los new hires enviar una noificacion recordando preparar la pc una semana antes
 - en new hires detectar location y predefinir los grupos a los que pertenece
 

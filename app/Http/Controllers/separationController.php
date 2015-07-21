@@ -56,7 +56,7 @@ class SeparationController extends Controller
         // generate reports
         $separationReport = \Config::get('app.separationReportsPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName') . '.pdf';
         $separationReport = Reports::escapeReportName($separationReport);
-        //Reports::generateReport($separationReport, \Config::get('app.separationReportsPath'), $req->request->get('reportType'), $req);
+        Reports::generateReport($separationReport, \Config::get('app.separationReportsPath'), $req->request->get('reportType'), $req);
 
 
         //send the email
@@ -66,15 +66,13 @@ class SeparationController extends Controller
         $attachment = \Config::get('app.separationReportsPath') . $separationReport;
         $attachment = isset($attachment) ? file_exists($attachment) ? $attachment : false : null;
 
-//        $attachment = '/home/rafag/Documents/projects/web/human_resources/storage/reports/New_Hires/Action User Notification-Mickey Mouse.pdf';
-
         Mailer::send('emails.forms', [], function (Message $m) use ($to, $ccRecipients, $subject, $attachment)
         {
             $m->to($to, null)->subject($subject);
-            /*if ($attachment)
+            if ($attachment)
             {
                 $m->attach($attachment);
-            }*/
+            }
 
 
         });
@@ -93,20 +91,20 @@ class SeparationController extends Controller
         {
             //remove user from groups
 
-            //ActiveDirectory::removeFromGroups($req->request->get('iTDeptEmail'), $req->request->get('sAMAccountName'));
+            $ad = ActiveDirectory::get_connection();
+            $ad->removeFromGroups($req->request->get('iTDeptEmail'), $req->request->get('sAMAccountName'));
 
             //check if the user wants to disable AD user
             if (isset($disableUser))
             {
-                //ActiveDirectory::disableUser($userName);
-                //ActiveDirectory::removeUserInfo($userName);
+                $ad->disableUser($userName);
+                $ad->removeUserInfo($userName);
             }
         }
         else
         {
-            Schedule::addSchedule($req->request->get('termDate'), $userName, $req->request->get('name') . ' ' . $req->request->get('lastName'), 'separation', isset($disableUser), $separationReport, $req->request->get('iTDeptEmail'));
+            Schedule::addSchedule($req->request->get('termDate'), $userName, $req->request->get('name') . ' ' . $req->request->get('lastName'), 'separation', isset($disableUser), \Config::get('app.separationReportsPath') . $separationReport, $req->request->get('iTDeptEmail'));
         }
-
 
         return view('thankYou', ['name' => $req->request->get('name'), 'lastName' => $req->request->get('lastName'),
             'separationReport' => $separationReport, 'reportType' => 'separation',
@@ -138,9 +136,13 @@ class SeparationController extends Controller
             $fromAD["department"] = $entry[0]["department"][0];
         }
         if (isset($entry[0]["title"][0]))
-        $fromAD["title"] = $entry[0]["title"][0];
+        {
+            $fromAD["title"] = $entry[0]["title"][0];
+        }
         if (isset($entry[0]["company"][0]))
-        $fromAD["company"] = $entry[0]["company"][0];
+        {
+            $fromAD["company"] = $entry[0]["company"][0];
+        }
 
         $fromAD["sAMAccountName"] = $entry[0]["samaccountname"][0];
 

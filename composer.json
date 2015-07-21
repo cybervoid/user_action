@@ -7,7 +7,6 @@
 	"require": {
 		"laravel/framework": "5.0.*",
 		"barryvdh/laravel-ide-helper": "~2.0",
-		"phpmailer/phpmailer": "~5.2",
 		"h4cc/wkhtmltopdf-amd64": "0.12.2.1"
 	},
 	"require-dev": {
