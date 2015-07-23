@@ -8,10 +8,11 @@
  */
 
 use App\Services\ActiveDirectory;
+use App\Services\Mailer;
+use Illuminate\Mail\Message;
 
 class Schedule extends Controller
 {
-
 
 
     /**
@@ -23,10 +24,11 @@ class Schedule extends Controller
     public static function processScheduleTasks($content)
     {
 
+
         switch ($content['action'])
         {
-            case "reminder":
-                return Schedule::reminders($content);
+            case "separation_reminder":
+                return Schedule::separation_reminder($content);
                 break;
             case "separation":
                 return Schedule::separations($content);
@@ -36,21 +38,67 @@ class Schedule extends Controller
         return false;
     }
 
-    private static function reminders($content)
+    private static function separation_reminder($content)
     {
-        $today = date('m/d/Y');
+
+        $attachment = isset($content['attachment']) ?
+            file_exists($content['attachment']) ? $content['attachment'] : false : null;
+
+        Mailer::send('emails.separation_reminder', ['name' => $content['name'], 'action' => $content['action'],
+            'samaccountname' => $content['samaccountname'], 'separationDate' => $content['deactivate'],
+            'comment' => $content['groups'],
+            'attachment' => $attachment], function (Message $m) use ($content, $attachment)
+        {
+            $to = \Config::get('app.eMailIT');
+            $subject = \Config::get('app.subjectBatchPrefix') . $content['action'] . ' - ' . $content['name'];
+            $m->to($to, null)->subject($subject)->cc(\Config::get('app.eMailITManager'));
+            if ($attachment)
+            {
+                $m->attach($attachment);
+            }
+        });
 
     }
 
     private static function separations($content)
     {
+
         $ad = ActiveDirectory::get_connection();
-        $ad->disableUser($content['samaccountname']);
-        $ad->removeUserInfo($content['samaccountname']);
+
+        $entry = $ad->getsamaccountname($content['samaccountname']);
+
+        if (count($entry) < 2)
+        {
+            return false;
+        }
+
+
+        $ad->disableUser($entry);
+        $ad->removeUserInfo($entry);
+
+
         if (count($content['groups']) > 0)
         {
-            $ad->removeFromGroups($content['groups'], $content['samaccountname']);
+            $ad->removeFromGroups($content['groups'], $entry[0]["dn"]);
         }
+
+
+        // send notification email
+        $attachment = isset($content['attachment']) ?
+            file_exists($content['attachment']) ? $content['attachment'] : false : null;
+
+        Mailer::send('emails.separation_batch', ['name' => $content['name'], 'action' => $content['action'],
+            'attachment' => $attachment], function (Message $m) use ($content, $attachment)
+        {
+            $to = \Config::get('app.eMailIT');
+            $subject = \Config::get('app.subjectBatchPrefix') . $content['action'] . ' - ' . $content['name'];
+            $m->to($to, null)->subject($subject);
+            if ($attachment)
+            {
+                $m->attach($attachment);
+            }
+        });
+
     }
 
     public static function addSchedule($dueDate, $samaccountname, $name, $action, $deactivate, $reportPath, $groups)
@@ -59,8 +107,7 @@ class Schedule extends Controller
         $schedule = Schedule::readScheduleFile();
 
         $schedule[$dueDate . date(' h:i:s a')][] = ['samaccountname' => $samaccountname, 'name' => $name,
-            'action' => $action,
-            'deactivate' => $deactivate, 'attachment' => $reportPath, 'groups' => $groups];
+            'action' => $action, 'deactivate' => $deactivate, 'attachment' => $reportPath, 'groups' => $groups];
 
         return Schedule::saveFile($schedule);
 

@@ -56,7 +56,7 @@ class SeparationController extends Controller
         // generate reports
         $separationReport = \Config::get('app.separationReportsPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName') . '.pdf';
         $separationReport = Reports::escapeReportName($separationReport);
-        Reports::generateReport($separationReport, \Config::get('app.separationReportsPath'), $req->request->get('reportType'), $req);
+//        Reports::generateReport($separationReport, \Config::get('app.separationReportsPath'), $req->request->get('reportType'), $req);
 
 
         //send the email
@@ -68,7 +68,7 @@ class SeparationController extends Controller
 
         Mailer::send('emails.forms', [], function (Message $m) use ($to, $ccRecipients, $subject, $attachment)
         {
-            $m->to($to, null)->subject($subject);
+            $m->to($to, null)->subject($subject)->cc($ccRecipients);
             if ($attachment)
             {
                 $m->attach($attachment);
@@ -105,6 +105,11 @@ class SeparationController extends Controller
         {
             Schedule::addSchedule($req->request->get('termDate'), $userName, $req->request->get('name') . ' ' . $req->request->get('lastName'), 'separation', isset($disableUser), \Config::get('app.separationReportsPath') . $separationReport, $req->request->get('iTDeptEmail'));
         }
+
+        // add new entry to the schedule system with due date 6 month after effective date for AD deletion
+        $dueDate = date('m/d/Y', strtotime('+6 month', strtotime($req->request->get('termDate'))));
+        Schedule::addSchedule($dueDate, $userName, $req->request->get('name') . ' ' . $req->request->get('lastName'), 'separation_reminder', $req->request->get('termDate'), \Config::get('app.separationReportsPath') . $separationReport, $req->request->get('generalComments'));
+
 
         return view('thankYou', ['name' => $req->request->get('name'), 'lastName' => $req->request->get('lastName'),
             'separationReport' => $separationReport, 'reportType' => 'separation',

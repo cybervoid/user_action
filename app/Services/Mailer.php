@@ -16,6 +16,7 @@ class Mailer
             if ($to['address'])
             {
                 $m->setTo($to['address'], isset($to['name']) ? $to['name'] : '');
+                $m->setCC(null);
             }
         });
     }

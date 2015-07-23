@@ -81,6 +81,8 @@ class newHireController extends Controller
         Mailer::send('emails.forms', [], function (Message $m) use ($to, $ccRecipients, $subject, $attachment)
         {
             $m->to($to, null)->subject($subject);
+            $m->cc($ccRecipients);
+
             if ($attachment)
             {
                 $m->attach($attachment);
@@ -123,13 +125,8 @@ class newHireController extends Controller
         //Schedule::addSchedule($req->request->get('startDate'), $samaacountname, $req->request->get('name') . ' ' . $req->request->get('lastName'), 'newHire', null, $attachment, $groups);
 
         //create the username in the AD
-//        if (env('APP_ENV') == 'live')
-//        {
         $ad = ActiveDirectory::get_connection();
         $ad->createUserAD($req);
-
-//        }
-
 
         return view('thankYou', ['name' => $req->request->get('name'), 'lastName' => $req->request->get('lastName'),
             'newHireReport' => $newHireReport, 'reportType' => 'newhire',

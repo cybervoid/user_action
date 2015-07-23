@@ -48,32 +48,27 @@ class ActiveDirectory
         return new ActiveDirectory();
     }
 
-    public function disableUser($userName)
+    public function disableUser($entry)
     {
-        $attributes = array('dn', 'useraccountcontrol');
-        $myDN = "OU=North America,DC=ILLY-DOMAIN,DC=COM";
-        $txtSearch = "samaccountname={$userName}";
-        $result = ldap_search(static::$conn, $myDN, $txtSearch, $attributes);
-        $entry = ldap_get_entries(static::$conn, $result);
+
         $dn = $entry[0]["dn"];
         $ac = $entry[0]["useraccountcontrol"][0];
         $disable = ($ac | 2); // set all bits plus bit 1 (=dec2)
         $userdata = array();
         $userdata["useraccountcontrol"][0] = $disable;
-
         return ldap_modify(static::$conn, $dn, $userdata); //change state
 
     }
 
-    public function removeFromGroups($groups, $user)
+    public function removeFromGroups($groups, $dn)
     {
 
-        $errorFound = true;
-        if (count($groups) > 0)
+        if (!isset($dn))
         {
-            // get user's dn
-            $result = ActiveDirectory::query("sAMAccountName={$user}");
-            $group_info['member'] = $result[0]['dn'];
+            return false;
+        }
+
+        $group_info['member'] = $dn;
 
             // get group dn
             foreach ($groups as $item)
@@ -84,7 +79,7 @@ class ActiveDirectory
             }
 
             return $errorFound;
-        }
+
         $result = false;
     }
 
@@ -99,20 +94,16 @@ class ActiveDirectory
         return ldap_get_entries(static::$conn, $result);
     }
 
-    public function removeUserInfo($userName)
+    public function removeUserInfo($entry)
     {
-        $attributes = array('dn', 'Description', 'title', 'manager');
-        $myDN = "OU=North America,DC=ILLY-DOMAIN,DC=COM";
-        $txtSearch = "samaccountname={$userName}";
-        $result = ldap_search(static::$conn, $myDN, $txtSearch, $attributes);
-        $entry = ldap_get_entries(static::$conn, $result);
+
         $dn = $entry[0]["dn"];
 
         if(isset($entry[0]["description"])) $userdata['Description']= array();
         if(isset($entry[0]["title"])) $userdata['title']= array();
         if(isset($entry[0]["manager"])) $userdata['manager']= array();
 
-        if(isset($userdata)) return ldap_mod_del(static::$conn, $dn, $userdata);
+        if (isset($userdata)) return @ldap_mod_del(static::$conn, $dn, $userdata);
 
 
     }
@@ -302,6 +293,18 @@ class ActiveDirectory
             return false;
         } // username incorrect or not allowed to login
 
+    }
+
+    public function getsamaccountname($username)
+    {
+        $attributes = array('dn', 'useraccountcontrol', 'Description', 'title', 'manager');
+        $myDN = "OU=North America,DC=ILLY-DOMAIN,DC=COM";
+
+        $txtSearch = "samaccountname={$username}";
+
+        $result = ldap_search(static::$conn, $myDN, $txtSearch, $attributes);
+
+        return ldap_get_entries(static::$conn, $result);
     }
 
     private function __clone() { }
