@@ -23,7 +23,7 @@ var App = App || {};
             }
         });
         $('#salesLevel').change(function () {
-            if ($('#salesLevel option:selected').text() == 'Level III') {
+            if ($('#salesLevel option:selected').val() == 'Level III Regional / Division Sales Manager / <br> National Retail Managers / Systems Mgr') {
                 $('#salesLevelDiv').html('Level III Regional / Division Sales Manager / <br> National Retail Managers / Systems Mgr');
             }
             else {
