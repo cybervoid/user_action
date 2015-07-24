@@ -45,6 +45,8 @@ Route::post('lookup', 'Change_OrgController@lookup');
 
 
 /*
+ *
+ * todo newhires revisar employee number and nickname estan saliendo vacios en el reporte
 todo cuando se llenan todos los campos en new hire el pdf se divide en varias pags, jugar con los settigns de htmltopdf para evitar esto
 todo para separation el grupo de illyusa Sales no está funcionando para salir autodetectado, problemas con el javascript
 todo- en new hires detectar location y predefinir los grupos a los que pertenece

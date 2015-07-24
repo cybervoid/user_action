@@ -3,7 +3,14 @@
 <head >
     <meta charset="utf-8" >
     <title >Illy NA Roaming data activation</title >
-    <style > span {
+    <style >
+
+
+        body {
+            background: url({{ $server }}/images/illy-watermark.png) repeat-y fixed 50% 50%;
+        }
+
+        span {
             font-weight: bold;
         }
 

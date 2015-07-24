@@ -64,7 +64,7 @@ class newHireController extends Controller
         $newHireReport = Reports::escapeReportName($newHireReport);
         $result = Reports::generateReport($newHireReport, \Config::get('app.newHireReportsPath'), $req->request->get('reportType'), $req);
 
-        die;
+
         //return $result;
 
         //generate payroll Report

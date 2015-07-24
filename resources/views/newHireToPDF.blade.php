@@ -4,10 +4,6 @@
 @section('content')
 
     <style type="text/css" >
-        body {
-            background: url({{ $server }}/images/illy-watermark.png) repeat-y fixed 50% 50%;
-        }
-
         #watermark {
 
             color: #d0d0d0;
