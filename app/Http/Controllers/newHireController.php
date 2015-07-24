@@ -122,7 +122,9 @@ class newHireController extends Controller
         });
 
 
-        //Schedule::addSchedule($req->request->get('startDate'), $samaacountname, $req->request->get('name') . ' ' . $req->request->get('lastName'), 'newHire', null, $attachment, $groups);
+        //add reminder for a week before new hre starts
+        $dueDate = date('m/d/Y', strtotime('-1 week', strtotime($req->request->get('startDate'))));
+        Schedule::addSchedule($dueDate, $samaacountname, $req->request->get('name') . ' ' . $req->request->get('lastName'), 'newHire_reminder', $req->request->get('startDate'), null, null);
 
         //create the username in the AD
         $ad = ActiveDirectory::get_connection();

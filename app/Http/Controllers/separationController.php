@@ -56,7 +56,7 @@ class SeparationController extends Controller
         // generate reports
         $separationReport = \Config::get('app.separationReportsPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName') . '.pdf';
         $separationReport = Reports::escapeReportName($separationReport);
-//        Reports::generateReport($separationReport, \Config::get('app.separationReportsPath'), $req->request->get('reportType'), $req);
+        Reports::generateReport($separationReport, \Config::get('app.separationReportsPath'), $req->request->get('reportType'), $req);
 
 
         //send the email

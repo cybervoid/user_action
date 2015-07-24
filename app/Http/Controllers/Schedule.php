@@ -27,6 +27,9 @@ class Schedule extends Controller
 
         switch ($content['action'])
         {
+            case "newHire_reminder":
+                return Schedule::newHire_reminder($content);
+                break;
             case "separation_reminder":
                 return Schedule::separation_reminder($content);
                 break;
@@ -36,6 +39,19 @@ class Schedule extends Controller
         }
 
         return false;
+    }
+
+    public static function newHire_reminder($content)
+    {
+        Mailer::send('emails.newHire_reminder', ['name' => $content['name'],
+            'samaccountname' => $content['samaccountname'],
+            'date' => $content['deactivate']], function (Message $m) use ($content)
+        {
+            $to = \Config::get('app.eMailIT');
+            $subject = \Config::get('app.subjectBatchPrefix') . $content['action'] . ' - ' . $content['name'];
+            $m->to($to, null)->subject($subject);
+
+        });
     }
 
     private static function separation_reminder($content)

@@ -45,7 +45,6 @@ Route::post('lookup', 'Change_OrgController@lookup');
 
 
 /*
-1- cuando la cookie está me deja entrar aunque no este en la VPN
 todo cuando se llenan todos los campos en new hire el pdf se divide en varias pags, jugar con los settigns de htmltopdf para evitar esto
 todo para separation el grupo de illyusa Sales no está funcionando para salir autodetectado, problemas con el javascript
 - para los new hires enviar una noificacion recordando preparar la pc una semana antes
@@ -65,34 +64,14 @@ todo para separation el grupo de illyusa Sales no está funcionando para salir a
 
 9- cuando el nombre del reporte  abajar no es el correcto arroja un error
 
-10- validar todas las pags por si los campos no estan llenos
 
 - organizacion change, al cambiar la compania mandar un correo
 automatizado para cmabiar la signature y actualizar info en AD
 
-- para los separation, calcular 6 meses despues del separation date y enviar una notification para remover el user from AD
 
-- remove from gorups no esta funcionando
-- verificar si el separation date is antes de la fecha de hoy, ejecutarlo right away
 - si tiene en el nombre un acento, no incluirlo en el nombre de usuario
 - en los emails templates poner stylo para los nombres en negrita
-- enviar a maren los forms samples
 - para el separation detectar si el campo de cellphone tiene algún valor is most likely the user has a cellphone.
 
-//// separation schedule
-date
-	save samaccountname
-	deactivate user
-	group separation
-	remove title
-	remove manager
-
-
-
-#######################################################
-Desghabilitar en testing
-newHireController
-    user creation  #75
-    Send MAil       #69
 
  */
