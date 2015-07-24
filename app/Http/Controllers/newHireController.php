@@ -64,6 +64,8 @@ class newHireController extends Controller
         $newHireReport = Reports::escapeReportName($newHireReport);
         $result = Reports::generateReport($newHireReport, \Config::get('app.newHireReportsPath'), $req->request->get('reportType'), $req);
 
+        die;
+        //return $result;
 
         //generate payroll Report
         $payrollReport = \Config::get('app.payrollReportsPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName') . '.pdf';
@@ -118,6 +120,12 @@ class newHireController extends Controller
             'manager' => $req->request->get('manager')], function (Message $m) use ($samaacountname)
         {
             $m->to(\Config::get('app.si_infra'), null)->subject('new user settings - ' . $samaacountname);
+
+            // copy NA IT
+            $cc[\Config::get('app.eMailITManager')] = \Config::get('app.eMailITManager');
+            $cc[\Config::get('app.eMailIT')] = \Config::get('app.eMailIT');
+
+            $m->cc($cc);
 
         });
 
