@@ -47,31 +47,24 @@ Route::post('lookup', 'Change_OrgController@lookup');
 /*
 todo cuando se llenan todos los campos en new hire el pdf se divide en varias pags, jugar con los settigns de htmltopdf para evitar esto
 todo para separation el grupo de illyusa Sales no está funcionando para salir autodetectado, problemas con el javascript
-- para los new hires enviar una noificacion recordando preparar la pc una semana antes
-- en new hires detectar location y predefinir los grupos a los que pertenece
+todo- en new hires detectar location y predefinir los grupos a los que pertenece
 
-- al crear un nuevo usuario enviar un recordatorio al correo  con el start date y con un checklist of TODO like:
-        - cnhange the password to Illy2014
-        - check the groups were appliend correctly
-        -prepare the computer to be ready a week before
+todo- para los nombres eliminar espacios en los titulos, nombres, etc
+todo- poner todos los label en negrita y pasar todo a labels
+todo6- aplicar el estilo de newhire a separation (el required que no funciona en separation)
 
+todo8-         REVISAR COMO CAPTURAR LOS ERRORES SI EL EMAIL NO SE PUEDE ENVIAR POR ALGUN MOTIVO
 
-- para los nombres eliminar espacios en los titulos, nombres, etc
-- poner todos los label en negrita y pasar todo a labels
-6- aplicar el estilo de newhire a separation (el required que no funciona en separation)
-
-8-         REVISAR COMO CAPTURAR LOS ERRORES SI EL EMAIL NO SE PUEDE ENVIAR POR ALGUN MOTIVO
-
-9- cuando el nombre del reporte  abajar no es el correcto arroja un error
+todo9- cuando el nombre del reporte  abajar no es el correcto arroja un error
 
 
-- organizacion change, al cambiar la compania mandar un correo
-automatizado para cmabiar la signature y actualizar info en AD
+todo- organizacion change, al cambiar la compania mandar un correo
+todo automatizado para cmabiar la signature y actualizar info en AD
 
 
-- si tiene en el nombre un acento, no incluirlo en el nombre de usuario
-- en los emails templates poner stylo para los nombres en negrita
-- para el separation detectar si el campo de cellphone tiene algún valor is most likely the user has a cellphone.
+todo- si tiene en el nombre un acento, no incluirlo en el nombre de usuario
+todo- en los emails templates poner stylo para los nombres en negrita
+todo- para el separation detectar si el campo de cellphone tiene algún valor is most likely the user has a cellphone.
 
 
  */
