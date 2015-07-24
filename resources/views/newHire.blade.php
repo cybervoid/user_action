@@ -197,7 +197,7 @@
                 <option value="Level IA Business Development Manager" >Level IA Business Development Manager</option >
                 <option value="Level II Branch Sales Manager" >Level II Branch Sales Manager</option >
                 <option
-                    value="Level III Regional / Division Sales Manager / <br> National Retail Managers / Systems Mgr" >
+                        value="Level III Regional / Division Sales Manager / <br> National Retail Managers / Systems Mgr" >
                     Level III
                 </option >
                 <option value="Level IV Director / VP" >Level IV Director / VP</option >

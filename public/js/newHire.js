@@ -23,7 +23,12 @@ var App = App || {};
             }
         });
         $('#salesLevel').change(function () {
+
+            console.log($('#salesLevel option:selected').text());
+
             if ($('#salesLevel option:selected').text() == 'Level III') {
+                console.log('entro');
+
                 $('#salesLevelDiv').html('Level III Regional / Division Sales Manager / <br> National Retail Managers / Systems Mgr');
             }
             else {

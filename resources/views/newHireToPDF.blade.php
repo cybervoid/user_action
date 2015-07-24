@@ -3,6 +3,34 @@
 
 @section('content')
 
+    <style type="text/css" >
+        body {
+            background: url({{ $server }}/images/illy-watermark.png) repeat-y fixed 50% 50%;
+        }
+
+        #watermark {
+
+            color: #d0d0d0;
+            font-size: 50pt;
+            -webkit-transform: rotate(-45deg);
+            -moz-transform: rotate(-45deg);
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            margin: 0;
+            z-index: -1;
+            left: 100px;
+            top: 100px;
+        }
+    </style >
+
+    <div id="watermarks" >
+        <p >illy caffè North America, Inc.</p >
+
+    </div >
+    {{--<div>--}}
+    {{--<img src="images/illy-watermark.png">--}}
+    {{--</div>--}}
 
 <p style="font-weight: bold" >NEW HIRE</p ></div >
 

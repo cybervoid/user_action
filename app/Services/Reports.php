@@ -35,6 +35,8 @@ class Reports
         $myView = view($reportType . 'ToPDF', ['req' => $req->request->all(),
             'server' => $parse['scheme'] . '://' . $parse['host'] . '/',]);
 
+        //return $myView;
+
 
         if (!fwrite($toPDF, $myView))
         {
@@ -52,7 +54,8 @@ class Reports
             $wkhtmltopdf = env('wkhtmltopdf');
         }
 
-        exec($wkhtmltopdf . ' ' . $myFile . ' ' . '"' . $location . $reportName . '"', $returnvar);
+        //
+        exec($wkhtmltopdf . ' --margin-top 5 --margin-bottom 5' . ' ' . $myFile . ' ' . '"' . $location . $reportName . '"', $returnvar);
 
     }
 
