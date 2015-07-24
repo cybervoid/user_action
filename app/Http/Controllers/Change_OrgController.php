@@ -43,9 +43,12 @@ class Change_OrgController extends Controller
 
 
         //$taskInfo = Schedule::checkDueDate();
-        die;
+        //die;
 
-        return view('change_org', ['user' => $user]);
+        //return view('change_org', ['user' => $user]);
+
+
+        return view('exportTemplate', ['server' => 'sdfsdf']);
 
     }
 

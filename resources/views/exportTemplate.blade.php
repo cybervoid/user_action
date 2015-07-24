@@ -50,8 +50,12 @@
     <table border="0" width="50%" align="center" >
         <tr align="center" >
             <td align="left" >
-                <span class="bold" >Printed name: Maren Gizicki</span ></td >
-            <td align="right" ><span class="bold" >Date: {{ date('m-d-Y') }}<br ><br ><span >_____________________<br >Signature</span ></span >
+                <span class="bold" >Printed name:
+            <p >Date: {{ date('m-d-Y') }}</p ></span >
+            </td >
+
+            <td align="right" ><span class="bold" >Maren Gizicki, HR Manager
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _____________________ Signature</span >
             </td >
         </tr >
     </table >
