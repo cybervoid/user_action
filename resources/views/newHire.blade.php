@@ -124,6 +124,8 @@
             <option value="empty" >Select</option >
             <option value="Full-time" >Full-time</option >
             <option value="Part-Time" >Part-Time</option >
+            <option value="Seasonal" >Seasonal</option >
+            <option value="Temporary" >Temporary</option >
         </select ><span id="hireStatusError" class="errorSpan" >*</span >
         <br >
     </div >
