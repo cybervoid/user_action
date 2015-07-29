@@ -66,9 +66,6 @@ class MyMail extends Controller
             $ccRecipients['Stacey.Berger@illy.com'] = 'Stacey.Berger@illy.com';
         }
 
-        // Per Maren's request include lisa Gutman in all the requests
-        $ccRecipients['Lissa.Guttman@illy.com'] = 'Lissa.Guttman@illy.com';
-
         //Add the manager's email in the recipients list
         if ($req->request->get('managerEmail') != '')
         {
