@@ -3,6 +3,7 @@
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Services\ActiveDirectory;
 
 
 class Change_OrgController extends Controller
@@ -41,14 +42,15 @@ class Change_OrgController extends Controller
 
         $user = User::current();
 
+        $ad = ActiveDirectory::get_connection();
+        $result = $ad->getEmail('rafael.gil@illy.com');
 
-        //$taskInfo = Schedule::checkDueDate();
-        //die;
+        echo json_encode($result);
+
+        //return new Response($result, 200, ['content-type' => 'application/json']);
 
         //return view('change_org', ['user' => $user]);
 
-
-        return view('exportTemplate', ['server' => 'sdfsdf']);
 
     }
 
