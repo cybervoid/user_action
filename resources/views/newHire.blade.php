@@ -126,6 +126,7 @@
             <option value="Part-Time" >Part-Time</option >
             <option value="Seasonal" >Seasonal</option >
             <option value="Temporary" >Temporary</option >
+            <option value="Operations" >Operations</option >
         </select ><span id="hireStatusError" class="errorSpan" >*</span >
         <br >
     </div >
