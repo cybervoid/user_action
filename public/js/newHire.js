@@ -32,23 +32,32 @@ var App = App || {};
         });
 
         $('#location').change(function () {
-            if ($('#location').val() == 'empty') {
-                $('#location').toggleClass('inputRender', true);
-                $('#locationError').html('*');
-            }
-            else {
+
+            if ($('#location').val() != 'empty') {
                 $('#location').toggleClass('validateError', false);
                 $('#location').toggleClass('inputRender', true);
                 $('#locationError').html('');
-                if ($('#location').val() == "Remote Users") {
+            }
+
+            $('#location_Other').val("");
+            $('#location_Other_Span').hide();
+
+
+            switch ($('#location').val()) {
+                case "empty":
+                    $('#location').toggleClass('inputRender', true);
+                    $('#locationError').html('*');
+                    break;
+                case "Rye Brook":
+                    $('#illyRyeBrook').prop("checked", true);
+                    break;
+                case "New York City":
+                    $('#illyNYCTeam').prop("checked", true);
+                    break;
+                case "Remote Users":
                     $('#location_Other_Span').show();
                     $('#location_Other').focus();
-                }
-                else {
-                    $('#location_Other').val("");
-                    $('#location_Other_Span').hide();
-                }
-
+                    break;
             }
 
         });

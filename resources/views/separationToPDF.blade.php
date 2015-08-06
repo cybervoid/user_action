@@ -10,7 +10,7 @@
 
 
     @if (isset($req["nickname"]))
-        <p ><span >Nickname (if applicable): </span >{{ $req["nickname"] }}</p >
+        <p ><span >Buddy Name: </span >{{ $req["nickname"] }}</p >
     @endif
 
 

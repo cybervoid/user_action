@@ -53,8 +53,12 @@ class SeparationController extends Controller
     public function add(Request $req)
     {
 
+        $name = trim($req->request->get('name'));
+        $lastName = trim($req->request->get('lastName'));
+
+
         // generate reports
-        $separationReport = \Config::get('app.separationReportsPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName') . '.pdf';
+        $separationReport = \Config::get('app.separationReportsPrefix') . $name . ' ' . $lastName . '.pdf';
         $separationReport = Reports::escapeReportName($separationReport);
         Reports::generateReport($separationReport, \Config::get('app.separationReportsPath'), $req->request->get('reportType'), $req);
 
@@ -62,7 +66,7 @@ class SeparationController extends Controller
         //send the email
         $to = \Config::get('app.servicedesk'); //$to = 'rafael.gil@illy.com';
         $ccRecipients = MyMail::emailRecipients($req);
-        $subject = \Config::get('app.subjectPrefix') . $req->request->get('name') . ' ' . $req->request->get('lastName');
+        $subject = \Config::get('app.subjectPrefix') . $name . ' ' . $lastName;
         $attachment = \Config::get('app.separationReportsPath') . $separationReport;
         $attachment = isset($attachment) ? file_exists($attachment) ? $attachment : false : null;
 
@@ -103,15 +107,15 @@ class SeparationController extends Controller
         }
         else
         {
-            Schedule::addSchedule($req->request->get('termDate'), $userName, $req->request->get('name') . ' ' . $req->request->get('lastName'), 'separation', isset($disableUser), \Config::get('app.separationReportsPath') . $separationReport, $req->request->get('iTDeptEmail'));
+            Schedule::addSchedule($req->request->get('termDate'), $userName, $name . ' ' . $lastName, 'separation', isset($disableUser), \Config::get('app.separationReportsPath') . $separationReport, $req->request->get('iTDeptEmail'));
         }
 
         // add new entry to the schedule system with due date 6 month after effective date for AD deletion
         $dueDate = date('m/d/Y', strtotime('+6 month', strtotime($req->request->get('termDate'))));
-        Schedule::addSchedule($dueDate, $userName, $req->request->get('name') . ' ' . $req->request->get('lastName'), 'separation_reminder', $req->request->get('termDate'), \Config::get('app.separationReportsPath') . $separationReport, $req->request->get('generalComments'));
+        Schedule::addSchedule($dueDate, $userName, $name . ' ' . $lastName, 'separation_reminder', $req->request->get('termDate'), \Config::get('app.separationReportsPath') . $separationReport, $req->request->get('generalComments'));
 
 
-        return view('thankYou', ['name' => $req->request->get('name'), 'lastName' => $req->request->get('lastName'),
+        return view('thankYou', ['name' => $name, 'lastName' => $lastName,
             'separationReport' => $separationReport, 'reportType' => 'separation',
             'separationRouteURL' => \Config::get('app.separationURL'), 'sendMail' => $ccRecipients]);
 
@@ -129,8 +133,16 @@ class SeparationController extends Controller
         $email = preg_replace('/\s+/', '', $email);
 
 
-        $ad = ActiveDirectory::get_connection();
-        $entry = $ad->getEmail($email);
+        if (env('APP_STATUS') == 'offline')
+        {
+            $entry = '{"count":1,"0":{"sn":{"count":1,"0":"Gil"},"0":"sn","title":{"count":1,"0":"IT Infrastructure Engineer & Support"},"1":"title","givenname":{"count":1,"0":"Rafael"},"2":"givenname","memberof":{"count":15,"0":"CN=SlideShow_SecurityGrp_NA,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM","1":"CN=HR-Tool,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM","2":"CN=Wordpress-editor,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM","3":"CN=si_infra_all,OU=Distribution,OU=Groups,OU=HeadQuarter,OU=Italy,DC=ILLY-DOMAIN,DC=COM","4":"CN=RoomUsersUSA,OU=Rooms,OU=New York City,OU=North America,DC=ILLY-DOMAIN,DC=COM","5":"CN=VNC Admin,OU=Service Groups,DC=ILLY-DOMAIN,DC=COM","6":"CN=PC Admins,OU=Service Groups,DC=ILLY-DOMAIN,DC=COM","7":"CN=illyusa Rye Brook Distribution Group,OU=Distribution Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM","8":"CN=Report ServiceDesk IC Nord America,CN=Users,DC=ILLY-DOMAIN,DC=COM","9":"CN=Finance NA,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM","10":"CN=VPN illy,OU=Security,OU=Groups,OU=HeadQuarter,OU=Italy,DC=ILLY-DOMAIN,DC=COM","11":"CN=Marketing NA,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM","12":"CN=Information Technology NA,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM","13":"CN=illyusaTeam Distribution Group,OU=Distribution Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM","14":"CN=Wifi Employees,OU=Security,OU=Groups,OU=HeadQuarter,OU=Italy,DC=ILLY-DOMAIN,DC=COM"},"3":"memberof","department":{"count":1,"0":"IT"},"4":"department","company":{"count":1,"0":"illy caff\u00e8 North America, Inc."},"5":"company","samaccountname":{"count":1,"0":"gilra"},"6":"samaccountname","mail":{"count":1,"0":"Rafael.Gil@illy.com"},"7":"mail","manager":{"count":1,"0":"CN=Roy Forster,OU=Users,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM"},"8":"manager","count":9,"dn":"CN=Rafael Gil,OU=Users,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM"}}';
+        }
+        else
+        {
+            $ad = ActiveDirectory::get_connection();
+            $entry = $ad->getEmail($email);
+        }
+
         //$entry = ActiveDirectory::getEmail($email);
 
 

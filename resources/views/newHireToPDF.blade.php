@@ -34,7 +34,7 @@
 
 
     @if ($req["buddy"]!='')
-    <p ><span >Nickname (if applicable): </span >{{ $req["buddy"] }}</p >
+        <p ><span >Buddy Name: </span >{{ $req["buddy"] }}</p >
 @endif
 
 

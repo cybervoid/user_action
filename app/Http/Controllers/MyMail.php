@@ -72,6 +72,9 @@ class MyMail extends Controller
             $ccRecipients[$req->request->get('managerEmail')] = $req->request->get('managerEmail');
         }
 
+        // per Maren request, add Mark Romano to all notifiations
+        $ccRecipients['Mark.Romano@illy.com'] = 'Mark.Romano@illy.com';
+
         return $ccRecipients;
     }
 
