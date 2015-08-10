@@ -111,7 +111,7 @@ class ActiveDirectory
     public function getEmail($email)
     {
         $attributes = array('dn', 'title', 'givenname', 'sn', 'manager', 'company', 'department', "memberOf",
-            'samaccountname', 'mail');
+            'samaccountname', 'mail', 'mobile');
 
         $result = ldap_search(ActiveDirectory::$conn, "OU=North America,DC=ILLY-DOMAIN,DC=COM", "mail={$email}", $attributes);
 

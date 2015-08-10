@@ -54,6 +54,9 @@ var App = App || {};
                 case "New York City":
                     $('#illyNYCTeam').prop("checked", true);
                     break;
+                case "Canada":
+                    $('#illyCanadaTeam').prop("checked", true);
+                    break;
                 case "Remote Users":
                     $('#location_Other_Span').show();
                     $('#location_Other').focus();

@@ -299,6 +299,8 @@
                                 value="illyryebrook" >illyusa Rye Brook Distribution Group</label ></li >
             <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]" id="illyNYCTeam"
                                 value="illyusa NYC Team" >illy NYC Team Distribution Group</label ></li >
+            <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]" id="illyCanadaTeam"
+                                value="illyCanada" >illy Canada Distribution Group</label ></li >
             <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]" id="illyManagers"
                                 value="illyManagers" >illyusa Managers Distribution Group</label ></li >
             <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]" id="illySales"
@@ -325,12 +327,13 @@
                                 value="e-mail Scanner (if applicable)" > e-mail Scanner (if applicable)</label ></li >
 
         </ul >
-
+</span >
 <br >
         <div class="subHeader" >Specific assets and or functionalities needed: not listed on the User Notification form
             should be confirmed with hiring manager by IT.
             <p ></p >
-            SPECIFIC INSTRUCTIONS HERE:<P ></P ></div >
+
+            <P ></P ></div >
 <div class="subHeader" >IT Oracle Specialist</div >
 <label >
     <input type="checkbox" class="inputRender" name="oracle" id="oracle"
@@ -398,14 +401,16 @@
 
 
     <br ><br >
-Aditional Instructions if applicable: <br >
+<span ><div class="subHeader" >
+        SPECIFIC INSTRUCTIONS HERE:
+    </div ></span >
 <textarea class="inputRender" cols="40" rows="6" id="comments" name="comments" ></textarea >
 
     <br ><br >
     <input type="submit" class="inputRender" name="submit" id="submit" >
     <input type="button" class="inputRender" id="cancel" value="Cancel" >
 
-</div >
+
 
 @endsection
 

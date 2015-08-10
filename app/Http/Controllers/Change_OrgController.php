@@ -54,8 +54,11 @@ class Change_OrgController extends Controller
     public function lookup(Request $req)
     {
         $uName = $req->request->get('uname');
-        $ldap = ActiveDirectory::ldap_MyConnect();
-        $result = ActiveDirectory::query("samaccountname={$uName}");
+        //$ldap = ActiveDirectory::ldap_MyConnect();
+        //$result = ActiveDirectory::query("samaccountname={$uName}");
+
+        echo 'pepe';
+        die;
 
         $fromAD["givenname"] = $result[0]['givenname'][0];
         $fromAD["sn"] = $result[0]['sn'][0];
