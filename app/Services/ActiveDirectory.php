@@ -241,12 +241,13 @@ class ActiveDirectory
     {
 
         // fetch the info from AD
-        $attributes = array('givenname', 'sn', 'mail', 'samaccountname');
+        $attributes = array('givenname', 'sn', 'mail', 'samaccountname', 'mail');
 
 
-        //$result = ldap_search($ldap, "OU=North America,DC=ILLY-DOMAIN,DC=COM", "(|(givenname={$param})(sn={$param}))", $attributes);
-        $result = ldap_search(static::$conn, "OU=North America,DC=ILLY-DOMAIN,DC=COM", "(&(!(userAccountControl:1.2.840.113556.1.4.803:=2))(|(givenname={$param})(sn={$param})))", $attributes);
+        $mail = str_replace(' ', '.', $param);
 
+        //$result = ldap_search(static::$conn, "OU=North America,DC=ILLY-DOMAIN,DC=COM", "(&(!(userAccountControl:1.2.840.113556.1.4.803:=2)) (|(givenname={$param})(sn={$param}))  )", $attributes);
+        $result = ldap_search(static::$conn, "OU=North America,DC=ILLY-DOMAIN,DC=COM", "(&(!(userAccountControl:1.2.840.113556.1.4.803:=2)) ( |(|(givenname={$param})(sn={$param})) (mail={$mail}))  )", $attributes);
         return ldap_get_entries(static::$conn, $result);
 
     }
@@ -254,7 +255,7 @@ class ActiveDirectory
     public function autocomplete(Request $req)
     {
 
-        $consult = $this->lookupUser($req->request->get('term') . '*');
+        $consult = $this->lookupUser('*' . $req->request->get('term') . '*');
 
         $result = [];
         for ($i = 0; $i < $consult["count"]; $i++)

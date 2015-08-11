@@ -67,12 +67,7 @@ var App = App || {};
 
         $("#separation").submit(function () {
 
-            var result = validateSubmit();
-
-            if (result) {
-                $("#submit").attr('disabled', 'disabled');
-            }
-            return result;
+            return false;
         });
 
         function validateSubmit() {
@@ -149,6 +144,7 @@ var App = App || {};
                 })
                     .done(function (msg) {
                         $('#homeMenu').html('');
+
                         $('#report').html(App.templates.separation(msg));
 
                         findGroupMatch(msg["groups"]);
