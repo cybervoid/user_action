@@ -124,7 +124,10 @@ var App = App || {};
             },
             response: function (event, ui) {
                 $("#searchProgress").html("");
-                console.log('response triggered');
+                if (ui.content.length === 0) {
+                    $('#report').html('<span class="errorSpan">The user was not found in the system...</span>');
+                }
+
             },
             select: function (event, ui) {
                 $("#email").val(ui.item.label);
