@@ -148,9 +148,6 @@ class SeparationController extends Controller
         $ad = ActiveDirectory::get_connection();
         $entry = $ad->getEmail($email);
 
-        print_r($entry);
-        die;
-
 
         $fromAD["givenname"] = $entry[0]["givenname"][0];
         $fromAD["sn"] = $entry[0]["sn"][0];
@@ -168,7 +165,8 @@ class SeparationController extends Controller
         }
 
         $fromAD["sAMAccountName"] = $entry[0]["samaccountname"][0];
-
+        $fromAD["mobile"] = (isset($entry[0]["mobile"][0]) ? $entry[0]["mobile"][0] : '');
+        $fromAD["telephonenumber"] = (isset($entry[0]["telephonenumber"][0]) ? $entry[0]["telephonenumber"][0] : '');
 
         // get manager name and email
         if (isset($entry[0]['manager'][0]))

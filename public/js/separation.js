@@ -151,6 +151,14 @@ var App = App || {};
                         $('#homeMenu').html('');
                         $('#report').html(App.templates.separation(msg));
 
+                        // check if the user has phones
+                        if (msg["mobile"] != '') {
+                            $("#cellphone").prop('checked', true);
+                        }
+                        if (msg["telephonenumber"] != '') {
+                            $("#phone").prop('checked', true);
+                        }
+
                         findGroupMatch(msg["groups"]);
                         $("#cancel").click(function () {
                             document.location = '/';
