@@ -20,7 +20,6 @@ function findGroupMatch(groups) {
                 }
                 //console.log('valor de this: ' + $(this).text() + ' valor del otro: ' + groups[index]);
                 if ($(this).text() == groups[index]){
-                    console.log('found for: ' + $(this).text());
                     $(this).find('input[type="checkbox"]').prop('checked', true)
                 }
             });

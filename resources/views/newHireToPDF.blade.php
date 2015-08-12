@@ -34,7 +34,7 @@
 
 
     @if ($req["buddy"]!='')
-    <p ><span >Nickname (if applicable): </span >{{ $req["buddy"] }}</p >
+        <p ><span >Buddy Name: </span >{{ $req["buddy"] }}</p >
 @endif
 
 
@@ -119,7 +119,7 @@
 @endif
 
 
-<p ><span >Specific assets and or functionalities needed: not listed on the User Notification form should be confirmed with hiring manager by IT.<p ></p >SPECIFIC INSTRUCTIONS HERE:<P ></P ></span >
+    <p ><span >Specific assets and or functionalities needed: not listed on the User Notification form should be confirmed with hiring manager by IT.<p ></p ><P ></P ></span >
 </p >
 
 
@@ -162,8 +162,10 @@
 
 
 @if($req["comments"]!="")
-<p ><span >Comments: </span ></p >
+    <br >
+    <p ><span >SPECIFIC INSTRUCTIONS HERE: </span ></p >
 {{ $req["comments"] }}
+    <p ></p ><br >
 @endif
 
 

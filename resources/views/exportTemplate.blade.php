@@ -54,14 +54,14 @@
     @yield('content')
 
 
-    <table border="0" width="50%" align="center" >
+    <table border="0" width="80%" align="center" >
         <tr align="center" >
             <td align="left" >
                 <span class="bold" >Printed name:
             <p >Date: {{ date('m-d-Y') }}</p ></span >
             </td >
 
-            <td align="right" ><span class="bold" >Maren Gizicki, HR Manager
+            <td align="right" valign="bottom" ><span class="bold" >Maren Gizicki, HR Manager
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _____________________ Signature</span >
             </td >
         </tr >
