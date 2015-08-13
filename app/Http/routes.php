@@ -54,6 +54,7 @@ todo para los newhires ponerlos en canada, verificar si hay un grupo en AD para 
 todo hacer el formulario de payroll para los separations
 todo para separation el grupo de illyusa Sales no está funcionando para salir autodetectado, problemas con el javascript
 todo optimizar los templates a PDF y poner cosas en el main template
+todo al insertar un nombre con espacio aún sale en el nombre del reporte.
 
 
 

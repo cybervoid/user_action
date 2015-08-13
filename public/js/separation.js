@@ -82,6 +82,10 @@ var App = App || {};
                 else {
                     $('#termDateError').html('');
                 }
+
+            }
+            else {
+                return false;
             }
 
 
