@@ -57,10 +57,15 @@ class SeparationController extends Controller
         $lastName = trim($req->request->get('lastName'));
 
 
-        // generate reports
+        // generate separation report
         $separationReport = \Config::get('app.separationReportsPrefix') . $name . ' ' . $lastName . '.pdf';
         $separationReport = Reports::escapeReportName($separationReport);
         Reports::generateReport($separationReport, \Config::get('app.separationReportsPath'), $req->request->get('reportType'), $req);
+
+        // generate payroll separtion report
+        $payrollSeparationReport = \Config::get('app.payrollSeparationReportsPrefix') . $name . ' ' . $lastName . '.pdf';
+        $payrollSeparationReport = Reports::escapeReportName($payrollSeparationReport);
+        Reports::generateReport($payrollSeparationReport, \Config::get('app.payrollSeparationReportsPath'), 'payroll_separation', $req);
 
 
         //send the email
@@ -117,7 +122,9 @@ class SeparationController extends Controller
 
         return view('thankYou', ['name' => $name, 'lastName' => $lastName,
             'separationReport' => $separationReport, 'reportType' => 'separation',
-            'separationRouteURL' => \Config::get('app.separationURL'), 'sendMail' => $ccRecipients]);
+            'separationRouteURL' => \Config::get('app.separationURL'), 'sendMail' => $ccRecipients,
+            'payrollSeparationReport' => $payrollSeparationReport,
+            'payrollSeparationRouteURL' => \Config::get('app.payrollSeparationURL')]);
 
     }
 

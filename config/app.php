@@ -4,15 +4,17 @@ return $settings = [
 
 
     'newHireReportsPrefix' => 'Action User Notification-', 'separationReportsPrefix' => 'Separation Notification-',
-    'payrollReportsPrefix' => 'Payroll Notification-',
+    'payrollNewHireReportsPrefix' => 'Payroll Notification-',
+    'payrollSeparationReportsPrefix' => 'Payroll Separation Notification-',
 
     // location for the reports
 
     'newHireReportsPath' => storage_path() . '/reports/New_Hires/', 'newHireURL' => '/report/newhire/',
-
     'separationReportsPath' => storage_path() . '/reports/Separations/', 'separationURL' => '/report/separation/',
-
-    'payrollReportsPath' => storage_path() . '/reports/Payroll/', 'payrollURL' => '/report/payroll/',
+    'payrollNewHireReportsPath' => storage_path() . '/reports/Payroll/New_Hires/',
+    'payrollNewHireURL' => '/report/payrollNewHire/',
+    'payrollSeparationReportsPath' => storage_path() . '/reports/Payroll/Separations/',
+    'payrollSeparationURL' => '/report/payrollSeparation/',
 
     // filepath for the schedule batch file
     'schedule_batch' => storage_path() . '/scheduled_batch',

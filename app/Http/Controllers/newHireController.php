@@ -69,9 +69,9 @@ class newHireController extends Controller
 
 
         //generate payroll Report
-        $payrollReport = \Config::get('app.payrollReportsPrefix') . $name . ' ' . $lastName . '.pdf';
+        $payrollReport = \Config::get('app.payrollNewHireReportsPrefix') . $name . ' ' . $lastName . '.pdf';
         $payrollReport = Reports::escapeReportName($payrollReport);
-        Reports::generateReport($payrollReport, \Config::get('app.payrollReportsPath'), 'payroll', $req);
+        Reports::generateReport($payrollReport, \Config::get('app.payrollNewHireReportsPath'), 'payroll', $req);
 
         //send the email
         $to = \Config::get('app.servicedesk');
@@ -154,7 +154,8 @@ class newHireController extends Controller
         return view('thankYou', ['name' => $name, 'lastName' => $lastName,
             'newHireReport' => $newHireReport, 'reportType' => 'newhire',
             'newHireRouteURL' => \Config::get('app.newHireURL'), 'sendMail' => $ccRecipients,
-            'payrollReport' => $payrollReport, 'payrollRouteURL' => \Config::get('app.payrollURL')]);
+            'payrollNewHireReport' => $payrollReport,
+            'payrollNewHireRouteURL' => \Config::get('app.payrollNewHireURL')]);
     }
 
     public function checkEmail(Request $req)

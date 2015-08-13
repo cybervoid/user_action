@@ -12,7 +12,8 @@
 <table border="0" width="100%" >
     <tr >
         <td ><p ><span class="bold" >Department/ Dept Code: </span >{{ $req["department"] }}</p ></td >
-        <td ><p ><span class="bold" >Employee ID #: </span >{{ $req["employee"] }}</p ></td >
+        <td ><p ><span class="bold" >Employee ID #: </span >{{ $req["employee"]!='' ? $req["employee"]:'TBD' }}</p >
+        </td >
         <td ><p ><span class="bold" >Date of Birth: </span >{{ $req["birthDate"] ?: "-" }}</p ></td >
     </tr >
 </table >
@@ -72,46 +73,41 @@
             @if($req["salaryType"]!="")
             {{$req["salaryType"] }}
             @else
-            @if($req["salary"]!="")
-            (Salary type TBD)
-            @endif
+                {{$req["salary"]!='' ? $req["salary"]:'(Salary type TBD)' }}
+
             @endif
         </td >
 
         <td >
-            @if($req["salesLevel"]!="")
-            <span class="bold" >Sales Level:</span > {{ $req["salesLevel"] }}
-            @endif
+            <span class="bold" >Sales Level:</span >
+            {{$req["salesLevel"]!='' ? $req["salesLevel"]:'-' }}
         </td >
-        <td ><span class="bold" >Bonus:</span >
-            @if($req["bonus"]!="")
-            {{ $req["bonus"] }}
-            @else -
-            @endif
+        <td ><span class="bold" >Bonus</span >
+            {{$req["bonus"]!='' ? $req["bonus"]:'-' }}
 
         </td >
 
         <td >
-            @if($req["trans"]!="")
             <span class="bold" >Transportation Allowance: </span >
+            {{$req["trans"]!='' ? $req["trans"]:'-' }}
 
-            {{ $req["trans"] }}
-            @else
-            -
-            @endif
         </td >
 
     </tr >
 </table ><br style="clear: left" ><br >
 <hr >
 <span class="bold" >Employee Benefits Section: </span >
-<p ><span >HRB Entry Date: {{ $req["HRB"] }}</span ></p ><br >
+<p ><span >
+
+        HRB Entry Date:
+        {{$req["HRB"]!='' ? $req["HRB"]:'-' }}
+    </span ></p ><br >
 <p >
 
 
+
     @if($req["payrollComments"]!="")
-<hr ><span class="bold" >Comments/Notes: </span >
-{{ $req["payrollComments"] }}
+        <span class="bold" ><hr >Comments/Notes: </span > {{$req["payrollComments"]}}
 @endif
 
 

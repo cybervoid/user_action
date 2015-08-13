@@ -29,13 +29,13 @@ class Reports
         $myFile = storage_path() . "/export.html";
         $toPDF = fopen($myFile, "w+");
 
+
         //get the domain so I can load the image on the PDF
         $parse = parse_url($req->url());
 
+
         $myView = view($reportType . 'ToPDF', ['req' => $req->request->all(),
             'server' => $parse['scheme'] . '://' . $parse['host'] . '/',]);
-
-        //return $myView;
 
 
         if (!fwrite($toPDF, $myView))
@@ -54,7 +54,7 @@ class Reports
             $wkhtmltopdf = env('wkhtmltopdf');
         }
 
-        //
+
         exec($wkhtmltopdf . ' --margin-top 5 --margin-bottom 5' . ' ' . $myFile . ' ' . '"' . $location . $reportName . '"', $returnvar);
 
     }
