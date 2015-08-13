@@ -15,72 +15,75 @@ var App = App || {};
             }
         });
 
+        /*
+                $("#search").click(function () {
 
-        $("#search").click(function () {
+                    //validate form first
+                    if ($("#email").val() == "") {
+                        $('#errorDiv').html('We need a valid email in order to proceed width the search');
+                        $('#email').focus();
+                        return false;
+                    }
+                    $("#errorDiv").html('');
 
-            //validate form first
-            if ($("#email").val() == "") {
-                $('#errorDiv').html('We need a valid email in order to proceed width the search');
-                $('#email').focus();
-                return false;
-            }
-            $("#errorDiv").html('');
-
-            $.ajax({
-                type: "POST",
-                url: "separation_search",
-                data: {cmd: $(this).attr('id'), email: $("#email").val() },
-                beforeSend: function () {
-                    $('<img src="images/wait.gif" align="middle">').load(function () {
-                        $(this).width(52).height(52).appendTo('#report');
-                    });
-                    $('#report').html('Processing your request ...');
-                }
-            })
-                .done(function (msg) {
-                    $('#homeMenu').html('');
-                    $('#report').html(App.templates.separation(msg));
-                    $("#cancel").click(function () {
-                        document.location = '/';
-                    });
-
-                    $("#termDate,#effectiveDate,#effectiveDate1").datepicker({
-                        onSelect: function (dateText) {
-                            $("#startDateError").html("");
+                    $.ajax({
+                        type: "POST",
+                        url: "separation_search",
+                        data: {cmd: $(this).attr('id'), email: $("#email").val() },
+                        beforeSend: function () {
+                            $('<img src="images/wait.gif" align="middle">').load(function () {
+                                $(this).width(52).height(52).appendTo('#report');
+                            });
+                            $('#report').html('Processing your request ...');
                         }
-                    });
+                    })
+                        .done(function (msg) {
+                            $('#homeMenu').html('');
+                            $('#report').html(App.templates.separation(msg));
+                            $("#cancel").click(function () {
+                                document.location = '/';
+                            });
 
-                    $('#onTimePayment').keyup(function () {
-                        $('#onetime').prop("checked", true);
-                    });
+                            $("#termDate,#effectiveDate,#effectiveDate1").datepicker({
+                                onSelect: function (dateText) {
+                                    $("#startDateError").html("");
+                                }
+                            });
 
-                    $('#severancePay,#overTime').keyup(function () {
-                        $('#severance').prop("checked", true);
-                    });
+                            $('#onTimePayment').keyup(function () {
+                                $('#onetime').prop("checked", true);
+                            });
 
-                    $('#periodPaid').keyup(function () {
-                        $('#cobra').prop("checked", true);
-                    });
+                            $('#severancePay,#overTime').keyup(function () {
+                                $('#severance').prop("checked", true);
+                            });
 
-                });
-        });
+                            $('#periodPaid').keyup(function () {
+                                $('#cobra').prop("checked", true);
+                            });
+
+                        });
+                });*/
+
 
         $("#separation").submit(function () {
 
-            return false;
-        });
-
-        function validateSubmit() {
             var cansubmit = true;
 
-            if ($('#termDate').val().length < 2) {
-                $('#termDateError').html('<span class="errorSpan"> * You have to choose a termination date before proceeding</span>');
-                errorValidation($('#termDate'), cansubmit);
-                cansubmit = false;
+
+            var value = $('#termDate').val();
+
+            if (typeof value != 'undefined') {
+                if ($('#termDate').val().length < 2) {
+                    $('#termDateError').html('<span class="errorSpan"> * You have to choose a termination date before proceeding</span>');
+                    errorValidation($('#termDate'), cansubmit);
+                    cansubmit = false;
+                }
+                else {
+                    $('#termDateError').html('');
+                }
             }
-            else {
-                $('#termDateError').html('');
-            }
+
 
             if ($('#hireStatus').val() === "empty") {
                 $('#hireStatusError').html('<span class="errorSpan"> * You have to choose a hire status before proceeding</span>');
@@ -91,6 +94,7 @@ var App = App || {};
                 $('#hireStatusError').html('');
             }
 
+
             if ($('#ptoDays').val() === "") {
                 $('#ptoDaysError').html('<span class="errorSpan"> * You have to enter a PTO time before proceeding</span>');
                 errorValidation($('#ptoDays'), cansubmit);
@@ -100,8 +104,15 @@ var App = App || {};
                 $('#ptoDaysError').html('');
             }
 
+
+            if (cansubmit) {
+                $("#submit").attr('disabled', 'disabled');
+            }
+
             return cansubmit;
-        }
+
+        });
+
 
         function errorValidation(obj, cansubmit) {
             $('#errorDiv').html("* You have some errors in your form, Please check the fields in red.");

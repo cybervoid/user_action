@@ -53,6 +53,7 @@ Route::post('lookup', 'Change_OrgController@lookup');
 todo para los newhires ponerlos en canada, verificar si hay un grupo en AD para ellos
 todo hacer el formulario de payroll para los separations
 todo para separation el grupo de illyusa Sales no está funcionando para salir autodetectado, problemas con el javascript
+todo optimizar los templates a PDF y poner cosas en el main template
 
 
 

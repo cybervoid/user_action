@@ -32,7 +32,7 @@
 
 <p ><span >Name: </span >{{ $req['name'] }} {{ $req['lastName'] }}</p >
 
-
+    $req[""]
     @if ($req["buddy"]!='')
         <p ><span >Buddy Name: </span >{{ $req["buddy"] }}</p >
 @endif
