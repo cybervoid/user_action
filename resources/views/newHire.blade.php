@@ -84,6 +84,7 @@
             <option >Marketing</option >
             <option >Human Resources</option >
             <option >Quality and Tech</option >
+            <option >Public Relations</option >
             <option value="Operations" >Operations</option >
         </select ><span id="departmentError" class="errorSpan" >*</span ><br >
     </div >
