@@ -142,64 +142,73 @@ var App = App || {};
                 if (ui.content.length === 0) {
                     $('#report').html('<span class="errorSpan">The user was not found in the system...</span>');
                 }
+                if ((ui.content.length === 1) && (ui.content[0].label.toLowerCase() == $('#email').val().toLowerCase())) {
+                    $("#email").autocomplete("close");
+                    getEmail(ui.content[0].value);
+
+                }
 
             },
             select: function (event, ui) {
                 $("#email").val(ui.item.label);
 
                 $("#errorDiv").html('');
-
-                $.ajax({
-                    type: "POST",
-                    url: "separation_search",
-                    data: {cmd: $(this).attr('id'), email: ui.item.value },
-                    beforeSend: function () {
-                        $('<img src="images/wait.gif" align="middle">').load(function () {
-                            $(this).width(52).height(52).appendTo('#report');
-                        });
-                        $('#report').html('Processing your request ...');
-                    }
-                })
-                    .done(function (msg) {
-                        $('#homeMenu').html('');
-
-                        $('#report').html(App.templates.separation(msg));
-
-                        // check if the user has phones
-                        if (msg["mobile"] != '') {
-                            $("#cellphone").prop('checked', true);
-                        }
-                        if (msg["telephonenumber"] != '') {
-                            $("#phone").prop('checked', true);
-                        }
-
-                        findGroupMatch(msg["groups"]);
-                        $("#cancel").click(function () {
-                            document.location = '/';
-                        });
-
-                        $("#termDate,#effectiveDate,#effectiveDate1").datepicker({
-                            onSelect: function (dateText) {
-                                $("#startDateError").html("");
-                            }
-                        });
-
-                        $('#onTimePayment').keyup(function () {
-                            $('#onetime').prop("checked", true);
-                        });
-
-                        $('#severancePay,#overTime').keyup(function () {
-                            $('#severance').prop("checked", true);
-                        });
-
-                        $('#periodPaid').keyup(function () {
-                            $('#cobra').prop("checked", true);
-                        });
-
-                    });
+                getEmail(ui.item.value);
                 return false;
             }
         });
+
+        function getEmail(email) {
+            $.ajax({
+                type: "POST",
+                url: "separation_search",
+                data: {cmd: $(this).attr('id'), email: email},
+                beforeSend: function () {
+                    $('<img src="images/wait.gif" align="middle">').load(function () {
+                        $(this).width(52).height(52).appendTo('#report');
+                    });
+                    $('#report').html('Processing your request ...');
+                }
+            })
+                .done(function (msg) {
+                    $('#homeMenu').html('');
+
+                    $('#report').html(App.templates.separation(msg));
+
+                    // check if the user has phones
+                    if (msg["mobile"] != '') {
+                        $("#cellphone").prop('checked', true);
+                    }
+                    if (msg["telephonenumber"] != '') {
+                        $("#phone").prop('checked', true);
+                    }
+
+                    findGroupMatch(msg["groups"]);
+                    $("#cancel").click(function () {
+                        document.location = '/';
+                    });
+
+                    $("#termDate,#effectiveDate,#effectiveDate1").datepicker({
+                        onSelect: function (dateText) {
+                            $("#startDateError").html("");
+                        }
+                    });
+
+                    $('#onTimePayment').keyup(function () {
+                        $('#onetime').prop("checked", true);
+                    });
+
+                    $('#severancePay,#overTime').keyup(function () {
+                        $('#severance').prop("checked", true);
+                    });
+
+                    $('#periodPaid').keyup(function () {
+                        $('#cobra').prop("checked", true);
+                    });
+
+                });
+
+        }
 
     });
 }(jQuery));

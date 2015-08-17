@@ -136,30 +136,48 @@ class ActiveDirectory
         $ldaprecord['department'] = $req->request->get('department');
         $ldaprecord['company'] = $req->request->get('company');
 
-        if ($req->request->get('location') == "New York City")
-        {
-            $ldaprecord['streetAddress'] = "275 Madison Avenue, 31st Floor";
-            $ldaprecord['st'] = "NY";
-            $ldaprecord['postalCode'] = "10016";
-            $ldaprecord['l'] = "New York";
-            $ldaprecord['c'] = "US";
-        }
-        else
-        {
-            if ($ldaprecord['company'] == 'Espressamente illy')
-            {
-                $ldaprecord['streetAddress'] = "800 Westchester Avenue, Suite S438";
-            }
-            else
-            {
-                $ldaprecord['streetAddress'] = "800 Westchester Avenue, Suite S440";
-            }
 
-            $ldaprecord['st'] = "NY";
-            $ldaprecord['postalCode'] = "10573";
-            $ldaprecord['l'] = "Rye Brook";
-            $ldaprecord['c'] = "US";
+        switch ($req->request->get('company'))
+        {
+            case "illy caffè North America, Inc.":
+                switch ($req->request->get('location'))
+                {
+                    case "New York City":
+                        $ldaprecord['streetAddress'] = "275 Madison Avenue, 31st Floor";
+                        $ldaprecord['st'] = "NY";
+                        $ldaprecord['postalCode'] = "10016";
+                        $ldaprecord['l'] = "New York";
+                        $ldaprecord['c'] = "US";
+                        break;
+                    default:
+                        $ldaprecord['st'] = "NY";
+                        $ldaprecord['postalCode'] = "10573";
+                        $ldaprecord['l'] = "Rye Brook";
+                        $ldaprecord['c'] = "US";
+                        $ldaprecord['streetAddress'] = "800 Westchester Avenue, Suite S440";
+
+                        break;
+                }
+                break;
+            case "Espressamente illy":
+                $ldaprecord['st'] = "NY";
+                $ldaprecord['postalCode'] = "10573";
+                $ldaprecord['l'] = "Rye Brook";
+                $ldaprecord['c'] = "US";
+                $ldaprecord['streetAddress'] = "800 Westchester Avenue, Suite S438";
+                break;
+            case "illy caffè San Francisco LLC":
+                $ldaprecord['st'] = "CA";
+                $ldaprecord['postalCode'] = "94105";
+                $ldaprecord['l'] = "San Francisco";
+                $ldaprecord['c'] = "US";
+                $ldaprecord['streetAddress'] = "535 Mission Street, Suite 1584";
+                break;
         }
+
+
+        //die;
+
 
         $ldaprecord['displayName'] = ucfirst(strtolower($lastName)) . " " . ucfirst(strtolower($name));
 

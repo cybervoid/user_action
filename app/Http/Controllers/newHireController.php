@@ -59,6 +59,10 @@ class newHireController extends Controller
     public function add(Request $req)
     {
 
+        //$ad = ActiveDirectory::get_connection();
+        //$ad->createUserAD($req);
+        //die;
+
         $name = trim($req->request->get('name'));
         $lastName = trim($req->request->get('lastName'));
 
