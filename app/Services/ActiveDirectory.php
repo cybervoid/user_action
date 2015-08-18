@@ -50,7 +50,6 @@ class ActiveDirectory
 
     public function disableUser($entry)
     {
-
         $dn = $entry[0]["dn"];
         $ac = $entry[0]["useraccountcontrol"][0];
         $disable = ($ac | 2); // set all bits plus bit 1 (=dec2)

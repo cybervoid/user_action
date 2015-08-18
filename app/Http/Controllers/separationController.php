@@ -82,8 +82,6 @@ class SeparationController extends Controller
             {
                 $m->attach($attachment);
             }
-
-
         });
 
 
@@ -101,13 +99,15 @@ class SeparationController extends Controller
             //remove user from groups
 
             $ad = ActiveDirectory::get_connection();
-            $ad->removeFromGroups($req->request->get('iTDeptEmail'), $req->request->get('sAMAccountName'));
+            $user_ad_info = $ad->getsamaccountname($req->request->get('sAMAccountName'));
+
+            $ad->removeFromGroups($req->request->get('iTDeptEmail'), $user_ad_info[0]["dn"]);
 
             //check if the user wants to disable AD user
             if (isset($disableUser))
             {
-                $ad->disableUser($userName);
-                $ad->removeUserInfo($userName);
+                $ad->disableUser($user_ad_info);
+                $ad->removeUserInfo($user_ad_info);
             }
         }
         else
