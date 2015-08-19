@@ -112,7 +112,7 @@ var App = App || {};
 
             if ($('#company').val() == "empty") {
                 $('#company').toggleClass('inputRender validateError');
-                $('#companyError').html('<span class="errorSpan"> * You have to choose a department before proceeding</span>');
+                $('#companyError').html('<span class="errorSpan"> * You have to choose a company before proceeding</span>');
                 errorValidation($('#company'), cansubmit);
                 cansubmit = false;
             }

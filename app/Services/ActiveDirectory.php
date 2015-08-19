@@ -55,6 +55,7 @@ class ActiveDirectory
         $disable = ($ac | 2); // set all bits plus bit 1 (=dec2)
         $userdata = array();
         $userdata["useraccountcontrol"][0] = $disable;
+
         return ldap_modify(static::$conn, $dn, $userdata); //change state
 
     }
@@ -69,15 +70,33 @@ class ActiveDirectory
 
         $group_info['member'] = $dn;
 
-            // get group dn
-            foreach ($groups as $item)
-            {
-                $result = ActiveDirectory::query("sAMAccountName={$item}");
-                $group_dn = $result[0]['dn'];
-                $errorFound = @ldap_mod_del(static::$conn, $group_dn, $group_info);
-            }
+        //remove from department group
+        $result = ActiveDirectory::query("distinguishedName={$dn}");
 
-            return $errorFound;
+        switch ($result[0]['department'][0])
+        {
+            case "Customer Care":
+                @ldap_mod_del(static::$conn, 'CN=Customer Care NA,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM', $group_info);
+                break;
+            case "Finance":
+                @ldap_mod_del(static::$conn, 'CN=Finance NA,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM', $group_info);
+                break;
+            case "Human Resources":
+                @ldap_mod_del(static::$conn, 'CN=Human Resources NA,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM', $group_info);
+                break;
+        }
+
+
+        // get group dn
+        foreach ($groups as $item)
+        {
+            $result = ActiveDirectory::query("sAMAccountName={$item}");
+            $group_dn = $result[0]['dn'];
+            $errorFound = @ldap_mod_del(static::$conn, $group_dn, $group_info);
+        }
+
+
+
 
         $result = false;
     }
@@ -98,11 +117,23 @@ class ActiveDirectory
 
         $dn = $entry[0]["dn"];
 
-        if(isset($entry[0]["description"])) $userdata['Description']= array();
-        if(isset($entry[0]["title"])) $userdata['title']= array();
-        if(isset($entry[0]["manager"])) $userdata['manager']= array();
+        if (isset($entry[0]["description"]))
+        {
+            $userdata['Description'] = array();
+        }
+        if (isset($entry[0]["title"]))
+        {
+            $userdata['title'] = array();
+        }
+        if (isset($entry[0]["manager"]))
+        {
+            $userdata['manager'] = array();
+        }
 
-        if (isset($userdata)) return @ldap_mod_del(static::$conn, $dn, $userdata);
+        if (isset($userdata))
+        {
+            return @ldap_mod_del(static::$conn, $dn, $userdata);
+        }
 
 
     }
@@ -175,9 +206,6 @@ class ActiveDirectory
         }
 
 
-        //die;
-
-
         $ldaprecord['displayName'] = ucfirst(strtolower($lastName)) . " " . ucfirst(strtolower($name));
 
         if ($req->request->get('location_Other') != '')
@@ -215,12 +243,14 @@ class ActiveDirectory
         $illyGroups['illyusaNorth America'] = 'CN=illyusaTeam Distribution Group,OU=Distribution Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM';
         $illyGroups['illyryebrook'] = 'CN=illyusa Rye Brook Distribution Group,OU=Distribution Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM';
         $illyGroups['illyusa NYC Team'] = 'CN=illy NYC Team Distribution Group,OU=Distribution Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM';
+        $illyGroups['illyCanada'] = 'CN=illy Canada Distribution Group,OU=Distribution Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM';
         $illyGroups['illyManagers'] = 'CN=illyusa Managers Distribution Group,OU=Distribution Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM';
         $illyGroups['illySales'] = 'CN=illyusa Sales Team Distribution Group,OU=Distribution Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM';
 
         $group_info['member'] = $dn_user;
 
         $groupsToAdd = $req->request->get('iTDeptEmail');
+
         if (isset($groupsToAdd))
         {
             foreach ($groupsToAdd as $group)
@@ -228,6 +258,21 @@ class ActiveDirectory
                 @ldap_mod_add(static::$conn, $illyGroups[$group], $group_info);
             }
         }
+
+        // add the department group
+        switch ($req->request->get('department'))
+        {
+            case "Customer Care":
+                @ldap_mod_add(static::$conn, 'CN=Customer Care NA,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM', $group_info);
+                break;
+            case "Finance":
+                @ldap_mod_add(static::$conn, 'CN=Finance NA,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM', $group_info);
+                break;
+            case "Human Resources":
+                @ldap_mod_add(static::$conn, 'CN=Human Resources NA,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM', $group_info);
+                break;
+        }
+
     }
 
     public function getManager($manager)
@@ -265,6 +310,7 @@ class ActiveDirectory
 
         //$result = ldap_search(static::$conn, "OU=North America,DC=ILLY-DOMAIN,DC=COM", "(&(!(userAccountControl:1.2.840.113556.1.4.803:=2)) (|(givenname={$param})(sn={$param}))  )", $attributes);
         $result = ldap_search(static::$conn, "OU=North America,DC=ILLY-DOMAIN,DC=COM", "(&(!(userAccountControl:1.2.840.113556.1.4.803:=2)) ( |(|(givenname={$param})(sn={$param})) (mail={$mail}))  )", $attributes);
+
         return ldap_get_entries(static::$conn, $result);
 
     }

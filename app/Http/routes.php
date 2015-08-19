@@ -55,6 +55,7 @@ todo hacer el formulario de payroll para los separations
 todo para separation el grupo de illyusa Sales no está funcionando para salir autodetectado, problemas con el javascript
 todo optimizar los templates a PDF y poner cosas en el main template
 todo al insertar un nombre con espacio aún sale en el nombre del reporte.
+todo obtener el formato de fecha que ry quiere y poner el mismo en todos en AD
 
 
 
@@ -73,8 +74,6 @@ todo automatizado para cmabiar la signature y actualizar info en AD
 
 // SEPARATION
 todo para los separation listar todos los directorios a los que el usuario está afiliado
-todo revisar que no hizo separation el mismo día a pesar que maren seleccionó el mismo día
-- todo en separation cuando el suario ponga los datos correcots en el autocompletar no esprear a darle click al resultado, mostrar el usaurio directamente
 todo al quitar info from ad ponerlas en el campo notas
 todo quitar del grupo del departamento como customer care na or finance na
 

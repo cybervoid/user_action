@@ -103,6 +103,7 @@ class newHireController extends Controller
         $ccRecipients[$to] = $to;
         $ccRecipients = array_unique($ccRecipients);
 
+        /*
 
         $illyGroups['illyusaNorth America'] = 'CN=illyusaTeam Distribution Group,OU=Distribution Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM';
         $illyGroups['illyryebrook'] = 'CN=illyusa Rye Brook Distribution Group,OU=Distribution Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM';
@@ -122,7 +123,7 @@ class newHireController extends Controller
                 }
             }
         }
-
+        */
 
         $samaacountname = strtolower(substr($lastName, 0, 5) . substr($name, 0, 2));
 
