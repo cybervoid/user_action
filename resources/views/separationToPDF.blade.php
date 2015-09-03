@@ -9,10 +9,9 @@
     <p ><span >Name: </span >{{ $req['name'] }} {{ $req['lastName'] }}</p >
 
 
-    @if (isset($req["nickname"]))
-        <p ><span >Buddy Name: </span >{{ $req["nickname"] }}</p >
+    @if ($req["buddy"]!='')
+        <p ><span >Buddy Name: </span >{{ $req["buddy"] }}</p >
     @endif
-
 
     <table width="100%" >
         <tr >
@@ -31,7 +30,12 @@
     @endif
 
 
-    <p ><span >Employee #: </span >{{ $req["employeeID"] or 'TBD' }}</p >
+    <p ><span >Employee #: </span >
+        @if($req["employeeID"]!='')
+            {{ $req["employeeID"] }}
+        @else TBD
+        @endif
+    </p >
 
 
     <div class="left3" ><span >Separation Date: </span > {{ $req["termDate"] }}</div >
