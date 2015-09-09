@@ -60,7 +60,7 @@ class ScheduleTasks extends Command
         foreach ($theDates as $date)
         {
             $current = date('m/d/Y', strtotime($date));
-            if ($current <= $today)
+            if (strtotime($current) <= strtotime($today))
             {
                 // execute the task
                 Schedule::processScheduleTasks($storedSchedules[$date][0]);
@@ -68,6 +68,7 @@ class ScheduleTasks extends Command
                 //  delete the task
                 unset($storedSchedules[$date]);
                 Schedule::saveFile($storedSchedules);
+
             }
         }
 

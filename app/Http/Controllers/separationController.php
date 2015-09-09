@@ -117,6 +117,7 @@ class SeparationController extends Controller
 
         // add new entry to the schedule system with due date 6 month after effective date for AD deletion
         $dueDate = date('m/d/Y', strtotime('+6 month', strtotime($req->request->get('termDate'))));
+
         Schedule::addSchedule($dueDate, $userName, $name . ' ' . $lastName, 'separation_reminder', $req->request->get('termDate'), \Config::get('app.separationReportsPath') . $separationReport, $req->request->get('generalComments'));
 
 
