@@ -23,7 +23,6 @@ class Change_OrgController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @return \App\Http\Controllers\Org_ChangeController
      */
 
     public function __construct()

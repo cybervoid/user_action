@@ -176,10 +176,31 @@
                         value="e-mail Scanner (if applicable)" > e-mail Scanner (if applicable)</label ></li >
     <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="laptop" value="Laptop" >
         Laptop</label ></li >
-    <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="cellphone" value="Cell Phone" > Cell
-        Phone</label ></li >
-    <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="phone" value="Phone extension" >
-        Phone extension</label ></li >
+    <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="cellphone"
+                        value="Cell Phone     {{#if mobile }}
+        (current {{ mobile }})
+    {{/if}}
+" > Cell
+        Phone
+
+        {{#if mobile }}
+            (current {{ mobile }})
+        {{/if}}
+
+
+    </label ></li >
+    <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="phone" value="Phone extension
+            {{#if telephonenumber }}
+            (current {{ telephonenumber }})
+        {{/if}}
+
+    " >
+        Phone extension
+
+        {{#if telephonenumber }}
+            (current {{ telephonenumber }})
+        {{/if}}
+    </label ></li >
     <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="software" value="Software" >
         Software</label ></li >
     <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="outlook"
