@@ -55,14 +55,15 @@
                 </p>
 
                 <div >
-                    <label >Will be working for</label >
-                    <select class="inputRender" name="company" id="company" >
-                        <option value="empty" >Select</option >
-                        <option >illy caffè North America, Inc.</option >
-                        <option >Espressamente illy</option >
-                        <option >illy caffè San Francisco LLC</option >
-                        <option >illy Espresso Canada</option >
-                    </select ><span id="companyError" class="errorSpan" >*</span ><br >
+                    @if(count($companies)>0)
+                        <label >Will be working for</label >
+                        <select class="inputRender" name="company" id="company" >
+                            <option value="empty" >Select</option >
+                            @foreach($companies as $company)
+                                <option >{{ $company }}</option >
+                            @endforeach
+                        </select ><span id="companyError" class="errorSpan" >*</span ><br >
+                    @endif
                 </div >
 
                 <p ></p >
@@ -75,19 +76,15 @@
 
                 <li >
                     <div class="left3" >
-                        <label >Department</label >
-                        <select class="inputRender" name="department" id="department" >
-                            <option value="empty" >Select</option >
-                            <option >Sales</option >
-                            <option >Customer Care</option >
-                            <option >Finance</option >
-                            <option >Information Technology</option >
-                            <option >Marketing</option >
-                            <option >Human Resources</option >
-                            <option >Quality and Tech</option >
-                            <option >Public Relations</option >
-                            <option value="Operations" >Operations</option >
-                        </select ><span id="departmentError" class="errorSpan" >*</span ><br >
+                        @if(count($departments)>0)
+                            <label >Department</label >
+                            <select class="inputRender" name="department" id="department" >
+                                <option value="empty" >Select</option >
+                                @foreach($departments as $department)
+                                    <option >{{ $department }}</option >
+                                @endforeach
+                            </select ><span id="departmentError" class="errorSpan" >*</span ><br >
+                        @endif
                     </div >
                     <div class="left3" >
                         Employee #
@@ -123,15 +120,16 @@
                 <!-- Employee New Hire Status -->
                 <li >
                     <div style="float:left; width:50%;" >
-                        <label >Employee New Hire Status</label >
-                        <select class="inputRender" name="hireStatus" id="hireStatus" >
-                            <option value="empty" >Select</option >
-                            <option value="Full-time" >Full-time</option >
-                            <option value="Part-Time" >Part-Time</option >
-                            <option value="Seasonal" >Seasonal</option >
-                            <option value="Temporary" >Temporary</option >
-                        </select ><span id="hireStatusError" class="errorSpan" >*</span >
-                        <br >
+                        @if(count($hireStatus)>0)
+                            <label >Employee New Hire Status</label >
+                            <select class="inputRender" name="hireStatus" id="hireStatus" >
+                                <option value="empty" >Select</option >
+                                @foreach($hireStatus as $status)
+                                    <option >{{ $status }}</option >
+                                @endforeach
+                            </select ><span id="hireStatusError" class="errorSpan" >*</span ><br >
+                        @endif
+
                     </div >
                     <div style="float:left; width:50%;" >
                         <select name="exepmtion" id="exepmtion" class="inputRender" >
@@ -188,15 +186,16 @@
                     <li >
 
                         <div class="left3" >
-                            <p >Payroll/Salary:</p >
                             <input type="text" class="inputRender" name="salary" id="salary" style="width: 70px" >
-                            <select name="salaryType" id="salaryType" class="inputRender" >
-                                <option value="" >Select</option >
-                                <option value="Annual Salary" >Annual Salary</option >
-                                <option value="Hourly" >Hourly</option >
-                                <option value="Half Month" >Half Month</option >
-                                <option value="Other" >Other</option >
-                            </select >
+                            @if(count($salaryType)>0)
+                                <p >Payroll/Salary:</p >
+                                <select name="salaryType" id="salaryType" class="inputRender" >
+                                    <option value="" >Select</option >
+                                    @foreach($salaryType as $type)
+                                        <option >{{ $type }}</option >
+                                    @endforeach
+                                </select ><span id="hireStatusError" class="errorSpan" >*</span ><br >
+                            @endif
                         </div >
                         <div class="left3" >
                             <p >Sales level</p >
@@ -260,15 +259,17 @@
                 <hr >
 
                 <li >
-                    <label >Location</label >
-                    <select class="inputRender" name="location" id="location" >
-                        <option value="empty" >Select</option >
-                        <option value="Rye Brook" >Rye Brook</option >
-                        <option value="New York City" >NYC</option >
-                        <option value="Canada" >Canada</option >
-                        <option value="Scottsdale" >Scottsdale</option >
-                        <option value="Remote Users" >Other</option >
-                    </select ><span id="locationError" class="errorSpan" >*</span >
+
+
+                    @if(count($locations)>0)
+                        <label >Location</label >
+                        <select class="inputRender" name="location" id="location" >
+                            <option value="empty" >Select</option >
+                            @foreach($salaryType as $type)
+                                <option >{{ $type }}</option >
+                            @endforeach
+                        </select ><span id="locationError" class="errorSpan" >*</span >
+                    @endif
         <span id="location_Other_Span" hidden="true" >
             <input class="inputRender" type="text" name="location_Other" id="location_Other" >
             </span >
