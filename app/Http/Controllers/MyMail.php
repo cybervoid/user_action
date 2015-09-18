@@ -29,7 +29,7 @@ class MyMail extends Controller
 
 
         $iTDeptEmail = $req->request->get('iTDeptEmail');
-        if (isset($iTDeptEmail))
+        if ((isset($iTDeptEmail)) || (isset($iTDept)))
         {
             $ccRecipients[\Config::get('app.eMailIT')] = \Config::get('app.eMailIT');
         }
