@@ -29,19 +29,8 @@ Route::post('separation_add', 'SeparationController@add');
 
 
 Route::get('change_org', 'Change_OrgController@index');
-Route::get('lookup_chng_org', 'ActiveDirectory@lookup_chng_org');
+Route::post('org_change_lookup', 'Change_OrgController@lookup');
 //Route::get('lookup/{uname}', 'Change_OrgController@lookup')->where('name', '[a-zA-Z0-9 -]');
-Route::post('lookup', 'Change_OrgController@lookup');
-
-
-
-
-
-
-
-
-
-
 
 
 /*

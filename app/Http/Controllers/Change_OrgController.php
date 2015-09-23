@@ -3,7 +3,8 @@
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Services\ActiveDirectory;
+//use App\Services\ActiveDirectory;
+use App\Services\Lookup;
 
 
 class Change_OrgController extends Controller
@@ -52,38 +53,7 @@ class Change_OrgController extends Controller
 
     public function lookup(Request $req)
     {
-        $uName = $req->request->get('uname');
-        //$ldap = ActiveDirectory::ldap_MyConnect();
-        //$result = ActiveDirectory::query("samaccountname={$uName}");
-
-        echo 'pepe';
-        die;
-
-        $fromAD["givenname"] = $result[0]['givenname'][0];
-        $fromAD["sn"] = $result[0]['sn'][0];
-        $fromAD["title"] = $result[0]['title'][0];
-        $fromAD["department"] = $result[0]['department'][0];
-        $fromAD["company"] = $result[0]['company'][0];
-        $manager = $result[0]['manager'][0];
-        $manager = substr($manager, 3, strpos($manager, ',') - 3);
-        $fromAD["manager"] = $manager;
-
-        // get the group info
-        if (isset($result[0]["memberof"]["count"]) > 0)
-        {
-
-            //create arry with user's groups
-            for ($i = 0; $i < $result[0]["memberof"]["count"]; $i++)
-            {
-                $fromAD["groups"][] = substr($result[0]["memberof"][$i], 3, strpos($result[0]["memberof"][$i], ',') - 3);
-
-            }
-        }
-
-        $response = new Response(json_encode($fromAD), 200, ['Content-Type' => 'application/json']);
-
-        return $response;
-
+        return Lookup::lookupUser($req);
     }
 
 

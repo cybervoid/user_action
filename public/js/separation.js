@@ -15,61 +15,9 @@ var App = App || {};
             }
         });
 
-        /*
-                $("#search").click(function () {
-
-                    //validate form first
-                    if ($("#email").val() == "") {
-                        $('#errorDiv').html('We need a valid email in order to proceed width the search');
-                        $('#email').focus();
-                        return false;
-                    }
-                    $("#errorDiv").html('');
-
-                    $.ajax({
-                        type: "POST",
-                        url: "separation_search",
-                        data: {cmd: $(this).attr('id'), email: $("#email").val() },
-                        beforeSend: function () {
-                            $('<img src="images/wait.gif" align="middle">').load(function () {
-                                $(this).width(52).height(52).appendTo('#report');
-                            });
-                            $('#report').html('Processing your request ...');
-                        }
-                    })
-                        .done(function (msg) {
-                            $('#homeMenu').html('');
-                            $('#report').html(App.templates.separation(msg));
-                            $("#cancel").click(function () {
-                                document.location = '/';
-                            });
-
-                            $("#termDate,#effectiveDate,#effectiveDate1").datepicker({
-                                onSelect: function (dateText) {
-                                    $("#startDateError").html("");
-                                }
-                            });
-
-                            $('#onTimePayment').keyup(function () {
-                                $('#onetime').prop("checked", true);
-                            });
-
-                            $('#severancePay,#overTime').keyup(function () {
-                                $('#severance').prop("checked", true);
-                            });
-
-                            $('#periodPaid').keyup(function () {
-                                $('#cobra').prop("checked", true);
-                            });
-
-                        });
-                });*/
-
-
         $("#separation").submit(function () {
 
             var cansubmit = true;
-
 
             var value = $('#termDate').val();
 

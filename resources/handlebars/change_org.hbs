@@ -3,26 +3,28 @@
 
     <input type="hidden" name="reportType" id="reportType" value="change_org" >
 
-    <div class="left" ><span class="bold" >Name: </span >
+    <div class="left" >
         <label >Name</label >
-        <input type="text" class="inputRender" name="name" id="name" value="{{ givenname }}" >
+        <input type="text" class="inputRender" name="name" id="name" value="{{ givenname }}" required >
+        <span class="errorSpan" >*</span >
     </div >
     <div class="left" >
         <label >Last Name</label >
-        <input type="text" class="inputRender" name="lastName" id="lastName" value="{{ sn }}" >
+        <input type="text" class="inputRender" name="lastName" id="lastName" value="{{ sn }}" required >
+        <span class="errorSpan" >*</span >
     </div >
 
-    <br >
+    <p ></p ><br ><br >
 
-    <p ></p ><br >
 
+    <div class="left" >
+        <label >Email</label >
+        <input type="text" class="inputRender" name="newEmail" id="newEmail" value="{{ mail }}" required >
+        <span class="errorSpan" >*</span >
+    </div >
     <div class="left" >
         <label >Employee ID #:</label >
         <input class="inputRender" name="employeeID" style="width: 80px" >
-    </div >
-    <div class="left" >
-        <label >NickName</label >
-        <input type="text" class="inputRender" name="nickname" id="nickname" >
     </div >
 
     <p ></p ><br ><br >
@@ -30,6 +32,7 @@
     <div >
         <label >Title:</label >
         <input type="text" size="50%" name="title" class="inputRender" value="{{ title }}" required="" >
+        <span class="errorSpan" >*</span >
     </div >
 
     <p ></p ><br >
@@ -37,7 +40,7 @@
     <div class="left" >
         <label >Department</label >
         <select class="inputRender" name="department" id="department" >
-            <option value="empty" >Select</option >
+            <option value="" >Select</option >
             <option >Sales</option >
             <option >Customer Care</option >
             <option >Finance</option >
@@ -54,7 +57,7 @@
 
         <label >Company</label >
         <select class="inputRender" name="company" id="company" >
-            <option value="empty" >Select</option >
+            <option value="" >Select</option >
             <option >illy caffè North America, Inc.</option >
             <option >Espressamente illy</option >
             <option >illy Espresso Canada</option >

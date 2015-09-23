@@ -10,7 +10,7 @@ var App = App || {};
         $('#user').focus();
 
         $("#user").autocomplete({
-            source: "/lookup_chng_org",
+            source: "/autocomplete",
             minLength: 2,
             search: function (event, ui) {
                 $("#searchProgress").html("");
@@ -28,8 +28,8 @@ var App = App || {};
 
                 $.ajax({
                     type: "POST",
-                    url: "lookup",
-                    data: {uname: ui.item.value },
+                    url: "org_change_lookup",
+                    data: {email: ui.item.value},
                     beforeSend: function () {
                         $('<img src="images/wait.gif" align="middle">').load(function () {
                             $(this).width(52).height(52).appendTo('#report');
@@ -51,7 +51,8 @@ var App = App || {};
                             }
                         });
 
-                        //set default department
+                        changeName();
+                        //set defaults
                         lookupDepartment(msg["department"]);
                         lookupCompany(msg["company"])
                         findGroupMatch(msg["groups"]);
@@ -60,6 +61,12 @@ var App = App || {};
                 return false;
             }
         });
+
+        function changeName() {
+            $("#name, #lastName").keyup(function () {
+                $('#newEmail').val($('#name').val().toLowerCase() + '.' + $('#lastName').val().toLowerCase() + '@illy.com');
+            });
+        }
 
         function lookupDepartment(department) {
             if (department != undefined) {
@@ -81,6 +88,27 @@ var App = App || {};
             }
 
         }
+
+        $("#org_change").submit(function () {
+
+            var canSubmit = false;
+
+            $('#departmentError').html('*');
+            if ($('#department').val() === "") {
+                $('#departmentError').html('<div> * You have to choose a department before proceeding</div>');
+                canSubmit = false;
+            }
+
+            $('#companyError').html('*');
+            if ($('#company').val() === "") {
+                $('#companyError').html('<div> * You have to choose a company before proceeding</div>');
+                canSubmit = false;
+            }
+
+
+            return canSubmit;
+        });
+
     });
 }(jQuery));
 
