@@ -31,6 +31,22 @@ return $settings = [
     'subjectPrefix' => 'User Action Notification for ', 'subjectBatchPrefix' => 'HR Tool Action taken for ',
 
 
+    'departments' => ['Sales', 'Customer Care', 'Finance', 'Information Technology', 'Marketing', 'Human Resources',
+        'Quality and Tech', 'Public Relations', 'Operations', 'Other',],
+
+
+    'companies' => ['illy caffè North America, Inc.', 'Espressamente illy', 'illy caffè San Francisco LLC',
+        'illy Espresso Canada',],
+
+    'hireStatus' => ['Full-time', 'Part-Time', 'Seasonal', 'Temporary',],
+
+
+    'salaryType' => ['Annual Salary', 'Hourly', 'Half Month', 'Other',],
+
+    'locations' => ['Rye Brook', 'New York City', 'Canada', 'Scottsdale', 'Remote Users',],
+
+
+
     /*
 	|--------------------------------------------------------------------------
 	| Application Debug Mode
