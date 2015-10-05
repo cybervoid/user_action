@@ -278,9 +278,6 @@
 
 
             <br >
-            <label ><input type="checkbox" class="inputRender" name="moreCC" id="moreCC"
-                           value="moreCC" >Include additional recipients </label >
-            <br >
 
             <div class="subHeader" >
                 IT Department Checklist: Rafael Gil and Service Desk<br >

@@ -91,7 +91,14 @@ var App = App || {};
 
         $("#org_change").submit(function () {
 
-            var canSubmit = false;
+
+            var canSubmit = true;
+
+            if (typeof $('#name').val() === 'undefined') {
+
+                return false;
+            }
+
 
             $('#departmentError').html('*');
             if ($('#department').val() === "") {
@@ -106,7 +113,13 @@ var App = App || {};
             }
 
 
+            if (canSubmit) {
+                $("#submit").attr('disabled', 'disabled');
+            }
+
+
             return canSubmit;
+
         });
 
     });

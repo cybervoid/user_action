@@ -19,6 +19,10 @@ class ActiveDirectory
 
     public static function get_connection()
     {
+        if (env('APP_STATUS') == 'offline')
+        {
+            return new ActiveDirectory();
+        }
         if (!ActiveDirectory::$conn)
         {
             ActiveDirectory::$conn = ldap_connect("ldap://" . env('LDAP_HOST'));
@@ -140,12 +144,45 @@ class ActiveDirectory
 
     public function getEmail($email)
     {
-        $attributes = array('dn', 'title', 'givenname', 'sn', 'manager', 'company', 'department', "memberOf",
-            'samaccountname', 'mail', 'mobile', 'telephoneNumber');
 
-        $result = ldap_search(ActiveDirectory::$conn, "OU=North America,DC=ILLY-DOMAIN,DC=COM", "mail={$email}", $attributes);
+        if (env('APP_STATUS') == 'offline')
+        {
+            $offline["givenname"] = 'Rafael';
+            $offline["sn"] = 'Gil';
+            $offline["mail"] = $email;
+            $offline["department"] = 'Information Technology';
 
-        return ldap_get_entries(ActiveDirectory::$conn, $result);
+            $offline["title"] = 'Infrastructure Engineer';
+
+
+            $offline["company"] = 'illy caffè North America, Inc.';
+
+
+            $offline["telephonenumber"] = '+1 914 253 4562';
+
+            $offline["mobile"] = '+1 914 420 3700';
+
+
+            $offline["sAMAccountName"] = 'gilra';
+
+
+            $offline["manager"] = 'Roy Forster';
+            $offline["managerEmail"] = 'roy.forster@illy.com';
+
+            return $offline;
+
+        }
+        else
+        {
+
+
+            $attributes = array('dn', 'title', 'givenname', 'sn', 'manager', 'company', 'department', "memberOf",
+                'samaccountname', 'mail', 'mobile', 'telephoneNumber');
+
+            $result = ldap_search(ActiveDirectory::$conn, "OU=North America,DC=ILLY-DOMAIN,DC=COM", "mail={$email}", $attributes);
+
+            return ldap_get_entries(ActiveDirectory::$conn, $result);
+        }
 
     }
 

@@ -89,7 +89,6 @@ class SeparationController extends Controller
         $ccRecipients[$to] = $to;
         $ccRecipients = array_unique($ccRecipients);
 
-
         // execute proper actions for a separation or schedule one9
         $today = date('m/d/Y');
         $userName = $req->request->get('sAMAccountName');
