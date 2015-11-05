@@ -3,7 +3,7 @@
 return $settings = [
 
 
-    'newHireReportsPrefix' => 'Action User Notification-', 'separationReportsPrefix' => 'Separation Notification-',
+    'newHireReportsPrefix' => 'New User Action Notification-', 'separationReportsPrefix' => 'Separation Notification-',
     'payrollNewHireReportsPrefix' => 'Payroll Notification-',
     'payrollSeparationReportsPrefix' => 'Payroll Separation Notification-',
 
@@ -15,6 +15,8 @@ return $settings = [
     'payrollNewHireURL' => '/report/payrollNewHire/',
     'payrollSeparationReportsPath' => storage_path() . '/reports/Payroll/Separations/',
     'payrollSeparationURL' => '/report/payrollSeparation/',
+    'change_org_ReportsPath' => storage_path() . '/reports/Org_Change/', 'change_org_URL' => '/report/change_org_rep/',
+    'org_change_ReportsPrefix' => 'User Organization Change Notification-',
 
     // filepath for the schedule batch file
     'schedule_batch' => storage_path() . '/scheduled_batch',
@@ -38,13 +40,23 @@ return $settings = [
     'companies' => ['illy caffè North America, Inc.', 'Espressamente illy', 'illy caffè San Francisco LLC',
         'illy Espresso Canada',],
 
+
+    'illy caffè North America, Inc.' => ['streetAddress' => '800 Westchester Avenue, Suite S440',
+        'postalCode' => '10573', 'l' => 'Rye Brook', 'c' => 'US', 'st' => 'NY'],
+    'Espressamente illy' => ['streetAddress' => '800 Westchester Avenue, Suite S438', 'postalCode' => '10573',
+        'l' => 'Rye Brook', 'c' => 'US', 'st' => 'NY'],
+    'illy caffè San Francisco LLC' => ['streetAddress' => '535 Mission Street, Suite 1584', 'postalCode' => '94105',
+        'l' => 'San Francisco', 'c' => 'US', 'st' => 'CA'],
+    'illy Espresso Canada' => ['streetAddress' => '800 Westchester Avenue, Suite S440', 'postalCode' => '10573',
+        'l' => 'Rye Brook', 'c' => 'US', 'st' => 'NY'],
+
+
     'hireStatus' => ['Full-time', 'Part-Time', 'Seasonal', 'Temporary',],
 
 
     'salaryType' => ['Annual Salary', 'Hourly', 'Half Month', 'Other',],
 
     'locations' => ['Rye Brook', 'New York City', 'Canada', 'Scottsdale', 'Remote Users',],
-
 
 
     /*

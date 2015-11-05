@@ -1,4 +1,5 @@
 @extends('mainTemplate')
+@include('menuTemplate')
 
 
 @section('javascript')
@@ -14,11 +15,8 @@
 @section('content')
 
 <br >
-<ul class="navigation" >
-    <li class="myNavigation navigationLink" id="newHire" >New Hire</li >
-    <li class="myNavigation navigationLink" id="separation" >Separation</li >
-    <li class="myNavigation navigationLink" id="org_change" >Organization Change</li >
-</ul >
+@yield('menu')
+
 
 <br >
 

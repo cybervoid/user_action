@@ -32,7 +32,7 @@ Route::get('change_org', 'Change_OrgController@index');
 Route::post('org_change_lookup', 'Change_OrgController@lookup');
 Route::post('change_org_verify', 'Change_OrgController@verify');
 Route::post('change_org_save', 'Change_OrgController@save');
-//Route::get('lookup/{uname}', 'Change_OrgController@lookup')->where('name', '[a-zA-Z0-9 -]');
+//Route::get('report/{reportType}/{name}', 'ReportsController@getReport')->where('name', '[a-zA-Z0-9 -]+\.pdf');
 
 
 /*

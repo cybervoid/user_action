@@ -100,8 +100,6 @@ class ActiveDirectory
         }
 
 
-
-
         $result = false;
     }
 
@@ -174,7 +172,6 @@ class ActiveDirectory
         }
         else
         {
-
 
             $attributes = array('dn', 'title', 'givenname', 'sn', 'manager', 'company', 'department', "memberOf",
                 'samaccountname', 'mail', 'mobile', 'telephoneNumber');
@@ -312,6 +309,12 @@ class ActiveDirectory
 
     }
 
+    /**
+     * @param $manager
+     *
+     * Get the email, sn and givenname of the manager expects a dn as a parameter
+     * @return array
+     */
     public function getManager($manager)
     {
         $consult = ldap_search(static::$conn, $manager, "(objectclass=*)", ['mail', 'sn', 'givenname']);
@@ -406,6 +409,63 @@ class ActiveDirectory
         $result = ldap_search(static::$conn, $myDN, $txtSearch, $attributes);
 
         return ldap_get_entries(static::$conn, $result);
+    }
+
+    public function change_org_Save($dn, $changes, $fromAD)
+    {
+
+
+        //var_dump($changes);
+        //echo $changes['givenname'];
+
+
+        foreach ($changes as $key => $value)
+        {
+            $userdata[$key] = $value;
+        }
+
+        if ((isset($changes['givenname'])) || (isset($changes['sn'])))
+        {
+            if (isset($changes['givenname']))
+            {
+                $name = $changes['givenname'];
+            }
+            else
+            {
+                $name = $fromAD[0]['givenname'][0];
+            }
+
+            if (isset($changes['sn']))
+            {
+                $lastName = $changes['sn'];
+            }
+            else
+            {
+                $lastName = $fromAD[0]['sn'][0];
+            }
+
+            $userdata['displayName'] = ucfirst(strtolower($lastName)) . " " . ucfirst(strtolower($name));
+        }
+
+        if(isset($changes['title'])){
+            $userdata['description'] = $changes['title'];
+        }
+
+
+        if(isset($changes['company'])){
+            $userdata['st'] = \Config::get('app.' . $changes['company'] . '.st');
+            $userdata['postalCode'] = \Config::get('app.' . $changes['company'] . '.postalCode');
+            $userdata['l'] = \Config::get('app.' . $changes['company'] . '.l');
+            $userdata['c'] = \Config::get('app.' . $changes['company'] . '.c');
+            $userdata['streetAddress'] = \Config::get('app.' . $changes['company'] . '.streetAddress');
+
+        }
+
+
+
+
+        ldap_mod_replace(static::$conn, $dn, $userdata);
+
     }
 
     private function __clone() { }

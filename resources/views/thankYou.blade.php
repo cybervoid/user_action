@@ -1,4 +1,5 @@
 @extends('mainTemplate')
+@include('menuTemplate')
 
 
 @section('javascript')
@@ -16,14 +17,16 @@
     <br ><br ><p class="center" >Your request has been processed successfully<p >
 
 
-    @if($reportType=='separation')
-        <p >The form was created successfully and has been sent to service desk, below is the download link</p >
-
-    @else
+    @if($reportType!='org_change')
         <p >We have created two forms, one has been sent to Payroll and the other to service desk, these are the
             download
             links</p >
+    @else
+        The notification form for this process has been submitted.
     @endif
+
+
+
 
     <p >Employee: <strong >{{ $name }} {{ $lastName }} </strong >
 
@@ -49,6 +52,11 @@
                                   href="{{ $payrollSeparationRouteURL }}{{ $payrollSeparationReport }}" >{{ $payrollSeparationReport }}</a >
             </li >
         @endif
+        @if(isset($change_org_Report))
+            <li >Notification Form: <a target="_blank"
+                                       href="{{ $change_org_URL }}{{ $change_org_Report }}" >{{ $change_org_Report }}</a >
+            </li >
+        @endif
 
     </ul >
 
@@ -58,7 +66,7 @@
 
     <p >
 
-        @if ($sendMail)
+        @if($sendMail)
             The following users has been notified with this form: <br >
     <div style="width: 50%; margin: 0 auto;" >
         <ul style="text-align: left" >
@@ -76,16 +84,8 @@
 
     <br ><br ><br ><p class="subHeader" >What's next: <br ></p >
 
-    <ul class="navigation" style="text-align: center" >
-        <li class="myNavigation navigationLink" id="home" >Home Screen</li >
 
-        @if($reportType=='separation')
-            <li class="myNavigation navigationLink" id="separation" >Enter another separation</li >
-        @else
-            <li class="myNavigation navigationLink" id="newHire" >Add another employee</li >
-        @endif
-
-    </ul >
+    @yield('menu')
 
 
 @endsection

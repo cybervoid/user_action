@@ -23,9 +23,7 @@ var App = App || {};
             },
             select: function (event, ui) {
                 $("#user").val(ui.item.label);
-
                 $("#errorDiv").html('');
-
                 $.ajax({
                     type: "POST",
                     url: "org_change_lookup",
@@ -39,7 +37,8 @@ var App = App || {};
                 })
                     .done(function (msg) {
                         $('#homeMenu').html('');
-                        $('#report').html(App.templates.change_org(msg));
+
+                        $('#report').html(App.templates.change_org({data: msg}));
 
                         $("#cancel").click(function () {
                             document.location = '/';
@@ -53,9 +52,9 @@ var App = App || {};
 
                         changeName();
                         //set defaults
-                        lookupDepartment(msg["department"]);
-                        lookupCompany(msg["company"])
-                        findGroupMatch(msg["groups"]);
+                        lookupDepartment(msg['fromAD']['department']);
+                        lookupCompany(msg['fromAD']['company'])
+                        findGroupMatch(msg['fromAD']["groups"]);
 
                     });
                 return false;
@@ -88,6 +87,10 @@ var App = App || {};
             }
 
         }
+
+        $("#org_change_save").submit(function () {
+            $("#submit").attr('disabled', 'disabled');
+        });
 
         $("#org_change").submit(function () {
 

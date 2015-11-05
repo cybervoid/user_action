@@ -1,4 +1,5 @@
 @extends('mainTemplate')
+@include('menuTemplate')
 
 @section('javascript')
     <script src="js/menu.js" ></script >
@@ -19,7 +20,12 @@
 
     @if(count($changes)<1)
 
-        No changes were detected, please see options below.
+        No changes were detected, please see options below.<br >
+        <br ><p ></p >
+        <br ><p ></p >
+        <br ><p ></p >
+        <br ><p ></p >
+        @yield('menu')
     @else
 
 
@@ -31,15 +37,19 @@
 <span class="leftIdentation" >
 <br ><p ></p >
 
+
     @if(count($changes)>1)
         <div >We have detected the following changes:</div >
         <ul >
             @foreach(array_keys($changes) as $key)
-                @if($changes[$key] != $fromAD[$key])
-                    <li >Change from <span class="noticeThis" > {{ $fromAD[$key]  }} </span > to <span
+
+                @if($changes[$key] != $fromAD[0][$key][0])
+                    <li >Change from <span class="noticeThis" > {{ $fromAD[0][$key][0]  }} </span > to <span
                                 class="noticeThis" > {{ $changes[$key] }} </span > detected.
                     </li >
                 @endif
+
+
             @endforeach
         </ul >
     @endif
@@ -61,24 +71,17 @@
     <li >Manager: <span class="noticeThis" > {{ $req['manager']  }} </span ></li >
 </ul >
 
-<input type="button" class="inputRender" name="cancel" id="cancel" value="Cancel" >
+<input type="button" class="inputRender" name="cancel" id="cancel" value="Cancel"
+       onclick="document.location.href='change_org'" >
 <input type="submit" class="inputRender" name="submit" id="submit" >
 
-<input type="hidden" name="params" id="params" value="<?php echo base64_encode(json_encode($req)); ?>" >
+<input type="hidden" name="email" id="email" value="{{ $fromAD[0]['mail'][0]  }}" >
+<input type="hidden" name="params" id="params" value="<?php echo base64_encode(json_encode($changes)); ?>" >
 
 </span >
 
         </form >
     @endif
-
-    <div id="homeMenu" >
-        <br ><br ><br >
-
-        <p class="subHeader" >Other options: <br ></p >
-        <ul class="navigation" style="text-align: center" >
-            <li class="myNavigation navigationLink" id="home" >Home Screen</a></li >
-        </ul >
-    </div >
 
 
 @endsection

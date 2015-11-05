@@ -16,6 +16,8 @@ class Lookup
 
         $email = $req->request->get('email');
 
+
+
         if (!preg_match("/@illy.com/", $email))
         {
             $email = $email . '@illy.com';
@@ -87,11 +89,9 @@ class Lookup
 
                 }
             }
-            $response = new Response(json_encode($fromAD), 200, ['Content-Type' => 'application/json']);
+            $response = $fromAD;
         }
 
         return $response;
-
-
     }
 }

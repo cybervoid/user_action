@@ -10,7 +10,7 @@
                     background: url({{ $server }}/images/illy-watermark.png) repeat-y fixed 50% 50%;
         }
 */
-        span {
+        .setBold {
             font-weight: bold;
         }
 

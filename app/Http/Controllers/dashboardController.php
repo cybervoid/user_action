@@ -37,7 +37,7 @@ class DashboardController extends Controller
     {
         $user = User::current();
 
-        return view('dashboard', ['user' => $user]);
+        return view('dashboard', ['user' => $user, 'menu_New' => '', 'menu_Separation' => '', 'menu_Org_Change' => '']);
     }
 
 }

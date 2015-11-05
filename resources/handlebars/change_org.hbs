@@ -5,12 +5,12 @@
 
     <div class="left" >
         <label >Name</label >
-        <input type="text" class="inputRender" name="name" id="name" value="{{ givenname }}" required >
+        <input type="text" class="inputRender" name="name" id="name" value="{{ data.fromAD.givenname }}" required >
         <span class="errorSpan" >*</span >
     </div >
     <div class="left" >
         <label >Last Name</label >
-        <input type="text" class="inputRender" name="lastName" id="lastName" value="{{ sn }}" required >
+        <input type="text" class="inputRender" name="lastName" id="lastName" value="{{ data.fromAD.sn }}" required >
         <span class="errorSpan" >*</span >
     </div >
 
@@ -19,8 +19,8 @@
 
     <div class="left" >
         <label >Email</label >
-        <input type="text" class="inputRender" name="newEmail" id="newEmail" value="{{ mail }}" required >
-        <input type="hidden" class="inputRender" name="email" id="email" value="{{ mail }}" required >
+        <input type="text" class="inputRender" name="newEmail" id="newEmail" value="{{ data.fromAD.mail }}" required >
+        <input type="hidden" class="inputRender" name="email" id="email" value="{{ data.fromAD.mail }}" required >
         <span class="errorSpan" >*</span >
     </div >
     <div class="left" >
@@ -32,26 +32,18 @@
 
     <div >
         <label >Title:</label >
-        <input type="text" size="50%" name="title" class="inputRender" value="{{ title }}" required="" >
+        <input type="text" size="50%" name="title" class="inputRender" value="{{ data.fromAD.title }}" required="" >
         <span class="errorSpan" >*</span >
     </div >
 
     <p ></p ><br >
-
     <div class="left" >
         <label >Department</label >
         <select class="inputRender" name="department" id="department" >
             <option value="" >Select</option >
-            <option >Sales</option >
-            <option >Customer Care</option >
-            <option >Finance</option >
-            <option >Information Technology</option >
-            <option >Marketing</option >
-            <option >Human Resources</option >
-            <option >Quality and Tech</option >
-            <option >Public Relations</option >
-            <option value="Operations" >Operations</option >
-            <option value="Other" >Other</option >
+            {{#each data.departments }}
+                <option >{{this}}</option >
+            {{/each}}
         </select ><span id="departmentError" class="errorSpan" >*</span >
     </div >
     <div class="left" >
@@ -59,9 +51,9 @@
         <label >Company</label >
         <select class="inputRender" name="company" id="company" >
             <option value="" >Select</option >
-            <option >illy caffè North America, Inc.</option >
-            <option >Espressamente illy</option >
-            <option >illy Espresso Canada</option >
+            {{#each data.companies }}
+                <option >{{this}}</option >
+            {{/each}}
         </select ><span id="companyError" class="errorSpan" >*</span >
     </div >
 
@@ -69,10 +61,10 @@
 
     <div class="left" >
         <label >Manager</label >
-        <input type="text" name="manager" class="inputRender" value="{{ manager }}" required="" >
+        <input type="text" name="manager" class="inputRender" value="{{ data.fromAD.manager }}" required="" >
     </div >
     <div class="left" >
-        <input type="hidden" name="managerEmail" id="managerEmail" value="{{ managerEmail }}" >
+        <input type="hidden" name="managerEmail" id="managerEmail" value="{{ data.fromAD.managerEmail }}" >
     </div >
 
     <p ></p ><br >
@@ -89,12 +81,12 @@
     <div class="left" >
         <label >Employee Status</label >
         <select class="inputRender" name="hireStatus" id="hireStatus" >
-            <option value="empty" >Select</option >
-            <option value="Full-time" selected >Full-time</option >
-            <option value="Temporary" >Temporary</option >
+            <option value="" >Select</option >
+            {{#each data.hireStatus }}
+                <option >{{this}}</option >
+            {{/each}}
         </select >
-
-        <div id="hireStatusError" class="errorSpan" >*</div >
+        <span id="hireStatusError" class="errorSpan" >*</span >
     </div >
 
 

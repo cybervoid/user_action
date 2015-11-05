@@ -46,6 +46,10 @@ class ReportsController extends Controller
             $filePath = \Config::get('app.separationReportsPath') . $name;
         }
 
+        if ($reportType == 'change_org_rep')
+        {
+            $filePath = \Config::get('app.change_org_ReportsPath') . $name;
+        }
 
         $result = Reports::loadReport($filePath);
 
