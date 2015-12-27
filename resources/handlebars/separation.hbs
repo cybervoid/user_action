@@ -5,16 +5,16 @@
 
 <div class="left3" ><span class="bold" >Name: </span >
 
-    {{ givenname }} {{ sn }}
-    <input type="hidden" name="name" id="name" value="{{ givenname }}" >
-    <input type="hidden" name="lastName" id="lastName" value="{{ sn }}" >
+    {{ data.fromAD.givenname }} {{ data.fromAD.sn }}
+    <input type="hidden" name="name" id="name" value="{{ data.fromAD.givenname }}" >
+    <input type="hidden" name="lastName" id="lastName" value="{{ data.fromAD.sn }}" >
 </div >
 <div class="left3" >
     <strong >
         Department:</strong >
-    {{ department }}
+    {{ data.fromAD.department }}
 
-    <input type="hidden" class="inputRender" name="department" value="{{ department }}" >
+    <input type="hidden" class="inputRender" name="department" value="{{ data.fromAD.department }}" >
 
 
 </div >
@@ -27,21 +27,21 @@
 <br ><br >
 
 <div >Title:
-    <input type="text" size="50%" name="title" class="inputRender" value="{{ title }}" required="" >
+    <input type="text" size="50%" name="title" class="inputRender" value="{{ data.fromAD.title }}" required="" >
 
 
 </div >
 <br ><br clear="left" >
 
 <div class="left" >Manager:
-    <input type="text" name="manager" class="inputRender" value="{{ manager }}" required="" >
-    <input type="hidden" name="managerEmail" id="managerEmail" value="{{ managerEmail }}" >
+    <input type="text" name="manager" class="inputRender" value="{{ data.fromAD.manager }}" required="" >
+    <input type="hidden" name="managerEmail" id="managerEmail" value="{{ data.fromAD.managerEmail }}" >
 
 </div >
 <div class="left" >
     <strong >Company: </strong >
-    {{ company }}
-    <input type="hidden" id="company" name="company" value="{{ company }}" >
+    {{ data.fromAD.company }}
+    <input type="hidden" id="company" name="company" value="{{ data.fromAD.company }}" >
 </div >
 
 <p ></p ><br ><br >
@@ -77,13 +77,12 @@
 <div class="left" >
     <label >Employee Status</label >
 
-            <select class="inputRender" name="hireStatus" id="hireStatus" >
-                <option value="empty" >Select</option >
-                <option value="Full-time" >Full-time</option >
-                <option value="Part-Time" >Part-Time</option >
-                <option value="Seasonal" >Seasonal</option >
-                <option value="Temporary" >Temporary</option >
-            </select >
+    <select class="inputRender" name="hireStatus" id="hireStatus" >
+        <option value="" >Select</option >
+        {{#each data.hireStatus }}
+            <option >{{this}}</option >
+        {{/each}}
+    </select >
     <span id="hireStatusError" class="errorSpan" >*</span >
 </div >
 <div class="left" >
@@ -138,7 +137,7 @@
 <hr >
 <label >
     <input type="checkbox" name="disableUser" id="disableUser" checked > Deactivate user from the system.
-    <input type="hidden" name="sAMAccountName" value="{{ sAMAccountName }}" >
+    <input type="hidden" name="sAMAccountName" value="{{ data.fromAD.sAMAccountName }}" >
 </label >
 
 
@@ -177,28 +176,28 @@
     <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="laptop" value="Laptop" >
         Laptop</label ></li >
     <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="cellphone"
-                        value="Cell Phone     {{#if mobile }}
-        (current {{ mobile }})
+                        value="Cell Phone     {{#if data.fromAD.mobile }}
+        (current {{ data.fromAD.mobile }})
     {{/if}}
 " > Cell
         Phone
 
-        {{#if mobile }}
-            (current {{ mobile }})
+        {{#if data.fromAD.mobile }}
+            (current {{ data.fromAD.mobile }})
         {{/if}}
 
 
     </label ></li >
     <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="phone" value="Phone extension
-            {{#if telephonenumber }}
-            (current {{ telephonenumber }})
+            {{#if data.fromAD.telephonenumber }}
+            (current {{ data.fromAD.telephonenumber }})
         {{/if}}
 
     " >
         Phone extension
 
-        {{#if telephonenumber }}
-            (current {{ telephonenumber }})
+        {{#if data.fromAD.telephonenumber }}
+            (current {{ data.fromAD.telephonenumber }})
         {{/if}}
     </label ></li >
     <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="software" value="Software" >
@@ -284,7 +283,7 @@ Aditional Instructions if applicable: <br >
 </ul >
 <p ></p ><br >
 
-<input type="submit" id="submit" name="submit" class="inputRender" value="Submit" >
 <input type="button" id="cancel" class="inputRender" value="Cancel" >
+    <input type="submit" id="submit" name="submit" class="inputRender" value="Submit" >
 
 </div >

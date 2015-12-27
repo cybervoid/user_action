@@ -4,7 +4,7 @@
 
 @section('javascript')
     <script src="js/menu.js" ></script >
-    <script src="js/thankYou.js" ></script >
+
 @endsection
 
 @section('css')
@@ -77,8 +77,6 @@
         <p class="notify" >Total notifications sent <strong >{{ count($sendMail) }}</strong ></p >
     </div >
     @endif
-
-
     </p>
 
 

@@ -42,6 +42,9 @@ Route::post('change_org_save', 'Change_OrgController@save');
 
       //probar este
 
+
+todo revisar el cron task no esta funcionando para nada
+todo arreglar en new hire y en change org las notificaciones para los managers en el autocompletar
 todo adicionar option para incluir a alguien en las notificaciones
 todo adicionar option de poner mas managers
 todo para separation el grupo de illyusa Sales no está funcionando para salir autodetectado, problemas con el javascript
@@ -71,6 +74,7 @@ todo al quitar info from ad ponerlas en el campo notas
 
 
 *
+ * donetodo add new users to VPN and Wifi by default
  * donetodo hacer el formulario de payroll para los separations
  donetodo newhires revisar employee number and nickname estan saliendo vacios en el reporte
 donetodo- en new hires detectar location y predefinir los grupos a los que pertenece

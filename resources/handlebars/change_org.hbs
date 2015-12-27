@@ -61,7 +61,9 @@
 
     <div class="left" >
         <label >Manager</label >
-        <input type="text" name="manager" class="inputRender" value="{{ data.fromAD.manager }}" required="" >
+        <input type="text" name="manager" id="manager" class="inputRender" value="{{ data.fromAD.manager }}"
+               required="" >
+        <span id="searchProgressManager" ></span >
     </div >
     <div class="left" >
         <input type="hidden" name="managerEmail" id="managerEmail" value="{{ data.fromAD.managerEmail }}" >
@@ -86,36 +88,36 @@
                 <option >{{this}}</option >
             {{/each}}
         </select >
-        <span id="hireStatusError" class="errorSpan" >*</span >
     </div >
 
+    {{!-- {{
+        <p ></p ><br ><br >
+    <span class="subHeader" >
+                    IT Service Desk E-Mail Distribution List:
+                   </span >
+        <hr >
 
-    <p ></p ><br ><br >
-<span class="subHeader" >
-                IT Service Desk E-Mail Distribution List:
-               </span >
-    <hr >
-
-    <p ></p ><br >
-    E-Mail Distribution List:
-    <ul id="itChecklist" style="text-align: left; list-style: none" >
-        <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]"
-                            value="illyusaTeam Distribution Group"
-                >illyusaTeam Distribution Group</label ></li >
-        <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]"
-                            value="illyusa Rye Brook Distribution Group"
-                >illyusa Rye Brook Distribution Group</label ></li >
-        <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]"
-                            value="illy NYC Team Distribution Group"
-                >illy NYC Team Distribution Group</label ></li >
-        <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]"
-                            value="illyusa Managers Distribution Group"
-                >illyusa Managers Distribution Group</label ></li >
-        <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]"
-                            value="illyusa Sales Team Distribution Group" >illyusa Sales Team Distribution Group</label >
-        </li >
-    </ul >
-
+        <p ></p ><br >
+        E-Mail Distribution List:
+        <ul id="itChecklist" style="text-align: left; list-style: none" >
+            <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]"
+                                value="illyusaTeam Distribution Group"
+                    >illyusaTeam Distribution Group</label ></li >
+            <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]"
+                                value="illyusa Rye Brook Distribution Group"
+                    >illyusa Rye Brook Distribution Group</label ></li >
+            <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]"
+                                value="illy NYC Team Distribution Group"
+                    >illy NYC Team Distribution Group</label ></li >
+            <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]"
+                                value="illyusa Managers Distribution Group"
+                    >illyusa Managers Distribution Group</label ></li >
+            <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]"
+                                value="illyusa Sales Team Distribution Group" >illyusa Sales Team Distribution Group</label >
+            </li >
+        </ul >
+        }}
+    --}}
 
     <p ></p ><br >
     What are the specific assets and or functionalities needed:<br >
@@ -123,8 +125,8 @@
 
 
     <div >
-        <input type="submit" id="submit" name="submit" class="inputRender" value="Submit" >
         <input type="button" id="cancel" class="inputRender" value="Cancel" >
+        <input type="submit" id="submit" name="submit" class="inputRender" value="Submit" >
 
     </div >
 </div >

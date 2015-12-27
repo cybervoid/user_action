@@ -36,66 +36,67 @@
     <table border="0" width="100%" >
         <tr align="center" >
             <td >
-                <p ><span class="bold" >Name: </span > {{ $req["name"]}} {{$req["lastName"] }} </p >
+                <p ><span class="bold" >Name: </span > {{ $req['sep']["name"]}} {{$req['sep']["lastName"] }} </p >
             </td >
-            <td ><p ><span class="bold" >Department/ Dept Code: </span > {{$req["department"]}} </p ></td >
+            <td ><p ><span class="bold" >Department/ Dept Code: </span > {{$req['sep']["department"]}} </p ></td >
 
 
             <td ><p ><span class="bold" >Employee ID #: </span >
-                    {{$req["employeeID"]!='' ? $req["employeeID"]:'TBD' }}
+                    {{$req['sep']["employeeID"]!='' ? $req['sep']["employeeID"]:'TBD' }}
                 </p ></td >
         </tr >
     </table >
 
 
-    <p ><span class="bold" >Title: </span > {{ $req["title"] }} </p >
-    <p ><span class="bold" >Reports to: </span > {{ $req["manager"] }}</p >
+    <p ><span class="bold" >Title: </span > {{ $req['sep']["title"] }} </p >
+    <p ><span class="bold" >Reports to: </span > {{ $req['sep']["manager"] }}</p >
     <span class="bold" >Termination/Separation</span ><br >
     <hr >
     <br >
     <table border="0" width="100%" >
         <tr align="center" valign="top" >
-            <td align="left" ><span class="bold" >Termination Date: </span > {{$req["termDate"]}}
+            <td align="left" ><span class="bold" >Termination Date: </span > {{$req['sep']["termDate"]}}
             </td >
-            <td align="center" > {{ $req["effectiveDate"] }} - {{ $req["effectiveDate1"]}}<br ><span class="bold" >Effective Date thru Date:</span >
+            <td align="center" > {{ $req['sep']["effectiveDate"] }} - {{ $req['sep']["effectiveDate1"]}}<br ><span
+                        class="bold" >Effective Date thru Date:</span >
             </td >
         </tr >
 
-        @if(isset($req["onetime"]))
+        @if(isset($req['sep']["onetime"]))
             <tr colspan="2" >
                 <td >
-                    <br ><span class="bold" >One time Severance Pay: $</span > {{$req["onTimePayment"]}}
+                    <br ><span class="bold" >One time Severance Pay: $</span > {{$req['sep']["onTimePayment"]}}
                 </td >
             <tr >
         @endif
 
-        @if(isset($req["severance"]))
+        @if(isset($req['sep']["severance"]))
             <tr colspan="2" >
                 <td >
                     <br ><span class="bold" >Continued Distribution of Severance Pay: $</span >
-                    {{$req["severancePay"]}} Over # {{$req["overTime"]}} Months/Weeks
+                    {{$req['sep']["severancePay"]}} Over # {{$req['sep']["overTime"]}} Months/Weeks
                 </td >
             <tr >
         @endif
 
-        @if(isset($req["cobra"]))
+        @if(isset($req['sep']["cobra"]))
             <tr colspan="2" >
                 <td >
-                    <br ><span class="bold" >COBRA Period paid: </span > {{$req["periodPaid"]}}
+                    <br ><span class="bold" >COBRA Period paid: </span > {{$req['sep']["periodPaid"]}}
                 </td >
             <tr >
         @endif
 
 
-        @if(isset($req["ptoDays"]))
+        @if(isset($req['sep']["ptoDays"]))
             <tr colspan="2" >
                 <td >
-                    <br ><span class="bold" >P.TO days/Hours: </span >{{$req["ptoDays"] }}
+                    <br ><span class="bold" >P.TO days/Hours: </span >{{$req['sep']["ptoDays"] }}
                 </td >
             <tr >
         @endif
 
-        @if(isset($req["otherComments"]))
+        @if(isset($req['sep']["otherComments"]))
             <tr colspan="2" >
                 <td >
                     <br ><span class="bold" >Other (Explain Below):</span >
@@ -103,10 +104,10 @@
             <tr >
         @endif
 
-        @if($req["commentsPayroll"] != '')
+        @if($req['sep']["commentsPayroll"] != '')
             <tr colspan="2" >
                 <td >
-                    <br ><span class="bold" >Comments/Notes for Payroll:</span > {{$req["commentsPayroll"]}}
+                    <br ><span class="bold" >Comments/Notes for Payroll:</span > {{$req['sep']["commentsPayroll"]}}
                 </td >
             <tr >
         @endif

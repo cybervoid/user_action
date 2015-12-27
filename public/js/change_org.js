@@ -56,6 +56,46 @@ var App = App || {};
                         lookupCompany(msg['fromAD']['company'])
                         findGroupMatch(msg['fromAD']["groups"]);
 
+                        var verifiedManager = false;
+                        var notVerifiedIcon = '<span title="User verified">&#10004;</span>';
+
+                        $("#manager").keyup(function () {
+                            verifiedManager = false;
+                        });
+                        $("#manager").blur(function () {
+                            if (!verifiedManager) {
+                                $("#searchProgressManager").html("<span title='This user has been not found in our database.'>&#10007;</span>");
+                            }
+                        });
+                        $("#manager").autocomplete({
+                            source: "/autocomplete",
+                            minLength: 2,
+                            search: function (event, ui) {
+                                if (verifiedManager) {
+                                    $("#searchProgressManager").html("");
+                                }
+                                else {
+                                    $("#searchProgressManager").html(notVerifiedIcon);
+                                }
+
+                                $('<img src="images/wait.gif" align="middle">').load(function () {
+                                    $(this).width(23).height(23).appendTo('#searchProgressManager');
+                                });
+                            },
+                            response: function (event, ui) {
+                                if (!verifiedManager) {
+                                    $("#searchProgressManager").html(notVerifiedIcon);
+                                }
+                            },
+                            select: function (event, ui) {
+                                $("#manager").val(ui.item.label);
+                                $("#managerEmail").val(ui.item.value);
+                                $('#searchProgressManager').html(notVerifiedIcon);
+                                verifiedManager = true;
+                                return false;
+                            }
+                        });
+
                     });
                 return false;
             }
@@ -122,8 +162,8 @@ var App = App || {};
 
 
             return canSubmit;
-
         });
+
 
     });
 }(jQuery));

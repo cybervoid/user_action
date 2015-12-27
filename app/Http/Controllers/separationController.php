@@ -53,6 +53,7 @@ class SeparationController extends Controller
 
     public function add(Request $req)
     {
+        $REPORT_TYPE = 'change_org';
 
         $name = trim($req->request->get('name'));
         $lastName = trim($req->request->get('lastName'));
@@ -61,12 +62,14 @@ class SeparationController extends Controller
         // generate separation report
         $separationReport = \Config::get('app.separationReportsPrefix') . $name . ' ' . $lastName . '.pdf';
         $separationReport = Reports::escapeReportName($separationReport);
-        Reports::generateReport($separationReport, \Config::get('app.separationReportsPath'), $req->request->get('reportType'), $req);
+        $view['sep'] = $req->request->all();
+        $view['url'] = $req->url();
+        Reports::generateReport($separationReport, \Config::get('app.separationReportsPath'), $req->request->get('reportType'), $view);
 
         // generate payroll separtion report
         $payrollSeparationReport = \Config::get('app.payrollSeparationReportsPrefix') . $name . ' ' . $lastName . '.pdf';
         $payrollSeparationReport = Reports::escapeReportName($payrollSeparationReport);
-        Reports::generateReport($payrollSeparationReport, \Config::get('app.payrollSeparationReportsPath'), 'payroll_separation', $req);
+        Reports::generateReport($payrollSeparationReport, \Config::get('app.payrollSeparationReportsPath'), 'payroll_separation', $view);
 
 
         //send the email
@@ -87,7 +90,7 @@ class SeparationController extends Controller
 
 
         $ccRecipients[$to] = $to;
-        $ccRecipients = array_unique($ccRecipients);
+        $ccRecipients = array_unique(array_map("StrToLower", $ccRecipients));
 
         // execute proper actions for a separation or schedule one9
         $today = date('m/d/Y');
@@ -125,7 +128,8 @@ class SeparationController extends Controller
             'separationReport' => $separationReport, 'reportType' => 'separation',
             'separationRouteURL' => \Config::get('app.separationURL'), 'sendMail' => $ccRecipients,
             'payrollSeparationReport' => $payrollSeparationReport,
-            'payrollSeparationRouteURL' => \Config::get('app.payrollSeparationURL')]);
+            'payrollSeparationRouteURL' => \Config::get('app.payrollSeparationURL'), 'menu_Home' => '',
+            'menu_Separation' => '']);
 
     }
 
@@ -133,7 +137,13 @@ class SeparationController extends Controller
     public function separation_search(Request $req)
     {
 
-        return Lookup::lookupUser($req);
+        // get AD information
+        $result_array['fromAD'] = Lookup::lookupUser($req);
+
+        $result_array['hireStatus'] = \Config::get('app.hireStatus');
+
+        return new Response(json_encode($result_array), 200, ['Content-Type' => 'application/json']);
+
 
     }
 }

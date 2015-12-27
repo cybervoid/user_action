@@ -4,7 +4,6 @@
 <script src="js/groupsAD.js" ></script >
 <script src="js/separation.js" ></script >
 <script src="js/menu.js" ></script >
-<script src="js/thankYou.js" ></script >
 @endsection
 
 @section('css')

@@ -58,7 +58,7 @@
                     @if(count($companies)>0)
                         <label >Will be working for</label >
                         <select class="inputRender" name="company" id="company" >
-                            <option value="empty" >Select</option >
+                            <option value="" >Select</option >
                             @foreach($companies as $company)
                                 <option >{{ $company }}</option >
                             @endforeach
@@ -79,7 +79,7 @@
                         @if(count($departments)>0)
                             <label >Department</label >
                             <select class="inputRender" name="department" id="department" >
-                                <option value="empty" >Select</option >
+                                <option value="" >Select</option >
                                 @foreach($departments as $department)
                                     <option >{{ $department }}</option >
                                 @endforeach
@@ -123,7 +123,7 @@
                         @if(count($hireStatus)>0)
                             <label >Employee New Hire Status</label >
                             <select class="inputRender" name="hireStatus" id="hireStatus" >
-                                <option value="empty" >Select</option >
+                                <option value="" >Select</option >
                                 @foreach($hireStatus as $status)
                                     <option >{{ $status }}</option >
                                 @endforeach
@@ -186,18 +186,19 @@
                     <li >
 
                         <div class="left3" >
-                            <input type="text" class="inputRender" name="salary" id="salary" style="width: 70px" >
+
                             @if(count($salaryType)>0)
                                 <p >Payroll/Salary:</p >
+                                <input type="text" class="inputRender" name="salary" id="salary" style="width: 70px" >
                                 <select name="salaryType" id="salaryType" class="inputRender" >
                                     <option value="" >Select</option >
                                     @foreach($salaryType as $type)
                                         <option >{{ $type }}</option >
                                     @endforeach
-                                </select ><span id="hireStatusError" class="errorSpan" >*</span ><br >
+                                </select ><span id="salaryTypeError" class="errorSpan" >*</span ><br >
                             @endif
                         </div >
-                        <div class="left3" >
+                        <div class="left3" id="sales_lev" >
                             <p >Sales level</p >
 
                             <select name="salesLevel" id="salesLevel" class="inputRender" >
@@ -250,27 +251,22 @@
                     <textarea class="inputRender" cols="40" rows="6" id="payrollComments"
                               name="payrollComments" ></textarea >
                 </li >
-
-
                 <p >
-
                 <div class="subHeader" >Information for other departments:</div >
                 </p>
                 <hr >
 
                 <li >
-
-
                     @if(count($locations)>0)
                         <label >Location</label >
                         <select class="inputRender" name="location" id="location" >
-                            <option value="empty" >Select</option >
-                            @foreach($salaryType as $type)
+                            <option value="" >Select</option >
+                            @foreach($locations as $type)
                                 <option >{{ $type }}</option >
                             @endforeach
                         </select ><span id="locationError" class="errorSpan" >*</span >
                     @endif
-        <span id="location_Other_Span" hidden="true" >
+                    <span id="location_Other_Span" hidden="true" >
             <input class="inputRender" type="text" name="location_Other" id="location_Other" >
             </span >
                 </li >
@@ -426,8 +422,8 @@
             <textarea class="inputRender" cols="40" rows="6" id="comments" name="comments" ></textarea >
 
             <br ><br >
-            <input type="submit" class="inputRender" name="submit" id="submit" >
             <input type="button" class="inputRender" id="cancel" value="Cancel" >
+            <input type="submit" class="inputRender" name="submit" id="submit" >
 
 
 

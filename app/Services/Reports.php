@@ -34,12 +34,7 @@ class Reports
         //get the domain so I can load the image on the PDF
         $parse = parse_url($req['url']);
 
-        //var_dump($req);
-        //echo 'pepe: ' . count($req['changes']);
-        //die;
-
-
-        //todo removed $req->request->all() frin tge $req param, update newHire and separation
+        //todo removed $req->request->all() from $req param, update newHire and separation
         $myView = view($reportType . 'ToPDF', ['req' => $req,
             'server' => $parse['scheme'] . '://' . $parse['host'] . '/',]);
 

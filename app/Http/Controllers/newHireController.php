@@ -61,23 +61,21 @@ class newHireController extends Controller
     public function add(Request $req)
     {
 
-        //$ad = ActiveDirectory::get_connection();
-        //$ad->createUserAD($req);
-        //die;
-
         $name = trim($req->request->get('name'));
         $lastName = trim($req->request->get('lastName'));
 
         // generate newHire reports
         $newHireReport = \Config::get('app.newHireReportsPrefix') . $name . ' ' . $lastName . '.pdf';
         $newHireReport = Reports::escapeReportName($newHireReport);
-        $result = Reports::generateReport($newHireReport, \Config::get('app.newHireReportsPath'), $req->request->get('reportType'), $req);
+        $view['newH'] = $req->request->all();
+        $view['url'] = $req->url();
 
+        Reports::generateReport($newHireReport, \Config::get('app.newHireReportsPath'), $req->request->get('reportType'), $view);
 
         //generate payroll Report
         $payrollReport = \Config::get('app.payrollNewHireReportsPrefix') . $name . ' ' . $lastName . '.pdf';
         $payrollReport = Reports::escapeReportName($payrollReport);
-        Reports::generateReport($payrollReport, \Config::get('app.payrollNewHireReportsPath'), 'payroll', $req);
+        Reports::generateReport($payrollReport, \Config::get('app.payrollNewHireReportsPath'), 'payroll', $view);
 
         //send the email
         $to = \Config::get('app.servicedesk');
@@ -103,7 +101,7 @@ class newHireController extends Controller
 
 
         $ccRecipients[$to] = $to;
-        $ccRecipients = array_unique($ccRecipients);
+        $ccRecipients = array_unique(array_map("StrToLower", $ccRecipients));
 
         /*
 
@@ -161,8 +159,8 @@ class newHireController extends Controller
         return view('thankYou', ['name' => $name, 'lastName' => $lastName,
             'newHireReport' => $newHireReport, 'reportType' => 'newhire',
             'newHireRouteURL' => \Config::get('app.newHireURL'), 'sendMail' => $ccRecipients,
-            'payrollNewHireReport' => $payrollReport,
-            'payrollNewHireRouteURL' => \Config::get('app.payrollNewHireURL')]);
+            'payrollNewHireReport' => $payrollReport, 'payrollNewHireRouteURL' => \Config::get('app.payrollNewHireURL'),
+            'menu_Home' => '', 'menu_New' => '']);
     }
 
     public function checkEmail(Request $req)

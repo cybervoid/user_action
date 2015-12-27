@@ -22,9 +22,8 @@ class MyMail extends Controller
 
         $ccRecipients[\Config::get('app.eMailHRAdd')] = \Config::get('app.eMailHRAdd');
 
-
         $iTDeptEmail = $req->request->get('iTDeptEmail');
-        if ((isset($iTDeptEmail)) || (isset($iTDept)))
+        if (isset($iTDeptEmail) || isset($iTDept) || $req->request->get('reportType') == 'change_org')
         {
             $ccRecipients[\Config::get('app.eMailIT')] = \Config::get('app.eMailIT');
         }

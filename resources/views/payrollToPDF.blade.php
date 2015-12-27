@@ -6,23 +6,25 @@
 
 <p class="bold" >NEW HIRE</p ><p class="bold" >EMPLOYEE ACTION FORM</p ></div>
 
-<p ><span class="bold" >Name: </span >{{ $req['name'] }} {{ $req['lastName'] }}</p >
+<p ><span class="bold" >Name: </span >{{ $req['newH']['name'] }} {{ $req['newH']['lastName'] }}</p >
 
 
 <table border="0" width="100%" >
     <tr >
-        <td ><p ><span class="bold" >Department/ Dept Code: </span >{{ $req["department"] }}</p ></td >
-        <td ><p ><span class="bold" >Employee ID #: </span >{{ $req["employee"]!='' ? $req["employee"]:'TBD' }}</p >
+        <td ><p ><span class="bold" >Department/ Dept Code: </span >{{ $req['newH']["department"] }}</p ></td >
+        <td ><p >
+                <span class="bold" >Employee ID #: </span >{{ $req['newH']["employee"]!='' ? $req['newH']["employee"]:'TBD' }}
+            </p >
         </td >
-        <td ><p ><span class="bold" >Date of Birth: </span >{{ $req["birthDate"] ?: "-" }}</p ></td >
+        <td ><p ><span class="bold" >Date of Birth: </span >{{ $req['newH']["birthDate"] ?: "-" }}</p ></td >
     </tr >
 </table >
 
 <table border="0" width="100%" >
     <tr >
-        <td ><p ><span class="bold" >New Hire Title: </span >{{ $req["title"] }}</p ></td >
-        <td ><p ><span class="bold" >Company: </span >{{ $req["company"] }}</p ></td >
-        <td ><p ><span class="bold" >Reports to (Name/Title): </span >{{ $req["manager"] }}</p ></td >
+        <td ><p ><span class="bold" >New Hire Title: </span >{{ $req['newH']["title"] }}</p ></td >
+        <td ><p ><span class="bold" >Company: </span >{{ $req['newH']["company"] }}</p ></td >
+        <td ><p ><span class="bold" >Reports to (Name/Title): </span >{{ $req['newH']["manager"] }}</p ></td >
     </tr >
 </table >
 
@@ -35,18 +37,19 @@
     <tr valign="top" >
         <td ><span class="bold" >Employee New Hire Status:</span >
             <ul >
-                <li >{{ $req["hireStatus"] }}</li >
+                <li >{{ $req['newH']["hireStatus"] }}</li >
 
-                @if($req["exepmtion"]!="empty")
-                <li > {{ $req["exepmtion"] }}</li >
+                @if($req['newH']["exepmtion"]!="empty")
+                    <li > {{ $req['newH']["exepmtion"] }}</li >
                 @endif
             </ul >
         </td >
         <td >
 
-            <span class="bold" >Hire Date: </span >{{ $req["startDate"] }}<br ><span class="bold" >(1 and 16th where applicable)<span >
-                    @if($req["benefitDate"]!="")
-    <p ><span class="bold" >Benefits Effective Date: </span >{{ $req["benefitDate"] }}<br ><span class="bold" >(Medical, Dental, FSA) 1st of the month</span >
+            <span class="bold" >Hire Date: </span >{{ $req['newH']["startDate"] }}<br ><span class="bold" >(1 and 16th where applicable)<span >
+                    @if($req['newH']["benefitDate"]!="")
+                        <p ><span class="bold" >Benefits Effective Date: </span >{{ $req['newH']["benefitDate"] }}
+                            <br ><span class="bold" >(Medical, Dental, FSA) 1st of the month</span >
     </p >
                     @endif
         </td >
@@ -61,35 +64,35 @@
 <table border="0" width="100%" >
     <tr >
         <td ><span class="bold" >Payroll/Salary:</span ></td >
-        <td colspan="2" align="right" ><span class="bold" >Date:</span > {{ $req["payrollDate"] }}<br ><span
+        <td colspan="2" align="right" ><span class="bold" >Date:</span > {{ $req['newH']["payrollDate"] }}<br ><span
                 class="bold" >(semi-monthly to reflect 1st or 16th of the month)</span ></td >
     <tr >
         <td colspan="3" >&nbsp;</td >
     </tr >
     <tr align="center" >
         <td >
-            <span class="bold" >Salary:</span > $ {{ $req["salary"] ?: 'TBD'}}
+            <span class="bold" >Salary:</span > $ {{ $req['newH']["salary"] ?: 'TBD'}}
 
-            @if($req["salaryType"]!="")
-            {{$req["salaryType"] }}
+            @if($req['newH']["salaryType"]!="")
+                {{$req['newH']["salaryType"] }}
             @else
-                {{$req["salary"]!='' ? $req["salary"]:'(Salary type TBD)' }}
+                {{$req['newH']["salary"]!='' ? $req['newH']["salary"]:'(Salary type TBD)' }}
 
             @endif
         </td >
 
         <td >
             <span class="bold" >Sales Level:</span >
-            {{$req["salesLevel"]!='' ? $req["salesLevel"]:'-' }}
+            {{$req['newH']["salesLevel"]!='' ? $req['newH']["salesLevel"]:'-' }}
         </td >
         <td ><span class="bold" >Bonus</span >
-            {{$req["bonus"]!='' ? $req["bonus"]:'-' }}
+            {{$req['newH']["bonus"]!='' ? $req['newH']["bonus"]:'-' }}
 
         </td >
 
         <td >
             <span class="bold" >Transportation Allowance: </span >
-            {{$req["trans"]!='' ? $req["trans"]:'-' }}
+            {{$req['newH']["trans"]!='' ? $req['newH']["trans"]:'-' }}
 
         </td >
 
@@ -100,14 +103,13 @@
 <p ><span >
 
         HRB Entry Date:
-        {{$req["HRB"]!='' ? $req["HRB"]:'-' }}
+        {{$req['newH']["HRB"]!='' ? $req['newH']["HRB"]:'-' }}
     </span ></p ><br >
 <p >
 
 
-
-    @if($req["payrollComments"]!="")
-        <span class="bold" ><hr >Comments/Notes: </span > {{$req["payrollComments"]}}
+    @if($req['newH']["payrollComments"]!="")
+        <span class="bold" ><hr >Comments/Notes: </span > {{$req['newH']["payrollComments"]}}
 @endif
 
 

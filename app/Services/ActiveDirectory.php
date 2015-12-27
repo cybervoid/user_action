@@ -285,6 +285,10 @@ class ActiveDirectory
 
         $groupsToAdd = $req->request->get('iTDeptEmail');
 
+        //add the user to the default groups
+        @ldap_mod_add(static::$conn, 'CN=VPN_usa,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM', $group_info);
+        @ldap_mod_add(static::$conn, 'CN=WIFI_usa,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM', $group_info);
+
         if (isset($groupsToAdd))
         {
             foreach ($groupsToAdd as $group)
@@ -345,10 +349,8 @@ class ActiveDirectory
         // fetch the info from AD
         $attributes = array('givenname', 'sn', 'mail', 'samaccountname', 'mail');
 
-
         $mail = str_replace(' ', '.', $param);
 
-        //$result = ldap_search(static::$conn, "OU=North America,DC=ILLY-DOMAIN,DC=COM", "(&(!(userAccountControl:1.2.840.113556.1.4.803:=2)) (|(givenname={$param})(sn={$param}))  )", $attributes);
         $result = ldap_search(static::$conn, "OU=North America,DC=ILLY-DOMAIN,DC=COM", "(&(!(userAccountControl:1.2.840.113556.1.4.803:=2)) ( |(|(givenname={$param})(sn={$param})) (mail={$mail}))  )", $attributes);
 
         return ldap_get_entries(static::$conn, $result);
@@ -414,11 +416,6 @@ class ActiveDirectory
     public function change_org_Save($dn, $changes, $fromAD)
     {
 
-
-        //var_dump($changes);
-        //echo $changes['givenname'];
-
-
         foreach ($changes as $key => $value)
         {
             $userdata[$key] = $value;
@@ -445,24 +442,28 @@ class ActiveDirectory
             }
 
             $userdata['displayName'] = ucfirst(strtolower($lastName)) . " " . ucfirst(strtolower($name));
+            // todo investigar como cabiar el dn para que aparezca con el nuevo nombre en AD
+            //$userdata['dn'] = 'ILLY-DOMAIN.COM/North America/Rye Brook/Users/Rigoberto Rondo'; // logon username
+            //$userdata['userPrincipalName'] = 'cucomania'; // logon username
         }
 
         if(isset($changes['title'])){
             $userdata['description'] = $changes['title'];
         }
 
+        if (isset($changes['manager']))
+        {
+            $userdata['manager'] = $fromAD['newManager'];
+        }
 
         if(isset($changes['company'])){
+            echo 'asdas ' . \Config::get('app.illy caffè North America, Inc.st');
             $userdata['st'] = \Config::get('app.' . $changes['company'] . '.st');
             $userdata['postalCode'] = \Config::get('app.' . $changes['company'] . '.postalCode');
             $userdata['l'] = \Config::get('app.' . $changes['company'] . '.l');
             $userdata['c'] = \Config::get('app.' . $changes['company'] . '.c');
             $userdata['streetAddress'] = \Config::get('app.' . $changes['company'] . '.streetAddress');
-
         }
-
-
-
 
         ldap_mod_replace(static::$conn, $dn, $userdata);
 

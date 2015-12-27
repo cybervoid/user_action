@@ -12,11 +12,15 @@ var App = App || {};
     $(document).ready(function () {
 
         $('#department').change(function () {
-            if ($('#department').val() == 'empty') {
+            $('#sales_lev').hide();
+            if ($('#department').val() === '') {
                 $('#department').toggleClass("inputRender", true);
                 $('#departmentError').html('*');
             }
             else {
+                if ($('#department').val() === 'Sales') {
+                    $('#sales_lev').show();
+                }
                 $('#department').toggleClass('validateError', false);
                 $('#department').toggleClass('inputRender', true);
                 $('#departmentError').html('');
@@ -33,7 +37,7 @@ var App = App || {};
 
         $('#location').change(function () {
 
-            if ($('#location').val() != 'empty') {
+            if ($('#location').val() != '') {
                 $('#location').toggleClass('validateError', false);
                 $('#location').toggleClass('inputRender', true);
                 $('#locationError').html('');
@@ -44,7 +48,7 @@ var App = App || {};
 
 
             switch ($('#location').val()) {
-                case "empty":
+                case "":
                     $('#location').toggleClass('inputRender', true);
                     $('#locationError').html('*');
                     break;
@@ -110,7 +114,7 @@ var App = App || {};
             // VALIDATION
             var cansubmit = true;
 
-            if ($('#company').val() == "empty") {
+            if ($('#company').val() == "") {
                 $('#company').toggleClass('inputRender validateError');
                 $('#companyError').html('<span class="errorSpan"> * You have to choose a company before proceeding</span>');
                 errorValidation($('#company'), cansubmit);
@@ -120,7 +124,7 @@ var App = App || {};
                 $('#companyError').html('<span class="errorSpan"> *</span>');
             }
 
-            if ($('#department').val() == "empty") {
+            if ($('#department').val() == "") {
                 $('#department').toggleClass('inputRender validateError');
                 $('#departmentError').html('<span class="errorSpan"> * You have to choose a department before proceeding</span>');
                 errorValidation($('#department'), cansubmit);
@@ -130,7 +134,7 @@ var App = App || {};
                 $('#departmentError').html('<span class="errorSpan"> *</span>');
             }
 
-            if ($('#hireStatus').val() == "empty") {
+            if ($('#hireStatus').val() == "") {
                 $('#hireStatus').toggleClass('inputRender validateError');
                 $('#hireStatusError').html('<span class="errorSpan"> * You have to choose a hire status before proceeding</span>');
                 errorValidation($('#hireStatus'), cansubmit);
@@ -162,7 +166,7 @@ var App = App || {};
                 $('#payrollDateError').html('<span class="errorSpan"> * </span>');
             }
 
-            if ($('#location').val() == "empty") {
+            if ($('#location').val() == "") {
                 $('#location').toggleClass('inputRender validateError');
                 $('#locationError').html('<span class="errorSpan"> * You must choose a location before proceeding</span>');
                 errorValidation($('#location'), cansubmit);
@@ -172,10 +176,23 @@ var App = App || {};
                 $('#locationError').html('<span class="errorSpan"> * </span>');
             }
 
+            if ($('#salaryType').val() == "") {
+                $('#salaryType').toggleClass('inputRender validateError');
+                $('#salaryTypeError').html('<span class="errorSpan"> * You must choose a location before proceeding</span>');
+                errorValidation($('#salaryType'), cansubmit);
+                cansubmit = false;
+            }
+            else {
+                $('#salaryTypeError').html('<span class="errorSpan"> * </span>');
+            }
+
+
             if (cansubmit) {
                 $("#submit").attr('disabled', 'disabled');
             }
 
+            alert('sent y cansubmit: ' + cansubmit);
+            return false;
             return cansubmit
 
         });

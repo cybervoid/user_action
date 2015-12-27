@@ -36,8 +36,7 @@ var App = App || {};
                 return false;
             }
 
-
-            if ($('#hireStatus').val() === "empty") {
+            if ($('#hireStatus').val() === "") {
                 $('#hireStatusError').html('<span class="errorSpan"> * You have to choose a hire status before proceeding</span>');
                 errorValidation($('#hireStatus'), cansubmit);
                 cansubmit = false;
@@ -55,7 +54,6 @@ var App = App || {};
             else {
                 $('#ptoDaysError').html('');
             }
-
 
             if (cansubmit) {
                 $("#submit").attr('disabled', 'disabled');
@@ -121,7 +119,7 @@ var App = App || {};
                 .done(function (msg) {
                     $('#homeMenu').html('');
 
-                    $('#report').html(App.templates.separation(msg));
+                    $('#report').html(App.templates.separation({data: msg}));
 
                     // check if the user has phones
                     if (msg["mobile"] != '') {

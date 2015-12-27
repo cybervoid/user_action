@@ -5,8 +5,6 @@ We need to add the following features for a new user:<br >
 
 <ul >
     <li >Create an email address</li >
-    <li >Add the user to the VPN group</li >
-    <li >Add the user to the WIFI group</li >
     <li >Add the user to the ticketing system</li >
 </ul >
 

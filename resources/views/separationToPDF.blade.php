@@ -6,46 +6,47 @@
 
     <p style="font-weight: bold" >SEPARATION</p ></div >
 
-    <p ><span >Name: </span >{{ $req['name'] }} {{ $req['lastName'] }}</p >
+    <p ><span >Name: </span >{{ $req['sep']['name'] }} {{ $req['sep']['lastName'] }}</p >
 
 
-    @if ($req["buddy"]!='')
-        <p ><span >Buddy Name: </span >{{ $req["buddy"] }}</p >
+    @if ($req['sep']["buddy"]!='')
+        <p ><span >Buddy Name: </span >{{ $req['sep']["buddy"] }}</p >
     @endif
 
     <table width="100%" >
         <tr >
-            <td width="left" ><span >Company: </span > {{ $req["company"] }}</td >
-            <td width="left" ><span >Department: </span > {{ $req["department"] }}</td >
+            <td width="left" ><span >Company: </span > {{ $req['sep']["company"] }}</td >
+            <td width="left" ><span >Department: </span > {{ $req['sep']["department"] }}</td >
 
-            @if (isset($req["manager"]))
-                <td width="right" ><span >Manager: </span > {{ $req["manager"] }}</td >
+            @if (isset($req['sep']["manager"]))
+                <td width="right" ><span >Manager: </span > {{ $req['sep']["manager"] }}</td >
             @endif
         </tr >
     </table >
 
 
-    @if (isset($req["title"]))
-        <p ><span >Title: </span >{{ $req["title"] }}</p >
+    @if (isset($req['sep']["title"]))
+        <p ><span >Title: </span >{{ $req['sep']["title"] }}</p >
     @endif
 
 
     <p ><span >Employee #: </span >
-        @if($req["employeeID"]!='')
-            {{ $req["employeeID"] }}
+        @if($req['sep']["employeeID"]!='')
+            {{ $req['sep']["employeeID"] }}
         @else TBD
         @endif
     </p >
 
 
-    <div class="left3" ><span >Separation Date: </span > {{ $req["termDate"] }}</div >
-    <div class="left3" ><span >Hire Status: </span > {{ $req["hireStatus"] }}</div >
-    @if (isset($req["location_Other"]))
-        <div class="left3" ><span >Location: </span > {{ $req["location"] }} {{ $req["location_Other"] }}</div >
+    <div class="left3" ><span >Separation Date: </span > {{ $req['sep']["termDate"] }}</div >
+    <div class="left3" ><span >Hire Status: </span > {{ $req['sep']["hireStatus"] }}</div >
+    @if (isset($req['sep']["location_Other"]))
+        <div class="left3" ><span >Location: </span > {{ $req['sep']["location"] }} {{ $req['sep']["location_Other"] }}
+        </div >
     @endif
 
 
-    @if (isset($req["iTDeptEmail"]))
+    @if (isset($req['sep']["iTDeptEmail"]))
 
         <p ><span >IT Department Checklist: Rafael Gil and Service Desk</span ></p >
 
@@ -53,32 +54,32 @@
         <ul >
 
 
-            @foreach($req["iTDeptEmail"] as $item)
+            @foreach($req['sep']["iTDeptEmail"] as $item)
                 <li >{{ $item }}</li >
             @endforeach
         </ul >
     @endif
 
 
-    @if (isset($req["iTDept"]))
+    @if (isset($req['sep']["iTDept"]))
         <p ><span >Assets:</span ></p >
         <ul >
-            @foreach($req["iTDept"] as $item)
+            @foreach($req['sep']["iTDept"] as $item)
                 <li >{{ $item }}</li >
             @endforeach
         </ul >
     @endif
 
 
-    @if (isset($req["itComments"]))
+    @if ($req['sep']["itComments"]!='')
         <p ><span >Additional instructions for IT:</span ></p >
         <p style="margin-left: 22px" >
-            {{ $req["itComments"] }}
+            {{ $req['sep']["itComments"] }}
         </p >
     @endif
 
 
-    @if(isset($req["oracle"]))
+    @if(isset($req['sep']["oracle"]))
         <p ><span >Oracle Specialist Natasha D'Souza</span ></p >
         <ul >
             <li >Oracle Access/Oracle (HR) Number Approval (Sales, Finance, Logistics, Customer Care, IT, Tech Svcs)
@@ -86,31 +87,31 @@
         </ul >
     @endif
 
-    @if(isset($req["oManager"]))
+    @if(isset($req['sep']["oManager"]))
         <p ><span >HQ Office Manager-Suzie Schwab</span ></p >
 
         <ul >
-            @foreach($req["oManager"] as $item)
+            @foreach($req['sep']["oManager"] as $item)
                 <li >{{ $item }}</li >
             @endforeach
         </ul >
     @endif
 
 
-    @if(isset($req["creditCard"]))
+    @if(isset($req['sep']["creditCard"]))
         <p ><span >Finance- (Credit Card and Concur Access Requests) *new hires and separation</span >
         </p >
         <ul >
-            @foreach($req["creditCard"] as $item)
+            @foreach($req['sep']["creditCard"] as $item)
                 <li >{{ $item }}</li >
             @endforeach
         </ul >
     @endif
 
-    @if (isset($req["generalComments"]))
+    @if ($req['sep']["generalComments"]!='')
         <p ><span >Additional instructions for Administration Office:</span ></p >
         <p style="margin-left: 22px" >
-            {{ $req["generalComments"] }}
+            {{ $req['sep']["generalComments"] }}
         </p >
     @endif
 

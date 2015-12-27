@@ -37,11 +37,11 @@ return $settings = [
         'Quality and Tech', 'Public Relations', 'Operations', 'Other',],
 
 
-    'companies' => ['illy caffè North America, Inc.', 'Espressamente illy', 'illy caffè San Francisco LLC',
+    'companies' => ['illy caffè North America, Inc', 'Espressamente illy', 'illy caffè San Francisco LLC',
         'illy Espresso Canada',],
 
 
-    'illy caffè North America, Inc.' => ['streetAddress' => '800 Westchester Avenue, Suite S440',
+    'illy caffè North America, Inc' => ['streetAddress' => '800 Westchester Avenue, Suite S440',
         'postalCode' => '10573', 'l' => 'Rye Brook', 'c' => 'US', 'st' => 'NY'],
     'Espressamente illy' => ['streetAddress' => '800 Westchester Avenue, Suite S438', 'postalCode' => '10573',
         'l' => 'Rye Brook', 'c' => 'US', 'st' => 'NY'],
