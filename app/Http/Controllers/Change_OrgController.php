@@ -158,6 +158,7 @@ class Change_OrgController extends Controller
         // make the change permanent in AD
         if(!empty($params)) $ad->change_org_Save($result[0]['dn'], $params, $result);
 
+
         if (!isset($result[0]['givenname'][0]))
         {
             echo 'Something went wrong, please contact your administrator. <a href="/">Go Home</a>';
@@ -180,7 +181,8 @@ class Change_OrgController extends Controller
         $view['url'] = $req->url();
         if($req->request->get('itComments')!= ''){
             $view['itComments'] = $req->request->get('itComments');
-        }
+        } else $view['itComments']= '';
+
 
         Reports::generateReport($change_org_Report, \Config::get('app.change_org_ReportsPath'), $REPORT_TYPE, $view);
 

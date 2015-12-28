@@ -61,7 +61,8 @@
 
     <div class="left" >
         <label >Manager</label >
-        <input type="text" name="manager" id="manager" class="inputRender" value="{{ data.fromAD.manager }}"
+        <input type="text" name="manager" id="manager" class="inputRender" autocomplete="off"
+               value="{{ data.fromAD.manager }}"
                required="" >
         <span id="searchProgressManager" ></span >
     </div >
@@ -89,7 +90,6 @@
             {{/each}}
         </select >
     </div >
-
     {{!-- {{
         <p ></p ><br ><br >
     <span class="subHeader" >

@@ -40,7 +40,7 @@
 
     @if(count($changes)>0)
         <div >We have detected the following changes:</div >
-        <ul >
+        <ul class="listNoBullets" >
             @foreach(array_keys($changes) as $key)
 
 
