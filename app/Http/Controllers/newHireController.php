@@ -72,6 +72,7 @@ class newHireController extends Controller
 
         Reports::generateReport($newHireReport, \Config::get('app.newHireReportsPath'), $req->request->get('reportType'), $view);
 
+
         //generate payroll Report
         $payrollReport = \Config::get('app.payrollNewHireReportsPrefix') . $name . ' ' . $lastName . '.pdf';
         $payrollReport = Reports::escapeReportName($payrollReport);

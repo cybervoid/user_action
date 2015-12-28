@@ -110,12 +110,31 @@ var App = App || {};
             window.location.href = "/";
         });
 
+        $('#company').change(function() {
+            $('#companyError').html('');
+        });
+
+        $('#department').change(function() {
+            $('#departmentError').html('');
+        });
+
+        $('#hireStatus').change(function() {
+            $('#hireStatusError').html('');
+        });
+
+        $('#salaryType').change(function() {
+            $('#salaryTypeError').html('');
+        });
+
+        $('#location').change(function() {
+            $('#locationError').html('');
+        });
+
         $('#newHire').submit(function (event) {
             // VALIDATION
             var cansubmit = true;
 
             if ($('#company').val() == "") {
-                $('#company').toggleClass('inputRender validateError');
                 $('#companyError').html('<span class="errorSpan"> * You have to choose a company before proceeding</span>');
                 errorValidation($('#company'), cansubmit);
                 cansubmit = false;
@@ -125,7 +144,6 @@ var App = App || {};
             }
 
             if ($('#department').val() == "") {
-                $('#department').toggleClass('inputRender validateError');
                 $('#departmentError').html('<span class="errorSpan"> * You have to choose a department before proceeding</span>');
                 errorValidation($('#department'), cansubmit);
                 cansubmit = false;
@@ -135,7 +153,6 @@ var App = App || {};
             }
 
             if ($('#hireStatus').val() == "") {
-                $('#hireStatus').toggleClass('inputRender validateError');
                 $('#hireStatusError').html('<span class="errorSpan"> * You have to choose a hire status before proceeding</span>');
                 errorValidation($('#hireStatus'), cansubmit);
                 cansubmit = false;
@@ -146,7 +163,6 @@ var App = App || {};
 
 
             if ($('#startDate').val().length < 2) {
-                $('#startDate').toggleClass('inputRender validateError');
                 $('#startDateError').html('<span class="errorSpan"> * You have to choose a start date before proceeding</span>');
                 errorValidation($('#startDate'), cansubmit);
                 cansubmit = false;
@@ -157,7 +173,6 @@ var App = App || {};
 
 
             if ($('#payrollDate').val().length < 2) {
-                $('#payrollDate').toggleClass('inputRender validateError');
                 $('#payrollDateError').html('<span class="errorSpan"> * You have to choose a payroll start date before proceeding</span>');
                 errorValidation($('#payrollDate'), cansubmit);
                 cansubmit = false;
@@ -167,7 +182,6 @@ var App = App || {};
             }
 
             if ($('#location').val() == "") {
-                $('#location').toggleClass('inputRender validateError');
                 $('#locationError').html('<span class="errorSpan"> * You must choose a location before proceeding</span>');
                 errorValidation($('#location'), cansubmit);
                 cansubmit = false;
@@ -177,7 +191,6 @@ var App = App || {};
             }
 
             if ($('#salaryType').val() == "") {
-                $('#salaryType').toggleClass('inputRender validateError');
                 $('#salaryTypeError').html('<span class="errorSpan"> * You must choose a location before proceeding</span>');
                 errorValidation($('#salaryType'), cansubmit);
                 cansubmit = false;
@@ -191,10 +204,7 @@ var App = App || {};
                 $("#submit").attr('disabled', 'disabled');
             }
 
-            alert('sent y cansubmit: ' + cansubmit);
-            return false;
             return cansubmit
-
         });
 
 

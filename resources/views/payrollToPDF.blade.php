@@ -24,7 +24,7 @@
     <tr >
         <td ><p ><span class="bold" >New Hire Title: </span >{{ $req['newH']["title"] }}</p ></td >
         <td ><p ><span class="bold" >Company: </span >{{ $req['newH']["company"] }}</p ></td >
-        <td ><p ><span class="bold" >Reports to (Name/Title): </span >{{ $req['newH']["orgger"] }}</p ></td >
+        <td ><p ><span class="bold" >Reports to (Name/Title): </span >{{ $req['newH']["manager"] }}</p ></td >
     </tr >
 </table >
 
