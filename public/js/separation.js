@@ -30,7 +30,6 @@ var App = App || {};
                 else {
                     $('#termDateError').html('');
                 }
-
             }
             else {
                 return false;
@@ -151,6 +150,17 @@ var App = App || {};
                     $('#periodPaid').keyup(function () {
                         $('#cobra').prop("checked", true);
                     });
+
+                    $("#hireStatus").change(function () {
+                        if ($('#hireStatus').val() != "") {
+                            $('#hireStatusError').html('');
+                        }
+                    });
+
+                    $('#ptoDays').keyup(function () {
+                        $('#ptoDaysError').html('');
+                    });
+
 
                 });
 
