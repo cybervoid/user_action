@@ -76,20 +76,21 @@ class ActiveDirectory
 
         //remove from department group
         $result = ActiveDirectory::query("distinguishedName={$dn}");
-
-        switch ($result[0]['department'][0])
+        if (isset($result[0]['department'][0]))
         {
-            case "Customer Care":
-                @ldap_mod_del(static::$conn, 'CN=Customer Care NA,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM', $group_info);
-                break;
-            case "Finance":
-                @ldap_mod_del(static::$conn, 'CN=Finance NA,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM', $group_info);
-                break;
-            case "Human Resources":
-                @ldap_mod_del(static::$conn, 'CN=Human Resources NA,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM', $group_info);
-                break;
+            switch ($result[0]['department'][0])
+            {
+                case "Customer Care":
+                    @ldap_mod_del(static::$conn, 'CN=Customer Care NA,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM', $group_info);
+                    break;
+                case "Finance":
+                    @ldap_mod_del(static::$conn, 'CN=Finance NA,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM', $group_info);
+                    break;
+                case "Human Resources":
+                    @ldap_mod_del(static::$conn, 'CN=Human Resources NA,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM', $group_info);
+                    break;
+            }
         }
-
 
         // get group dn
         foreach ($groups as $item)

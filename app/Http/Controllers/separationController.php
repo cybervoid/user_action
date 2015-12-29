@@ -115,6 +115,7 @@ class SeparationController extends Controller
         }
         else
         {
+            // if the separation date is not today, schedule when it will be effective
             Schedule::addSchedule($req->request->get('termDate'), $userName, $name . ' ' . $lastName, 'separation', isset($disableUser), \Config::get('app.separationReportsPath') . $separationReport, $req->request->get('iTDeptEmail'));
         }
 

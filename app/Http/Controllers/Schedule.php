@@ -88,7 +88,6 @@ class Schedule extends Controller
             return false;
         }
 
-
         $ad->disableUser($entry);
         $ad->removeUserInfo($entry);
 
@@ -100,6 +99,7 @@ class Schedule extends Controller
 
 
         // send notification email
+
         $attachment = isset($content['attachment']) ?
             file_exists($content['attachment']) ? $content['attachment'] : false : null;
 

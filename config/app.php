@@ -19,7 +19,7 @@ return $settings = [
     'org_change_ReportsPrefix' => 'User Organization Change Notification-',
 
     // filepath for the schedule batch file
-    'schedule_batch' => storage_path() . '/scheduled_batch',
+    'schedule_batch' => storage_path() . '/scheduled_batch.json',
 
     /*
      * Email settings
