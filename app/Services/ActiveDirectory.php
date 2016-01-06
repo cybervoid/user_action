@@ -23,14 +23,16 @@ class ActiveDirectory
         {
             return new ActiveDirectory();
         }
+
+
         if (!ActiveDirectory::$conn)
         {
+
             ActiveDirectory::$conn = ldap_connect("ldap://" . env('LDAP_HOST'));
 
             if (!ActiveDirectory::$conn)
             {
                 error_log(ldap_error(ActiveDirectory::$conn));
-
                 return null;
             }
             else
@@ -204,7 +206,7 @@ class ActiveDirectory
 
         switch ($req->request->get('company'))
         {
-            case "illy caffè North America, Inc.":
+            case "illy caffè North America, Inc":
                 switch ($req->request->get('location'))
                 {
                     case "New York City":
@@ -458,7 +460,7 @@ class ActiveDirectory
         }
 
         if(isset($changes['company'])){
-            echo 'asdas ' . \Config::get('app.illy caffè North America, Inc.st');
+            //echo 'asdas ' . \Config::get('app.illy caffè North America, Inc.st');
             $userdata['st'] = \Config::get('app.' . $changes['company'] . '.st');
             $userdata['postalCode'] = \Config::get('app.' . $changes['company'] . '.postalCode');
             $userdata['l'] = \Config::get('app.' . $changes['company'] . '.l');

@@ -21,6 +21,7 @@ class ReportsController extends Controller
 
     public function getReport(Request $req)
     {
+
         $reportType = $req->route('reportType');
         $name = $req->route('name');
 
@@ -49,6 +50,7 @@ class ReportsController extends Controller
         if ($reportType == 'change_org_rep')
         {
             $filePath = \Config::get('app.change_org_ReportsPath') . $name;
+
         }
 
         $result = Reports::loadReport($filePath);

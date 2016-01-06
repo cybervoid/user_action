@@ -63,11 +63,7 @@ class Change_OrgController extends Controller
         $result_array['hireStatus'] = \Config::get('app.hireStatus');
 
         return new Response(json_encode($result_array), 200, ['Content-Type' => 'application/json']);
-        /*
-        $response = new Response(json_encode($result_array), 200, ['Content-Type' => 'application/json']);
 
-        return $response;
-        */
     }
 
     public function verify(Request $req)
@@ -172,7 +168,7 @@ class Change_OrgController extends Controller
             $manager = $result[0]['manager'][0];
 
         //generate report
-        $change_org_Report = \Config::get('app.org_change_ReportsPrefix') . $name . ' ' . $lastName . '.pdf';
+        $change_org_Report = \Config::get('app.org_change_ReportsPrefix') . $name . ' ' . $lastName . date('_m-d-Y') . '.pdf';
         $change_org_Report = Reports::escapeReportName($change_org_Report);
 
         // set variables needed in the view

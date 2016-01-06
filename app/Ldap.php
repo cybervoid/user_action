@@ -24,21 +24,23 @@ class Ldap implements AuthenticatableContract, CanResetPasswordContract
         if (!$ldap)
         {
             error_log(ldap_error($ldap));
-
             return null;
         }
         else
         {
-            $adUserName = \Config::get('app.adUserName');
-            $adPassword = \Config::get('app.adPassword');
-            $adDomain = \Config::get('app.adDomain');
+            $adUserName = env('LDAP_USER');
+            $adPassword = env('LDAP_PASSWORD');
+            $adDomain = env('LDAP_DOMAIN');
 
 
             ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
             ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
             ldap_set_option($ldap, LDAP_OPT_SIZELIMIT, 1000); //this is just for speed.
+
+
             if (!ldap_bind($ldap, $adUserName . "@" . $adDomain, $adPassword))
             {
+                error_log(ldap_error($ldap));
                 return null;
             }
 
