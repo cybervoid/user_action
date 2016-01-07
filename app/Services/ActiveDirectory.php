@@ -19,16 +19,13 @@ class ActiveDirectory
 
     public static function get_connection()
     {
-        if (env('APP_STATUS') == 'offline')
-        {
-            return new ActiveDirectory();
-        }
 
 
         if (!ActiveDirectory::$conn)
         {
+            ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7);
 
-            ActiveDirectory::$conn = ldap_connect("ldap://" . env('LDAP_HOST'));
+            ActiveDirectory::$conn = ldap_connect("ldap://" . env('LDAP_HOST') . ":389");
 
             if (!ActiveDirectory::$conn)
             {
@@ -44,8 +41,9 @@ class ActiveDirectory
                 ldap_set_option(ActiveDirectory::$conn, LDAP_OPT_PROTOCOL_VERSION, 3);
                 ldap_set_option(ActiveDirectory::$conn, LDAP_OPT_REFERRALS, 0);
                 ldap_set_option(ActiveDirectory::$conn, LDAP_OPT_SIZELIMIT, 1000); //this is just for speed.
-                if (!ldap_bind(ActiveDirectory::$conn, $adUserName . "@" . $adDomain, $adPassword))
+                if (!@ldap_bind(ActiveDirectory::$conn, $adUserName . "@" . $adDomain, $adPassword))
                 {
+                    echo ldap_error(ActiveDirectory::$conn);
                     return null;
                 }
             }

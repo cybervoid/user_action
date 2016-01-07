@@ -27,15 +27,13 @@ class Reports
     {
 
         $myFile = storage_path() . "/export.html";
+
         $toPDF = fopen($myFile, "w+");
 
-
-        // todo removed $req->url() add it to newhire and separation in the $req param
         //get the domain so I can load the image on the PDF
         $parse = parse_url($req['url']);
 
-        //todo removed $req->request->all() from $req param, update newHire and separation
-        $myView = view($reportType . 'ToPDF', ['req' => $req,
+       $myView = view($reportType . 'ToPDF', ['req' => $req,
             'server' => $parse['scheme'] . '://' . $parse['host'] . '/',]);
 
         if (!fwrite($toPDF, $myView))
@@ -44,18 +42,9 @@ class Reports
         }
         fclose($toPDF);
 
-
-        if (env('APP_ENV') == 'windowsLocal')
-        {
-            $wkhtmltopdf = '"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe"';
-        }
-        else
-        {
-            $wkhtmltopdf = env('wkhtmltopdf');
-        }
+       $wkhtmltopdf = env('wkhtmltopdf');
 
         exec($wkhtmltopdf . ' --margin-top 5 --margin-bottom 5' . ' ' . $myFile . ' ' . '"' . $location . $reportName . '"', $returnvar);
-
     }
 
     /**

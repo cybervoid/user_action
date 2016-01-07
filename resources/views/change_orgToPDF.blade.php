@@ -1,26 +1,36 @@
 @extends('exportTemplate')
-
-
 @section('content')
 
-    <p class="subHeader" >illy caffè North America, Inc.</p >
-    <br >
+    <div class="centerObj remark page_title" ><p >Organization Change </p ></div >
 
+    <div class="container custom_top" >
+        <div class="row" ><span class="remark">Name:</span>{{ $req['main_req']['name'] }} {{ $req['main_req']['lastName'] }}</div >
+        <div class="row" ><span class="remark">Employee ID:</span> {{ $req['main_req']['employeeID']!='' ? $req['main_req']['employeeID']:'TBD' }}</div >
+        <div class="row" ><span class="remark">Email:</span> <a href="mailto:{{ $req['main_req']['newEmail'] }}" >{{ $req['main_req']['newEmail'] }}</a ></div >
+    </div >
 
-    <span class="leftIdentation" >
-<br ><p ></p >
+    <div class="custom_top" >
+        <span class="remark">Title:</span>{{ $req['main_req']['title'] }}
+    </div >
 
-        @if($req['fromAD'][0]['givenname'][0]!='')
-            <div >The following changes has been made to the user
-        <span class="setBold" >
-            {{ $req['fromAD'][0]['givenname'][0] }} {{ $req['fromAD'][0]['sn'][0] }}
+    <div class="container custom_top" >
+        <div class="row" ><span class="remark">Company:</span> {{ $req['main_req']['company'] }}</div >
+        <div class="row" ><span class="remark">Department:</span> {{ $req['main_req']['department'] }}</div >
+        <div class="row" ><span class="remark">Manager:</span> {{ $req['main_req']['manager'] }}</div >
+    </div >
 
-        </span >
-            </div >
-
-        @endif
+    <div class="container custom_top" >
+        <div class="row" ><span class="remark">Effective Date:</span> {{ $req['main_req']['effectiveDate'] }}</div >
+        @if($req['main_req']['hireStatus']!='')
+            <div class="row" ><span class="remark">Hire Status</span> {{ $req['main_req']['hireStatus'] }}</div >
+            @endif
+    </div >
 
         @if(count($req['changes'])>0)
+            <div class="custom_top">
+                <span class="remark">Detected Changes:</span>
+            </div>
+
             <ul >
                 @foreach(array_keys($req['changes']) as $key)
                     @if($req['changes'][$key] != $req['fromAD'][0][$key][0] && $key!='manager')
@@ -34,12 +44,12 @@
                                 class="setBold" > {{ $req['newManagerName'] }} </span > made.
                     </li >
                 @endif
-            </ul >
+
         @endif
         @if($req['itComments']!='')
             <li >Additional Instructions: <span class="setBold" > {{ $req['itComments']  }} </span ></li >
         @endif
-
+            </ul >
         <br ><p ></p >
 
 

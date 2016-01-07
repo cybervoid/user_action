@@ -42,14 +42,10 @@ class Change_OrgController extends Controller
      */
     public function index()
     {
+        //return view('testToPDF', ['server' => 'pepe.com']);
 
         $user = User::current();
-
-
-        //return new Response($result, 200, ['content-type' => 'application/json']);
-
         return view('change_org', ['user' => $user]);
-
 
     }
 
@@ -174,11 +170,11 @@ class Change_OrgController extends Controller
         // set variables needed in the view
         $view['changes'] = $params;
         $view['fromAD'] = $result;
+        $view['main_req'] = json_decode(base64_decode($req->request->get('main_req')), true);
         $view['url'] = $req->url();
         if($req->request->get('itComments')!= ''){
             $view['itComments'] = $req->request->get('itComments');
         } else $view['itComments']= '';
-
 
         Reports::generateReport($change_org_Report, \Config::get('app.change_org_ReportsPath'), $REPORT_TYPE, $view);
 

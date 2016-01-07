@@ -74,7 +74,6 @@
 
 <div >Below is the updated information being stored in our system for this user</div >
 
-
 <ul >
     <li >Name: <span class="noticeThis" > {{ $req['name']  }} </span ></li >
     <li >Last Name: <span class="noticeThis" > {{ $req['lastName']  }} </span ></li >
@@ -97,10 +96,10 @@
         <input type="submit" class="inputRender" name="submit" id="submit" >
     @endif
 
-    <input type="hidden" name="reportType" id="reportType" value="change_org" >
+<input type="hidden" name="reportType" id="reportType" value="change_org" >
 <input type="hidden" name="email" id="email" value="{{ $fromAD[0]['mail'][0]  }}" >
 <input type="hidden" name="params" id="params" value="<?php echo base64_encode(json_encode($changes)); ?>" >
-
+<input type="hidden" name="main_req" id="main_req" value="<?php echo base64_encode(json_encode($req)); ?>" >
 </span >
 
         </form >
