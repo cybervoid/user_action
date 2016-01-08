@@ -4,13 +4,13 @@
     <div class="centerObj remark page_title" ><p >Organization Change </p ></div >
 
     <div class="container custom_top" >
-        <div class="row" ><span class="remark">Name:</span>{{ $req['main_req']['name'] }} {{ $req['main_req']['lastName'] }}</div >
+        <div class="row" ><span class="remark">Name:</span> {{ $req['main_req']['name'] }} {{ $req['main_req']['lastName'] }}</div >
         <div class="row" ><span class="remark">Employee ID:</span> {{ $req['main_req']['employeeID']!='' ? $req['main_req']['employeeID']:'TBD' }}</div >
         <div class="row" ><span class="remark">Email:</span> <a href="mailto:{{ $req['main_req']['newEmail'] }}" >{{ $req['main_req']['newEmail'] }}</a ></div >
     </div >
 
     <div class="custom_top" >
-        <span class="remark">Title:</span>{{ $req['main_req']['title'] }}
+        <span class="remark">Title:</span> {{ $req['main_req']['title'] }}
     </div >
 
     <div class="container custom_top" >

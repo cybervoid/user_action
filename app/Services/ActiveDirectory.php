@@ -23,13 +23,14 @@ class ActiveDirectory
 
         if (!ActiveDirectory::$conn)
         {
-            ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7);
+            ldap_set_option(null, LDAP_OPT_DEBUG_LEVEL, 7);
 
             ActiveDirectory::$conn = ldap_connect("ldap://" . env('LDAP_HOST') . ":389");
 
             if (!ActiveDirectory::$conn)
             {
                 error_log(ldap_error(ActiveDirectory::$conn));
+
                 return null;
             }
             else
@@ -44,6 +45,7 @@ class ActiveDirectory
                 if (!@ldap_bind(ActiveDirectory::$conn, $adUserName . "@" . $adDomain, $adPassword))
                 {
                     echo ldap_error(ActiveDirectory::$conn);
+
                     return null;
                 }
             }
@@ -144,43 +146,13 @@ class ActiveDirectory
     public function getEmail($email)
     {
 
-        if (env('APP_STATUS') == 'offline')
-        {
-            $offline["givenname"] = 'Rafael';
-            $offline["sn"] = 'Gil';
-            $offline["mail"] = $email;
-            $offline["department"] = 'Information Technology';
+        $attributes = array('dn', 'title', 'givenname', 'sn', 'manager', 'company', 'department', "memberOf",
+            'samaccountname', 'mail', 'mobile', 'telephoneNumber');
 
-            $offline["title"] = 'Infrastructure Engineer';
+        $result = ldap_search(ActiveDirectory::$conn, "OU=North America,DC=ILLY-DOMAIN,DC=COM", "mail={$email}", $attributes);
 
+        return ldap_get_entries(ActiveDirectory::$conn, $result);
 
-            $offline["company"] = 'illy caffè North America, Inc.';
-
-
-            $offline["telephonenumber"] = '+1 914 253 4562';
-
-            $offline["mobile"] = '+1 914 420 3700';
-
-
-            $offline["sAMAccountName"] = 'gilra';
-
-
-            $offline["manager"] = 'Roy Forster';
-            $offline["managerEmail"] = 'roy.forster@illy.com';
-
-            return $offline;
-
-        }
-        else
-        {
-
-            $attributes = array('dn', 'title', 'givenname', 'sn', 'manager', 'company', 'department', "memberOf",
-                'samaccountname', 'mail', 'mobile', 'telephoneNumber');
-
-            $result = ldap_search(ActiveDirectory::$conn, "OU=North America,DC=ILLY-DOMAIN,DC=COM", "mail={$email}", $attributes);
-
-            return ldap_get_entries(ActiveDirectory::$conn, $result);
-        }
 
     }
 
@@ -318,6 +290,7 @@ class ActiveDirectory
      * @param $manager
      *
      * Get the email, sn and givenname of the manager expects a dn as a parameter
+     *
      * @return array
      */
     public function getManager($manager)
@@ -362,7 +335,6 @@ class ActiveDirectory
     {
 
         $consult = $this->lookupUser('*' . $req->request->get('term') . '*');
-
         $result = [];
         for ($i = 0; $i < $consult["count"]; $i++)
         {
@@ -448,7 +420,8 @@ class ActiveDirectory
             //$userdata['userPrincipalName'] = 'cucomania'; // logon username
         }
 
-        if(isset($changes['title'])){
+        if (isset($changes['title']))
+        {
             $userdata['description'] = $changes['title'];
         }
 
@@ -457,7 +430,8 @@ class ActiveDirectory
             $userdata['manager'] = $fromAD['newManager'];
         }
 
-        if(isset($changes['company'])){
+        if (isset($changes['company']))
+        {
             //echo 'asdas ' . \Config::get('app.illy caffè North America, Inc.st');
             $userdata['st'] = \Config::get('app.' . $changes['company'] . '.st');
             $userdata['postalCode'] = \Config::get('app.' . $changes['company'] . '.postalCode');

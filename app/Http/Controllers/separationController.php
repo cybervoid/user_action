@@ -140,11 +140,8 @@ class SeparationController extends Controller
 
         // get AD information
         $result_array['fromAD'] = Lookup::lookupUser($req);
-
         $result_array['hireStatus'] = \Config::get('app.hireStatus');
-
         return new Response(json_encode($result_array), 200, ['Content-Type' => 'application/json']);
-
 
     }
 }

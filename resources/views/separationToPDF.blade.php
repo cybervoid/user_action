@@ -1,49 +1,36 @@
 @extends('exportTemplate')
-
-
 @section('content')
 
 
-    <p style="font-weight: bold" >SEPARATION</p ></div >
+    <div class="centerObj remark page_title" ><p >Separation</p ></div >
 
-    <p ><span >Name: </span >{{ $req['sep']['name'] }} {{ $req['sep']['lastName'] }}</p >
-
-
-    @if ($req['sep']["buddy"]!='')
-        <p ><span >Buddy Name: </span >{{ $req['sep']["buddy"] }}</p >
-    @endif
-
-    <table width="100%" >
-        <tr >
-            <td width="left" ><span >Company: </span > {{ $req['sep']["company"] }}</td >
-            <td width="left" ><span >Department: </span > {{ $req['sep']["department"] }}</td >
-
-            @if (isset($req['sep']["manager"]))
-                <td width="right" ><span >Manager: </span > {{ $req['sep']["manager"] }}</td >
+    <div class="container custom_top" >
+        <div class="row" ><span class="remark">Name:</span> {{ $req['sep']['name'] }} {{ $req['sep']['lastName'] }}</div >
+        <div class="row" ><span class="remark">Employee ID:</span> {{ $req['sep']['employeeID']!='' ? $req['sep']['employeeID']:'TBD' }}</div >
+        @if ($req['sep']["buddy"]!='')
+        <div class="row" ><span class="remark">Buddy:</span> {{ $req['sep']['buddy'] }}</div >
             @endif
-        </tr >
-    </table >
+    </div >
 
+    <div class="container custom_top" >
+        <div class="row" ><span class="remark">Company:</span>{{ $req['sep']['company'] }}</div >
+        <div class="row" ><span class="remark">Department:</span> {{ $req['sep']['department'] }}</div >
+        <div class="row" ><span class="remark">Manager:</span> {{ $req['sep']['manager'] }}</div >
+    </div >
 
     @if (isset($req['sep']["title"]))
-        <p ><span >Title: </span >{{ $req['sep']["title"] }}</p >
+        <div class="custom_top" >
+        <p ><span class="remark">Title: </span > {{ $req['sep']["title"] }}</p >
+        </div>
     @endif
 
-
-    <p ><span >Employee #: </span >
-        @if($req['sep']["employeeID"]!='')
-            {{ $req['sep']["employeeID"] }}
-        @else TBD
+    <div class="container custom_top" >
+        <div class="row" ><span class="remark">Separation Date:</span> {{ $req['sep']['termDate'] }}</div >
+        <div class="row" ><span class="remark">Hire Status:</span> {{ $req['sep']['hireStatus'] }}</div >
+        @if (isset($req['sep']["location_Other"]))
+        <div class="row" ><span class="remark">Location:</span> {{ $req['sep']["location"] }} {{ $req['sep']["location_Other"] }}</div >
         @endif
-    </p >
-
-
-    <div class="left3" ><span >Separation Date: </span > {{ $req['sep']["termDate"] }}</div >
-    <div class="left3" ><span >Hire Status: </span > {{ $req['sep']["hireStatus"] }}</div >
-    @if (isset($req['sep']["location_Other"]))
-        <div class="left3" ><span >Location: </span > {{ $req['sep']["location"] }} {{ $req['sep']["location_Other"] }}
-        </div >
-    @endif
+    </div >
 
 
     @if (isset($req['sep']["iTDeptEmail"]))

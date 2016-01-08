@@ -15,15 +15,8 @@ class LdapController extends Controller
     public function autocomplete(Request $req)
     {
 
-        if (env('APP_STATUS') == 'offline')
-        {
-            $result = '[{"label":"Rafael Gil","value":"Rafael.Gil@illy.com"}]';
-        }
-        else
-        {
-            $ad = ActiveDirectory::get_connection();
-            $result = $ad->autocomplete($req);
-        }
+        $ad = ActiveDirectory::get_connection();
+        $result = $ad->autocomplete($req);
 
 
         return new Response($result, 200, ['content-type' => 'application/json']);
