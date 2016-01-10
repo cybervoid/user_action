@@ -79,6 +79,7 @@ class SeparationController extends Controller
         $attachment = \Config::get('app.separationReportsPath') . $separationReport;
         $attachment = isset($attachment) ? file_exists($attachment) ? $attachment : false : null;
 
+
         Mailer::send('emails.forms', [], function (Message $m) use ($to, $ccRecipients, $subject, $attachment)
         {
             $m->to($to, null)->subject($subject)->cc($ccRecipients);
@@ -88,11 +89,10 @@ class SeparationController extends Controller
             }
         });
 
-
         $ccRecipients[$to] = $to;
         $ccRecipients = array_unique(array_map("StrToLower", $ccRecipients));
 
-        // execute proper actions for a separation or schedule one9
+        // execute proper actions for a separation or schedule one
         $today = date('m/d/Y');
         $userName = $req->request->get('sAMAccountName');
         $disableUser = $req->request->get('disableUser');
@@ -104,7 +104,7 @@ class SeparationController extends Controller
             $ad = ActiveDirectory::get_connection();
             $user_ad_info = $ad->getsamaccountname($req->request->get('sAMAccountName'));
 
-            $ad->removeFromGroups($req->request->get('iTDeptEmail'), $user_ad_info[0]["dn"]);
+            $ad->removeFromGroups($req->request->get('iTDeptEmail'), $user_ad_info[0]["dn"], $disableUser);
 
             //check if the user wants to disable AD user
             if (isset($disableUser))

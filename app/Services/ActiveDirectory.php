@@ -66,7 +66,7 @@ class ActiveDirectory
 
     }
 
-    public function removeFromGroups($groups, $dn)
+    public function removeFromGroups($groups, $dn, $disableUSer)
     {
 
         if (!isset($dn))
@@ -76,7 +76,7 @@ class ActiveDirectory
 
         $group_info['member'] = $dn;
 
-        //remove from department group
+        //remove from departments group
         $result = ActiveDirectory::query("distinguishedName={$dn}");
         if (isset($result[0]['department'][0]))
         {
@@ -94,14 +94,23 @@ class ActiveDirectory
             }
         }
 
-        // get group dn
-        foreach ($groups as $item)
+        if (isset($groups))
         {
-            $result = ActiveDirectory::query("sAMAccountName={$item}");
-            $group_dn = $result[0]['dn'];
-            $errorFound = @ldap_mod_del(static::$conn, $group_dn, $group_info);
+            // get group dn
+            foreach ($groups as $item)
+            {
+                $result = ActiveDirectory::query("sAMAccountName={$item}");
+                $group_dn = $result[0]['dn'];
+                $errorFound = @ldap_mod_del(static::$conn, $group_dn, $group_info);
+            }
         }
 
+        // remove from the basics groups
+        if ($disableUSer)
+        {
+            @ldap_mod_del(static::$conn, 'CN=VPN_usa,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM', $group_info);
+            @ldap_mod_del(static::$conn, 'CN=WIFI_usa,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM', $group_info);
+        }
 
         $result = false;
     }

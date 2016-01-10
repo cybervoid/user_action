@@ -44,6 +44,7 @@ Route::post('change_org_save', 'Change_OrgController@save');
 
 
 todo en separation remove the user from the VPN and wifi groups and check if we can first (usa groups)
+todo en separation schedule check if disable user is checked then actuall disable it and clean the info from AD
 todo en el form de org change al poner un coment no sale el nombre del usuario al que aplicaactivac
 
 todo arreglar en new hire y en change org las notificaciones para los managers en el autocompletar
