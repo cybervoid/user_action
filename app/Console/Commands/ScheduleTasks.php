@@ -52,10 +52,9 @@ class ScheduleTasks extends Command
 
         $today = date('m/d/Y');
 
-
         $storedSchedules = Schedule::readScheduleFile();
-        $theDates = array_keys($storedSchedules);
 
+        $theDates = array_keys($storedSchedules);
 
         foreach ($theDates as $date)
         {
@@ -68,7 +67,6 @@ class ScheduleTasks extends Command
                 //  delete the task
                 unset($storedSchedules[$date]);
                 Schedule::saveFile($storedSchedules);
-
             }
         }
 

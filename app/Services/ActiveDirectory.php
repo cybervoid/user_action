@@ -23,7 +23,7 @@ class ActiveDirectory
 
         if (!ActiveDirectory::$conn)
         {
-            ldap_set_option(null, LDAP_OPT_DEBUG_LEVEL, 7);
+            //ldap_set_option(null, LDAP_OPT_DEBUG_LEVEL, 7);
 
             ActiveDirectory::$conn = ldap_connect("ldap://" . env('LDAP_HOST') . ":389");
 

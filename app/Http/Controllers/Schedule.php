@@ -24,7 +24,6 @@ class Schedule extends Controller
     public static function processScheduleTasks($content)
     {
 
-
         switch ($content['action'])
         {
             case "newHire_reminder":
@@ -80,7 +79,6 @@ class Schedule extends Controller
     {
 
         $ad = ActiveDirectory::get_connection();
-
         $entry = $ad->getsamaccountname($content['samaccountname']);
 
         if (count($entry) < 2)
@@ -88,18 +86,21 @@ class Schedule extends Controller
             return false;
         }
 
-        $ad->disableUser($entry);
-        $ad->removeUserInfo($entry);
+        $disableUser= $content['deactivate'];
+
+        if($disableUser){
+            $ad->disableUser($entry);
+            $ad->removeUserInfo($entry);
+        }
+
 
 
         if (count($content['groups']) > 0)
         {
-            $ad->removeFromGroups($content['groups'], $entry[0]["dn"]);
+            $ad->removeFromGroups($content['groups'], $entry[0]["dn"], $disableUser);
         }
 
-
         // send notification email
-
         $attachment = isset($content['attachment']) ?
             file_exists($content['attachment']) ? $content['attachment'] : false : null;
 
