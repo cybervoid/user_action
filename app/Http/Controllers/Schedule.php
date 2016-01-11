@@ -35,6 +35,9 @@ class Schedule extends Controller
             case "separation":
                 return Schedule::separations($content);
                 break;
+            case "Org_Change":
+                return Schedule::org_change($content);
+                break;
         }
 
         return false;
@@ -104,19 +107,54 @@ class Schedule extends Controller
         $attachment = isset($content['attachment']) ?
             file_exists($content['attachment']) ? $content['attachment'] : false : null;
 
-        Mailer::send('emails.separation_batch', ['name' => $content['name'], 'action' => $content['action'],
+        Mailer::send('emails.notification_batch', ['name' => $content['name'], 'action' => 'a separation',
             'attachment' => $attachment], function (Message $m) use ($content, $attachment)
         {
             $to = \Config::get('app.eMailIT');
-            $subject = \Config::get('app.subjectBatchPrefix') . $content['action'] . ' - ' . $content['name'];
-            $m->to($to, null)->subject($subject);
+            $cc = \Config::get('app.eMailITManager');
+            $subject = \Config::get('app.subjectBatchPrefix') . ' - ' . $content['name'] . ' separation';
+            $m->to($to, null)->subject($subject)->cc($cc, null);
+            if ($attachment)
+            {
+                $m->attach($attachment);
+            }
+        });
+    }
+
+    private static function org_change($content)
+    {
+
+        $ad = ActiveDirectory::get_connection();
+        $entry = $ad->getsamaccountname($content['samaccountname']);
+
+        // if manager is one of the changes prepare the needed information
+        if (isset($content['changes']['manager'])){
+            $getManager = $ad->getEmail($content['changes']['manager']);
+            $entry['newManager'] = $getManager[0]['dn'];
+        }
+
+        $ad->change_org_Save($entry[0]['dn'], $content['changes'], $entry);
+
+        // send notification email
+        $attachment = isset($content['attachment']) ?
+            file_exists($content['attachment']) ? $content['attachment'] : false : null;
+
+        Mailer::send('emails.notification_batch', ['name' => $content['name'], 'action' => 'an organization change',
+            'attachment' => $attachment], function (Message $m) use ($content, $attachment)
+        {
+            $to = \Config::get('app.eMailIT');
+            $cc = \Config::get('app.eMailITManager');
+            $subject = \Config::get('app.subjectBatchPrefix') . ' - ' . $content['name'] . ' org change';
+            $m->to($to, null)->subject($subject)->cc($cc, null);
             if ($attachment)
             {
                 $m->attach($attachment);
             }
         });
 
+
     }
+
 
     public static function addSchedule($dueDate, $samaccountname, $name, $action, $deactivate, $reportPath, $groups)
     {
@@ -127,6 +165,21 @@ class Schedule extends Controller
             'action' => $action, 'deactivate' => $deactivate, 'attachment' => $reportPath, 'groups' => $groups];
 
         return Schedule::saveFile($schedule);
+
+    }
+
+
+    /*
+     * Function to replace addSchedule making easier to create json for the
+     * schedule file with custom requests
+     */
+    public static function createSchedule($dueDate, $params){
+        //load the file
+        $schedule = Schedule::readScheduleFile();
+
+        $schedule[$dueDate . date(' h:i:s a')][] = $params;
+        return Schedule::saveFile($schedule);
+
 
     }
 

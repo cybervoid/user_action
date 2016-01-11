@@ -44,13 +44,9 @@ Route::post('change_org_save', 'Change_OrgController@save');
 
 php artisan schdl_batch:check
 
-todo en separation remove the user from the VPN and wifi groups and check if we can first (usa groups)
-todo en separation schedule check if disable user is checked then actuall disable it and clean the info from AD
-todo en el form de org change al poner un coment no sale el nombre del usuario al que aplicaactivac
 
 todo arreglar en new hire y en change org las notificaciones para los managers en el autocompletar
 todo adicionar option para incluir a alguien en las notificaciones
-todo adicionar option de poner mas managers
 todo para separation el grupo de illyusa Sales no está funcionando para salir autodetectado, problemas con el javascript
 todo optimizar los templates a PDF y poner cosas en el main template
 todo obtener el formato de direccion que roy quiere y poner el mismo en todos en AD
@@ -70,7 +66,7 @@ todo effective date prset today's date.
 todo revisar que schedule funcione en org change
 todo if department is sales notify tracie
 todo automatizado para cmabiar la signature y actualizar info en AD
-
+todo with a department change remove from the department's group
 
 // SEPARATION
 todo al quitar info from ad ponerlas en el campo notas

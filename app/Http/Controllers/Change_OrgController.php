@@ -45,6 +45,7 @@ class Change_OrgController extends Controller
         //return view('testToPDF', ['server' => 'pepe.com']);
 
         $user = User::current();
+
         return view('change_org', ['user' => $user]);
 
     }
@@ -67,6 +68,16 @@ class Change_OrgController extends Controller
 
         $ad = ActiveDirectory::get_connection();
         $result = $ad->getEmail($req->request->get('email'));
+        $currentManager = '';
+        if (isset($result[0]['manager'][0]))
+        {
+            $currentManager = $result[0]['manager'][0];
+        }
+        else
+        {
+            $result[0]['manager'][0] = '';
+        }
+
 
         $changes = Array();
 
@@ -103,17 +114,22 @@ class Change_OrgController extends Controller
 
 
         // compare managers, get manager's dn based on the email
-
         $resultManager = $ad->getEmail($req->request->get('managerEmail'));
         $manager = [];
-        if (strtolower($resultManager[0]['dn']) != strtolower($result[0]['manager'][0]))
+        if (strtolower($resultManager[0]['dn']) != strtolower($currentManager))
         {
             $changes['manager'] = $req->request->get('managerEmail');
             $manager['name'] = $resultManager[0]['givenname'][0] . ' ' . $resultManager[0]['sn'][0];
 
-            $oldManager = $ad->getManager($result[0]['manager'][0]);
-            $manager['oldManager'] = $oldManager[0]['givenname'][0] . ' ' . $oldManager[0]['sn'][0];
-
+            if ($currentManager != '')
+            {
+                $oldManager = $ad->getManager($currentManager);
+                $manager['oldManager'] = $oldManager[0]['givenname'][0] . ' ' . $oldManager[0]['sn'][0];
+            }
+            else
+            {
+                $manager['oldManager'] = 'none';
+            }
         }
 
         return view('change_org_verify', ['changes' => $changes, 'fromAD' => $result, 'req' => $req->request->all(),
@@ -124,31 +140,65 @@ class Change_OrgController extends Controller
     /*
      * Request has all the changes for this user
      */
-
-
     public function save(Request $req)
     {
 
-        // rafag me quede en aplicar los email distribution list
         $REPORT_TYPE = 'change_org';
 
         $params = json_decode(base64_decode($req->request->get('params')), true);
+        $main_req = json_decode(base64_decode($req->request->get('main_req')), true);
 
         $ad = ActiveDirectory::get_connection();
         $result = $ad->getEmail($req["email"]);
 
+
+        $name = $result[0]['givenname'][0];
+        $lastName = $result[0]['sn'][0];
+        $change_org_Report = \Config::get('app.org_change_ReportsPrefix') . $name . ' ' . $lastName . date('_m-d-Y') . '.pdf';
+        $change_org_Report = Reports::escapeReportName($change_org_Report);
+
+
         //if one of the changes is manager get extra info
-        if(isset($params['manager'])){
-            $getManager= $ad->getEmail($params['manager']);
-            $result['newManager']= $getManager[0]['dn'];
-            $oldManager= $ad->getManager($result[0]['manager'][0]);
-            $view['newManagerName']=  $getManager[0]['givenname'][0] . ' ' . $getManager[0]['sn'][0];// use this var later on the view
-            $view['oldManagerName']=  $oldManager[0]['givenname'][0] . ' ' . $oldManager[0]['sn'][0];// use this var later on the view
+        if (isset($params['manager']))
+        {
+            $getManager = $ad->getEmail($params['manager']);
+            $result['newManager'] = $getManager[0]['dn'];
+            if(isset($result[0]['manager'][0])){
+                $oldManager = $ad->getManager();
+                $view['oldManagerName'] = $oldManager[0]['givenname'][0] . ' ' . $oldManager[0]['sn'][0];// use this var later on the view
+            } else{
+                $view['oldManagerName'] = 'none';
+                $result[0]['manager'][0] = '';
+            }
+
+
+            $view['newManagerName'] = $getManager[0]['givenname'][0] . ' ' . $getManager[0]['sn'][0];// use this var later on the view
+
         }
 
 
         // make the change permanent in AD
-        if(!empty($params)) $ad->change_org_Save($result[0]['dn'], $params, $result);
+        if (!empty($params) && $main_req['effectiveDate'] != '')
+        {
+            //CHECK IF SCHEDULE FOR TODAY OR A FUTURE DATE
+            $today = date('m/d/Y');
+            if ((strtotime($today) < strtotime($main_req['effectiveDate'])))
+            {
+                $schedule['samaccountname'] = $result[0]['samaccountname'][0];
+                $schedule['name'] = $main_req['name'] . ' ' . $main_req['lastName'];
+                $schedule['action'] = 'Org_Change';
+                $schedule['request_date'] = $today;
+                $schedule['attachment'] =  \Config::get('app.change_org_ReportsPath') . $change_org_Report;
+
+                $schedule['changes'] = $params;
+                Schedule::createSchedule($main_req['effectiveDate'], $schedule);
+
+            }
+            else
+            {
+                $ad->change_org_Save($result[0]['dn'], $params, $result);
+            }
+        }
 
 
         if (!isset($result[0]['givenname'][0]))
@@ -157,24 +207,32 @@ class Change_OrgController extends Controller
             die;
         }
 
-        //some var declarations
-        $name = $result[0]['givenname'][0];
-        $lastName = $result[0]['sn'][0];
-        if(isset($result['newManager'])) $manager= $result['newManager']; else
+
+        if (isset($result['newManager']))
+        {
+            $manager = $result['newManager'];
+        }
+        else
+        {
             $manager = $result[0]['manager'][0];
+        }
+
 
         //generate report
-        $change_org_Report = \Config::get('app.org_change_ReportsPrefix') . $name . ' ' . $lastName . date('_m-d-Y') . '.pdf';
-        $change_org_Report = Reports::escapeReportName($change_org_Report);
-
         // set variables needed in the view
         $view['changes'] = $params;
         $view['fromAD'] = $result;
-        $view['main_req'] = json_decode(base64_decode($req->request->get('main_req')), true);
+        $view['main_req'] = $main_req;
         $view['url'] = $req->url();
-        if($req->request->get('itComments')!= ''){
+
+        if ($req->request->get('itComments') != '')
+        {
             $view['itComments'] = $req->request->get('itComments');
-        } else $view['itComments']= '';
+        }
+        else
+        {
+            $view['itComments'] = '';
+        }
 
         Reports::generateReport($change_org_Report, \Config::get('app.change_org_ReportsPath'), $REPORT_TYPE, $view);
 
@@ -199,13 +257,18 @@ class Change_OrgController extends Controller
 
 
         $ccRecipients[$to] = $to;
-        $ccRecipients = array_unique(array_map("StrToLower",$ccRecipients));
+        $ccRecipients = array_unique(array_map("StrToLower", $ccRecipients));
 
         return view('thankYou', ['name' => $name, 'lastName' => $lastName, 'reportType' => $REPORT_TYPE,
 
             'change_org_URL' => \Config::get('app.change_org_URL'), 'sendMail' => $ccRecipients, 'menu_Home' => '',
             'menu_Org_Change' => '', 'change_org_Report' => $change_org_Report,]);
 
+
+    }
+
+    public function executeChange()
+    {
 
     }
 

@@ -42,8 +42,6 @@
         <div >We have detected the following changes:</div >
         <ul class="listNoBullets" >
             @foreach(array_keys($changes) as $key)
-
-
                 @if($changes[$key] != $fromAD[0][$key][0] && $key!='manager')
                     <li >Change from <span class="noticeThis" > {{ $fromAD[0][$key][0]  }} </span > to <span
                                 class="noticeThis" > {{ $changes[$key] }} </span > detected.
