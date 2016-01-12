@@ -17,7 +17,7 @@
     <br ><br ><p class="center" >Your request has been processed successfully<p >
 
 
-    @if($reportType!='org_change')
+    @if($reportType!='change_org')
         <p >We have created two forms, one has been sent to Payroll and the other to service desk, these are the
             download
             links</p >

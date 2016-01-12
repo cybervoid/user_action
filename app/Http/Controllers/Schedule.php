@@ -152,7 +152,6 @@ class Schedule extends Controller
             }
         });
 
-
     }
 
 

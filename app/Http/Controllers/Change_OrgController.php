@@ -42,7 +42,6 @@ class Change_OrgController extends Controller
      */
     public function index()
     {
-        //return view('testToPDF', ['server' => 'pepe.com']);
 
         $user = User::current();
 
@@ -163,19 +162,18 @@ class Change_OrgController extends Controller
         {
             $getManager = $ad->getEmail($params['manager']);
             $result['newManager'] = $getManager[0]['dn'];
-            if(isset($result[0]['manager'][0])){
-                $oldManager = $ad->getManager();
+            if (isset($result[0]['manager'][0]))
+            {
+                $oldManager = $ad->getManager($result[0]['manager'][0]);
                 $view['oldManagerName'] = $oldManager[0]['givenname'][0] . ' ' . $oldManager[0]['sn'][0];// use this var later on the view
-            } else{
+            }
+            else
+            {
                 $view['oldManagerName'] = 'none';
                 $result[0]['manager'][0] = '';
             }
-
-
             $view['newManagerName'] = $getManager[0]['givenname'][0] . ' ' . $getManager[0]['sn'][0];// use this var later on the view
-
         }
-
 
         // make the change permanent in AD
         if (!empty($params) && $main_req['effectiveDate'] != '')
@@ -188,7 +186,7 @@ class Change_OrgController extends Controller
                 $schedule['name'] = $main_req['name'] . ' ' . $main_req['lastName'];
                 $schedule['action'] = 'Org_Change';
                 $schedule['request_date'] = $today;
-                $schedule['attachment'] =  \Config::get('app.change_org_ReportsPath') . $change_org_Report;
+                $schedule['attachment'] = \Config::get('app.change_org_ReportsPath') . $change_org_Report;
 
                 $schedule['changes'] = $params;
                 Schedule::createSchedule($main_req['effectiveDate'], $schedule);
@@ -242,6 +240,10 @@ class Change_OrgController extends Controller
         $req->request->add(['managerEmail' => $manager[0]['mail'][0]]);
 
         $ccRecipients = MyMail::emailRecipients($req);
+        if ($view['main_req']['department'] == 'Sales')
+        {
+            $ccRecipients['Stacey.Berger@illy.com'] = 'Stacey.Berger@illy.com';
+        }
         $subject = \Config::get('app.subjectPrefix') . $name . ' ' . $lastName;
         $attachment = \Config::get('app.change_org_ReportsPath') . $change_org_Report;
         $attachment = isset($attachment) ? file_exists($attachment) ? $attachment : false : null;
@@ -267,8 +269,20 @@ class Change_OrgController extends Controller
 
     }
 
-    public function executeChange()
+    public static function update_signature($name, $email, $changes, $currentInfo)
     {
+
+        $to = $email;
+        $ccRecipients[\Config::get('app.eMailIT')] = \Config::get('app.eMailIT');
+        $ccRecipients[\Config::get('app.eMailHRAdd')] = \Config::get('app.eMailHRAdd');
+        $ccRecipients[\Config::get('app.eMailITManager')] = \Config::get('app.eMailITManager');
+        $subject = 'changes for user ' . $name;
+
+        Mailer::send('emails.signature_update', ['name' => $name, 'changes' => $changes,
+            'currentInfo' => $currentInfo], function (Message $m) use ($to, $ccRecipients, $subject)
+        {
+            $m->to($to, null)->subject($subject)->cc($ccRecipients, null);
+        });
 
     }
 

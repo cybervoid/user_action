@@ -63,8 +63,6 @@ todo - arreglar que la firma salga siempre en la misma pag https://www.google.co
 
 // ORGANIZATION CHANGE
 todo effective date prset today's date.
-todo revisar que schedule funcione en org change
-todo if department is sales notify tracie
 todo automatizado para cmabiar la signature y actualizar info en AD
 todo with a department change remove from the department's group
 

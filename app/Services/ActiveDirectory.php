@@ -7,6 +7,7 @@
  * Time: 9:45 AM
  */
 
+use App\Http\Controllers\Change_OrgController;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -33,6 +34,7 @@ class ActiveDirectory
             if (!ActiveDirectory::$conn)
             {
                 error_log(ldap_error(ActiveDirectory::$conn));
+
                 return null;
             }
             else
@@ -320,6 +322,7 @@ class ActiveDirectory
      * @param $manager
      *
      * Get the email, sn and givenname of the manager expects a dn as a parameter
+     *
      * @return array
      */
     public function getManager($manager)
@@ -406,7 +409,7 @@ class ActiveDirectory
 
     public function getsamaccountname($username)
     {
-        $attributes = array('dn', 'useraccountcontrol', 'Description', 'title', 'manager');
+        $attributes = array('givenname', 'sn','dn', 'useraccountcontrol', 'Description', 'title', 'mail', 'manager');
         $myDN = "OU=North America,DC=ILLY-DOMAIN,DC=COM";
 
         $txtSearch = "samaccountname={$username}";
@@ -416,42 +419,60 @@ class ActiveDirectory
         return ldap_get_entries(static::$conn, $result);
     }
 
+    /**
+     * @param $dn
+     * @param $changes
+     * @param $fromAD
+     */
     public function change_org_Save($dn, $changes, $fromAD)
     {
+
+        $notifyChanges = [];
+        $notifyCurrentInfo = [];
+
 
         foreach ($changes as $key => $value)
         {
             $userdata[$key] = $value;
         }
 
-        if ((isset($changes['givenname'])) || (isset($changes['sn'])))
+        if (isset($changes['givenname']))
         {
-            if (isset($changes['givenname']))
-            {
-                $name = $changes['givenname'];
-            }
-            else
-            {
-                $name = $fromAD[0]['givenname'][0];
-            }
-
-            if (isset($changes['sn']))
-            {
-                $lastName = $changes['sn'];
-            }
-            else
-            {
-                $lastName = $fromAD[0]['sn'][0];
-            }
-
-            $userdata['displayName'] = ucfirst(strtolower($lastName)) . " " . ucfirst(strtolower($name));
-            // todo investigar como cabiar el dn para que aparezca con el nuevo nombre en AD
-            //$userdata['dn'] = 'ILLY-DOMAIN.COM/North America/Rye Brook/Users/Rigoberto Rondo'; // logon username
-            //$userdata['userPrincipalName'] = 'cucomania'; // logon username
+            $name = $changes['givenname'];
+            $notifyChanges['givenname'] = $name;
+            $notifyCurrentInfo['givenname'] = $fromAD[0]['givenname'][0];
+        }
+        else
+        {
+            $name = $fromAD[0]['givenname'][0];
         }
 
-        if(isset($changes['title'])){
+        if (isset($changes['sn']))
+        {
+            $lastName = $changes['sn'];
+            $notifyChanges['sn'] = $lastName;
+            $notifyCurrentInfo['sn'] = $fromAD[0]['sn'][0];
+
+        }
+        else
+        {
+            $lastName = $fromAD[0]['sn'][0];
+        }
+
+        if(isset($notifyChanges['givenname']) || isset($notifyChanges['sn']))
+            $userdata['displayName'] = ucfirst(strtolower($lastName)) . " " . ucfirst(strtolower($name));
+
+        // todo investigar como cabiar el dn para que aparezca con el nuevo nombre en AD
+        //$userdata['dn'] = 'ILLY-DOMAIN.COM/North America/Rye Brook/Users/Rigoberto Rondo'; // logon username
+        //$userdata['userPrincipalName'] = 'cucomania'; // logon username
+
+
+        if (isset($changes['title']))
+        {
             $userdata['description'] = $changes['title'];
+            $notifyChanges['title'] = $changes['title'];
+            $notifyCurrentInfo['title'] = $fromAD[0]['title'][0];
+
         }
 
         if (isset($changes['manager']))
@@ -459,16 +480,27 @@ class ActiveDirectory
             $userdata['manager'] = $fromAD['newManager'];
         }
 
-        if(isset($changes['company'])){
-            //echo 'asdas ' . \Config::get('app.illy caffè North America, Inc.st');
+        if (isset($changes['company']))
+        {
             $userdata['st'] = \Config::get('app.' . $changes['company'] . '.st');
             $userdata['postalCode'] = \Config::get('app.' . $changes['company'] . '.postalCode');
             $userdata['l'] = \Config::get('app.' . $changes['company'] . '.l');
             $userdata['c'] = \Config::get('app.' . $changes['company'] . '.c');
             $userdata['streetAddress'] = \Config::get('app.' . $changes['company'] . '.streetAddress');
+            $notifyChanges['company'] = $changes['company'];
+            $notifyCurrentInfo['company'] = $fromAD[0]['company'][0];
+
         }
 
-        ldap_mod_replace(static::$conn, $dn, $userdata);
+
+        @ldap_mod_replace(static::$conn, $dn, $userdata);
+
+        // if the change is info that appears on the signature send an email to the user to update it
+        if (count($notifyChanges) >= 1)
+        {
+           Change_OrgController::update_signature($name . ' ' . $lastName, $fromAD[0]['mail'][0] , $notifyChanges, $notifyCurrentInfo);
+        }
+
 
     }
 
