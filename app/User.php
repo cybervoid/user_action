@@ -29,10 +29,12 @@ class User implements AuthenticatableContract, CanResetPasswordContract
         //todo check AD password
         // if password not correct return null
 
+
         $result = Ldap::ldap_login_validate($req->input('userName'), $req->input('password'));
 
 
         if (!$result){ return false; }
+
 
         if (isset($result[0]["count"]))
         {

@@ -20,7 +20,8 @@ class Ldap implements AuthenticatableContract, CanResetPasswordContract
 
     public static function ldap_MyConnect()
     {
-        $ldap = ldap_connect("ldap://DCUSA2.ILLY-DOMAIN.COM");
+        //$ldap = ldap_connect("ldap://DCUSA2.ILLY-DOMAIN.COM");
+        $ldap = ldap_connect("ldap://ILLY-DOMAIN.COM");
         if (!$ldap)
         {
             error_log(ldap_error($ldap));
@@ -65,7 +66,6 @@ class Ldap implements AuthenticatableContract, CanResetPasswordContract
     {
 
         $ad = ActiveDirectory::get_connection();
-
         return $ad->validateLogin($userName, $password);
 
     }

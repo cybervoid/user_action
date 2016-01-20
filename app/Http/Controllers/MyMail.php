@@ -17,7 +17,51 @@ class MyMail extends Controller
     /*
  * Organize the list of recepients
  */
-    static public function emailRecipients(Request $req)
+    static public function getRecipients($action, $deparments, $manager)
+    {
+        $ccRecipients[\Config::get('app.eMailHRAdd')] = \Config::get('app.eMailHRAdd');
+
+        if(in_array('it', $deparments)){
+            $ccRecipients[\Config::get('app.eMailIT')] = \Config::get('app.eMailIT');
+            $ccRecipients[\Config::get('app.eMailITManager')] = \Config::get('app.eMailITManager');
+        }
+
+        if(in_array('oracle', $deparments)){
+            $ccRecipients[\Config::get('app.eMailOracle')] = \Config::get('app.eMailOracle');
+        }
+
+        if(in_array('management', $deparments)){
+            $ccRecipients[\Config::get('app.eMailManagement')] = \Config::get('app.eMailManagement');
+            $ccRecipients[\Config::get('app.eMailManagement1')] = \Config::get('app.eMailManagement1');
+        }
+
+        if(in_array('creditCard', $deparments)){
+            $ccRecipients[\Config::get('app.eMailFinanceCreditCard')] = \Config::get('app.eMailFinanceCreditCard');
+        }
+        if(in_array('newDriver', $deparments)){
+            $ccRecipients[\Config::get('app.eMailFinanceDrivers')] = \Config::get('app.eMailFinanceDrivers');
+        }
+
+        // Per Maren's request include Stacey when we hire Sales Person
+        if(in_array('sales', $deparments)){
+            $ccRecipients['Stacey.Berger@illy.com'] = 'Stacey.Berger@illy.com';
+        }
+
+        //Add the manager's email in the recipients list
+        if($manager!='')
+            $ccRecipients[$manager] = $manager;
+
+       // per Maren request, add Mark Romano to all notifiations
+        if($action!='change_org')
+            $ccRecipients['Mark.Romano@illy.com'] = 'Mark.Romano@illy.com';
+
+
+        return $ccRecipients;
+
+    }
+
+
+        static public function emailRecipients(Request $req)
     {
 
         $ccRecipients[\Config::get('app.eMailHRAdd')] = \Config::get('app.eMailHRAdd');

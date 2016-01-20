@@ -84,8 +84,6 @@ class Lookup
             }
         }
         $response = $fromAD;
-
-
         return $response;
     }
 }

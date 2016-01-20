@@ -18,23 +18,18 @@ class ActiveDirectory
 
     private function __construct() { }
 
+
     public static function get_connection()
     {
-        if (env('APP_STATUS') == 'offline')
-        {
-            return new ActiveDirectory();
-        }
-
-
         if (!ActiveDirectory::$conn)
         {
 
+//            ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7);
             ActiveDirectory::$conn = ldap_connect("ldap://" . env('LDAP_HOST'));
 
             if (!ActiveDirectory::$conn)
             {
                 error_log(ldap_error(ActiveDirectory::$conn));
-
                 return null;
             }
             else
@@ -46,8 +41,11 @@ class ActiveDirectory
                 ldap_set_option(ActiveDirectory::$conn, LDAP_OPT_PROTOCOL_VERSION, 3);
                 ldap_set_option(ActiveDirectory::$conn, LDAP_OPT_REFERRALS, 0);
                 ldap_set_option(ActiveDirectory::$conn, LDAP_OPT_SIZELIMIT, 1000); //this is just for speed.
+
                 if (!ldap_bind(ActiveDirectory::$conn, $adUserName . "@" . $adDomain, $adPassword))
                 {
+//                    echo ldap_error(ActiveDirectory::$conn);
+//                    die;
                     return null;
                 }
             }
@@ -386,6 +384,8 @@ class ActiveDirectory
 
     public function validateLogin($userName, $password)
     {
+        echo ' asda1';
+
         $attributes = array('givenname', 'sn', 'sAMAccountName');
         $result = ldap_search(static::$conn, "OU=North America,DC=ILLY-DOMAIN,DC=COM", "(&(sAMAccountName={$userName})(memberOf=CN=HR-Tool,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM))", $attributes);
         $entry = ldap_get_entries(static::$conn, $result);

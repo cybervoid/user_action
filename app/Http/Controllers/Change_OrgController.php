@@ -43,6 +43,7 @@ class Change_OrgController extends Controller
     public function index()
     {
 
+
         $user = User::current();
 
         return view('change_org', ['user' => $user]);
@@ -113,23 +114,27 @@ class Change_OrgController extends Controller
 
 
         // compare managers, get manager's dn based on the email
-        $resultManager = $ad->getEmail($req->request->get('managerEmail'));
-        $manager = [];
-        if (strtolower($resultManager[0]['dn']) != strtolower($currentManager))
+        if ($req->request->get('managerEmail') != '')
         {
-            $changes['manager'] = $req->request->get('managerEmail');
-            $manager['name'] = $resultManager[0]['givenname'][0] . ' ' . $resultManager[0]['sn'][0];
+            $resultManager = $ad->getEmail($req->request->get('managerEmail'));
 
-            if ($currentManager != '')
+            $manager = [];
+            if (strtolower($resultManager[0]['dn']) != strtolower($currentManager))
             {
-                $oldManager = $ad->getManager($currentManager);
-                $manager['oldManager'] = $oldManager[0]['givenname'][0] . ' ' . $oldManager[0]['sn'][0];
+                $changes['manager'] = $req->request->get('managerEmail');
+                $manager['name'] = $resultManager[0]['givenname'][0] . ' ' . $resultManager[0]['sn'][0];
+
+                if ($currentManager != '')
+                {
+                    $oldManager = $ad->getManager($currentManager);
+                    $manager['oldManager'] = $oldManager[0]['givenname'][0] . ' ' . $oldManager[0]['sn'][0];
+                }
+                else
+                {
+                    $manager['oldManager'] = 'none';
+                }
             }
-            else
-            {
-                $manager['oldManager'] = 'none';
-            }
-        }
+        } else $manager='';
 
         return view('change_org_verify', ['changes' => $changes, 'fromAD' => $result, 'req' => $req->request->all(),
             'menu_Home' => '', 'menu_Org_Change' => '', 'manager' => $manager]);
@@ -160,6 +165,7 @@ class Change_OrgController extends Controller
         //if one of the changes is manager get extra info
         if (isset($params['manager']))
         {
+            $managerEmail = $params['manager'];
             $getManager = $ad->getEmail($params['manager']);
             $result['newManager'] = $getManager[0]['dn'];
             if (isset($result[0]['manager'][0]))
@@ -173,6 +179,11 @@ class Change_OrgController extends Controller
                 $result[0]['manager'][0] = '';
             }
             $view['newManagerName'] = $getManager[0]['givenname'][0] . ' ' . $getManager[0]['sn'][0];// use this var later on the view
+        } else{
+            if(isset($result[0]['manager'][0])){
+                $oldManager= $ad->getManager($result[0]['manager'][0]);
+                $managerEmail= $oldManager[0]['mail'][0];
+            } else $managerEmail = '';
         }
 
         // make the change permanent in AD
@@ -206,16 +217,6 @@ class Change_OrgController extends Controller
         }
 
 
-        if (isset($result['newManager']))
-        {
-            $manager = $result['newManager'];
-        }
-        else
-        {
-            $manager = $result[0]['manager'][0];
-        }
-
-
         //generate report
         // set variables needed in the view
         $view['changes'] = $params;
@@ -234,16 +235,16 @@ class Change_OrgController extends Controller
 
         Reports::generateReport($change_org_Report, \Config::get('app.change_org_ReportsPath'), $REPORT_TYPE, $view);
 
-        //send the email
+        //SEND THE MAIL
         $to = \Config::get('app.servicedesk');
-        $manager = $ad->getManager($manager);
-        $req->request->add(['managerEmail' => $manager[0]['mail'][0]]);
 
-        $ccRecipients = MyMail::emailRecipients($req);
+        $mailNotifyDepartments= array('it', 'management');
         if ($view['main_req']['department'] == 'Sales')
         {
-            $ccRecipients['Stacey.Berger@illy.com'] = 'Stacey.Berger@illy.com';
+            $mailNotifyDepartments[]= 'sales';
         }
+        $ccRecipients= MyMail::getRecipients( 'change_org',$mailNotifyDepartments, $managerEmail);
+
         $subject = \Config::get('app.subjectPrefix') . $name . ' ' . $lastName;
         $attachment = \Config::get('app.change_org_ReportsPath') . $change_org_Report;
         $attachment = isset($attachment) ? file_exists($attachment) ? $attachment : false : null;
