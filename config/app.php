@@ -24,7 +24,7 @@ return $settings = [
     /*
      * Email settings
      */
-    'si_infra' => 'si_infra@illy.com', 'servicedesk' => 'servicedesk@illy.com',
+    'si_infra' => 'si_icna@illy.com', 'servicedesk' => 'servicedesk@illy.com',
     'eMailHRAdd' => 'Maren.Gizicki@illy.com', 'eMailITManager' => 'roy.forster@illy.com',
     'eMailIT' => 'rafael.gil@illy.com', 'eMailOracle' => 'Natasha.DSouza@illy.com',
     'eMailManagement' => 'Suzanne.Schwab@illy.com', 'eMailManagement1' => 'stephanie.brush@illy.com',
