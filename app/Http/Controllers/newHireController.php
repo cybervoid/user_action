@@ -141,10 +141,8 @@ class newHireController extends Controller
                 $cc[\Config::get('app.eMailIT')] = \Config::get('app.eMailIT');
 
                 $m->cc($cc);
-
             });
         }
-
 
         //add reminder for a week before new hre starts
         $dueDate = date('m/d/Y', strtotime('-1 week', strtotime($req->request->get('startDate'))));
