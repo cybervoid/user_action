@@ -35,9 +35,9 @@
 
     @if (isset($req['sep']["iTDeptEmail"]))
 
-        <p ><span >IT Department Checklist: Rafael Gil and Service Desk</span ></p >
+        <p ><span class="remark">IT Department Checklist: Rafael Gil and Service Desk</span ></p >
 
-        <p ><span >E-Mail Distribution List:</span ></p >
+        <p ><span class="remark">E-Mail Distribution List:</span ></p >
         <ul >
 
 
@@ -49,7 +49,7 @@
 
 
     @if (isset($req['sep']["iTDept"]))
-        <p ><span >Assets:</span ></p >
+        <p ><span class="remark">Assets:</span ></p >
         <ul >
             @foreach($req['sep']["iTDept"] as $item)
                 <li >{{ $item }}</li >
@@ -59,7 +59,7 @@
 
 
     @if ($req['sep']["itComments"]!='')
-        <p ><span >Additional instructions for IT:</span ></p >
+        <p ><span class="remark">Additional instructions for IT:</span ></p >
         <p style="margin-left: 22px" >
             {{ $req['sep']["itComments"] }}
         </p >
@@ -67,7 +67,7 @@
 
 
     @if(isset($req['sep']["oracle"]))
-        <p ><span >Oracle Specialist Natasha D'Souza</span ></p >
+        <p ><span class="remark">Oracle Specialist Natasha D'Souza</span ></p >
         <ul >
             <li >Oracle Access/Oracle (HR) Number Approval (Sales, Finance, Logistics, Customer Care, IT, Tech Svcs)
             </li >
@@ -75,7 +75,7 @@
     @endif
 
     @if(isset($req['sep']["oManager"]))
-        <p ><span >HQ Office Manager-Suzie Schwab</span ></p >
+        <p ><span class="remark">HQ Office Manager-Suzie Schwab</span ></p >
 
         <ul >
             @foreach($req['sep']["oManager"] as $item)
@@ -86,7 +86,7 @@
 
 
     @if(isset($req['sep']["creditCard"]))
-        <p ><span >Finance- (Credit Card and Concur Access Requests) *new hires and separation</span >
+        <p ><span class="remark">Finance- (Credit Card and Concur Access Requests) *new hires and separation</span >
         </p >
         <ul >
             @foreach($req['sep']["creditCard"] as $item)
@@ -96,7 +96,7 @@
     @endif
 
     @if ($req['sep']["generalComments"]!='')
-        <p ><span >Additional instructions for Administration Office:</span ></p >
+        <p ><span class="remark">Additional instructions for Administration Office:</span ></p >
         <p style="margin-left: 22px" >
             {{ $req['sep']["generalComments"] }}
         </p >

@@ -128,7 +128,7 @@ var App = App || {};
                         $("#phone").prop('checked', true);
                     }
 
-                    findGroupMatch(msg["groups"]);
+                    findGroupMatch(msg['fromAD']["groups"]);
                     $("#cancel").click(function () {
                         document.location = '/';
                     });
