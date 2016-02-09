@@ -26,12 +26,12 @@
     <table border="0" width="80%" align="center" >
         <tr align="center" >
             <td align="left" >
-                <span class="bold" >Printed name:
-            <p >Date: {{ date('m-d-Y') }}</p ></span >
+                <span class="remark" >Printed name:</span >
+            <p ><span class="remark" >Date: </span >{{ date('m-d-Y') }}</p >
             </td >
 
-            <td align="right" valign="bottom" ><span class="bold" >Maren Gizicki, HR Manager
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _____________________ Signature</span >
+            <td align="right" valign="bottom" ><span class="remark" >Maren Gizicki, HR Manager</span >
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _____________________ Signature
             </td >
         </tr >
     </table >

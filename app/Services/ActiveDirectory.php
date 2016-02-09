@@ -21,6 +21,7 @@ class ActiveDirectory
 
     public static function get_connection()
     {
+
         if (!ActiveDirectory::$conn)
         {
 
@@ -384,8 +385,6 @@ class ActiveDirectory
 
     public function validateLogin($userName, $password)
     {
-        echo ' asda1';
-
         $attributes = array('givenname', 'sn', 'sAMAccountName');
         $result = ldap_search(static::$conn, "OU=North America,DC=ILLY-DOMAIN,DC=COM", "(&(sAMAccountName={$userName})(memberOf=CN=HR-Tool,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM))", $attributes);
         $entry = ldap_get_entries(static::$conn, $result);

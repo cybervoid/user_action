@@ -1,6 +1,4 @@
 @extends('exportTemplate')
-
-
 @section('content')
 
     <style type="text/css" >
@@ -20,41 +18,38 @@
         }
     </style >
 
-    <div id="watermarks" >
-        <p >illy caffè North America, Inc.</p >
-
-    </div >
     {{--<div>--}}
     {{--<img src="images/illy-watermark.png">--}}
     {{--</div>--}}
 
-<p style="font-weight: bold" >NEW HIRE</p ></div >
+    <div class="centerObj remark page_title" ><p >NEW HIRE</p ></div >
 
-    <p ><span >Name: </span >{{ $req['newH']['name'] }} {{ $req['newH']['lastName'] }}</p >
+
+    <p ><span class="remark" >Name: </span >{{ $req['newH']['name'] }} {{ $req['newH']['lastName'] }}</p >
 
     @if ($req['newH']["buddy"]!='')
-        <p ><span >Buddy Name: </span >{{ $req['newH']["buddy"] }}</p >
+        <p ><span class="remark" >Buddy Name: </span >{{ $req['newH']["buddy"] }}</p >
 @endif
 
 
 <table width="100%" >
     <tr >
-        <td width="left" ><span >Company: </span > {{ $req['newH']["company"] }}</td >
-        <td width="left" ><span >Department: </span > {{ $req['newH']["department"] }}</td >
+        <td width="left" ><span class="remark" >Company: </span > {{ $req['newH']["company"] }}</td >
+        <td width="left" ><span class="remark" >Department: </span > {{ $req['newH']["department"] }}</td >
 
         @if (isset($req['newH']["manager"]))
-            <td width="right" ><span >Manager: </span > {{ $req['newH']["manager"] }}</td >
+            <td width="right" ><span class="remark" >Manager: </span > {{ $req['newH']["manager"] }}</td >
         @endif
     </tr >
 </table >
 
 
     @if (isset($req['newH']["title"]))
-        <p ><span >Title: </span >{{ $req['newH']["title"] }}</p >
+        <p ><span class="remark" >Title: </span >{{ $req['newH']["title"] }}</p >
 @endif
 
 
-    <p ><span >Employee #: </span >
+    <p ><span class="remark" >Employee #: </span >
         @if($req['newH']["employee"]!='')
             {{ $req['newH']["employee"] }}
         @else TBD
@@ -64,21 +59,21 @@
 
 <table width="100%" >
     <tr >
-        <td width="left" ><span >Start Date: </span > {{ $req['newH']["startDate"] }}</td >
+        <td width="left" ><span class="remark" >Start Date: </span > {{ $req['newH']["startDate"] }}</td >
 
         @if (isset($req['newH']["location_Other"]))
             <td width="center" >
-                <span >Location: </span > {{ $req['newH']["location"] }} {{ $req['newH']["location_Other"] }}</td >
+                <span class="remark" >Location: </span > {{ $req['newH']["location"] }} {{ $req['newH']["location_Other"] }}</td >
         @endif
 
-        <td width="right" ><span >Hire Status: </span > {{ $req['newH']["hireStatus"] }}</td >
+        <td width="right" ><span class="remark" >Hire Status: </span > {{ $req['newH']["hireStatus"] }}</td >
     </tr >
 </table >
 
 
     @if (isset($req['newH']["iTDeptEmail"]))
 
-<p ><span >IT Department Checklist: Rafael Gil and Service Desk</span ></p >
+<p ><span class="remark" >IT Department Checklist: Rafael Gil and Service Desk</span ></p >
 
 <p >Standard notification request includes on all computers/laptops: OfficeSuite, Adobe Acrobat Pro, CCleaner, VPN,
     Efax, Chrome, Firefox, Silverlight, FlashPlayer, Omniform, Skype, Dropbox, VLC Media Player, 7Zip. Outlook, Addition
@@ -93,7 +88,7 @@
     Computer and or other equipment will be delivered 3 days prior to hire date. An email confirmation notification
     will be sent to Hiring manager, Associate and Human Resources Manager.</p >
 
-<p ><span >E-Mail Distribution List:</span ></p >
+<p ><span class="remark" >E-Mail Distribution List:</span ></p >
 <ul >
 
 
@@ -105,7 +100,7 @@
 
     @if (isset($req['newH']["iTDept"]))
 
-<p ><span >Assets:</span ></p >
+<p ><span class="remark" >Assets:</span ></p >
 
 @if (isset($req['newH']["deliveryDate"]))
     <p >Delivery Date: {{ $req['newH']["deliveryDate"] }}</p >
@@ -119,19 +114,19 @@
 @endif
 
 
-    <p ><span >Specific assets and or functionalities needed: not listed on the User Notification form should be confirmed with hiring manager by IT.<p ></p ><P ></P ></span >
+    <p ><span class="remark" >Specific assets and or functionalities needed: not listed on the User Notification form should be confirmed with hiring manager by IT.<p ></p ><P ></P ></span >
 </p >
 
 
     @if(isset($req['newH']["oracle"]))
-<p ><span >Oracle Specialist Natasha D'Souza</span ></p >
+<p ><span class="remark" >Oracle Specialist Natasha D'Souza</span ></p >
 <ul >
     <li >Oracle Access/Oracle (HR) Number Approval (Sales, Finance, Logistics, Customer Care, IT, Tech Svcs)</li >
 </ul >
 @endif
 
     @if(isset($req['newH']["oManager"]))
-<p ><span >HQ Office Manager-Suzie Schwab</span ></p >
+<p ><span class="remark" >HQ Office Manager-Suzie Schwab</span ></p >
 
 <ul >
     @foreach($req['newH']["oManager"] as $item)
@@ -141,7 +136,7 @@
 @endif
 
     @if(isset($req['newH']["newDriver"]))
-<p ><span >New Driver for Company Vehicle Form-Erik Tellone (new hire notification only) (if applicable)</span ></p >
+<p ><span class="remark" >New Driver for Company Vehicle Form-Erik Tellone (new hire notification only) (if applicable)</span ></p >
 <ul >
     <li >Form to Hiring Manager</li >
 </ul >
@@ -149,7 +144,7 @@
 
 
     @if(isset($req['newH']["creditCard"]))
-    <p ><span >        Finance - Marjorie Guthrie<br >
+    <p ><span class="remark" >        Finance - Marjorie Guthrie<br >
         (Credit Card and Concur Access Requests) *new hires and separation
 </span >
 </p >
@@ -163,7 +158,7 @@
 
     @if($req['newH']["comments"]!="")
     <br >
-    <p ><span >SPECIFIC INSTRUCTIONS HERE: </span ></p >
+    <p ><span class="remark" >SPECIFIC INSTRUCTIONS HERE: </span ></p >
     {{ $req['newH']["comments"] }}
     <p ></p ><br >
 @endif
