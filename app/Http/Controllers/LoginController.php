@@ -43,6 +43,8 @@ class LoginController extends Controller
     {
 
         $user = User::check_password($req);
+
+
         if ($user)
         {
             return redirect('/');

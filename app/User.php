@@ -35,19 +35,12 @@ class User implements AuthenticatableContract, CanResetPasswordContract
 
         if (!$result){ return false; }
 
-
         if (isset($result[0]["count"]))
         {
             //$_SESSION['userName'] = $result[0]["cn"][0];
             $user = new User();
             $user->givenName = $result[0]["givenname"][0];
             $user->id = $result[0]["samaccountname"][0];
-
-            /*
-            $user->id = 'gilra';
-
-            $user->sn = 'Gil';
-            */
             Session::put('user_id', $user->id);
             Session::put('givenName', $user->givenName);
 
