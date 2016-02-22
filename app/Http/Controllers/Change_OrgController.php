@@ -238,7 +238,7 @@ class Change_OrgController extends Controller
         //SEND THE MAIL
         $to = \Config::get('app.servicedesk');
 
-        $mailNotifyDepartments= array('it', 'management');
+        $mailNotifyDepartments= array('management');
         if ($view['main_req']['department'] == 'Sales')
         {
             $mailNotifyDepartments[]= 'sales';

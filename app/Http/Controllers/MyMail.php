@@ -52,9 +52,7 @@ class MyMail extends Controller
             $ccRecipients[$manager] = $manager;
 
        // per Maren request, add Mark Romano to all notifiations
-        if($action!='change_org')
-            $ccRecipients['Mark.Romano@illy.com'] = 'Mark.Romano@illy.com';
-
+        $ccRecipients['Mark.Romano@illy.com'] = 'Mark.Romano@illy.com';
 
         return $ccRecipients;
 
