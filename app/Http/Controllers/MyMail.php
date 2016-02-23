@@ -15,7 +15,8 @@ class MyMail extends Controller
 
 
     /*
- * Organize the list of recepients
+ * Organize the list of recipients
+     * it should replace emailRecipients
  */
     static public function getRecipients($action, $deparments, $manager)
     {

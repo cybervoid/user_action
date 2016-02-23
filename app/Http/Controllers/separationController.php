@@ -74,7 +74,17 @@ class SeparationController extends Controller
 
         //send the email
         $to = \Config::get('app.servicedesk');
-        $ccRecipients = MyMail::emailRecipients($req);
+        $mailNotifyDepartments= [];
+
+
+        if($req->request->get('oManager')!='') $mailNotifyDepartments[] = 'management';
+        if($req->request->get('creditCard')!='') $mailNotifyDepartments[] = 'creditCard';
+        if($req->request->get('newDriver')!='') $mailNotifyDepartments[] = 'newDriver';
+        if($req->request->get('department')=='Sales') $mailNotifyDepartments[] = 'sales';
+
+
+//        $ccRecipients = MyMail::emailRecipients($req);
+        $ccRecipients= MyMail::getRecipients( 'separation',$mailNotifyDepartments, $req->request->get('managerEmail'));
         $subject = \Config::get('app.subjectPrefix') . $name . ' ' . $lastName;
         $attachment = \Config::get('app.separationReportsPath') . $separationReport;
         $attachment = isset($attachment) ? file_exists($attachment) ? $attachment : false : null;
