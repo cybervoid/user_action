@@ -121,11 +121,13 @@ var App = App || {};
                     $('#report').html(App.templates.separation({data: msg}));
 
                     // check if the user has phones
-                    if (msg["mobile"] != '') {
+                    if (msg['fromAD']["mobile"] != '') {
                         $("#cellphone").prop('checked', true);
                     }
-                    if (msg["telephonenumber"] != '') {
+
+                    if (msg['fromAD']["telephonenumber"] != '' && msg['fromAD']["telephonenumber"]!= '+1 914 253 4') {
                         $("#phone").prop('checked', true);
+                        $('#telephonenumber').html(msg['fromAD']["telephonenumber"]);
                     }
 
                     findGroupMatch(msg['fromAD']["groups"]);
