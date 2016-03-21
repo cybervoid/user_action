@@ -408,7 +408,7 @@ class ActiveDirectory
 
     public function getsamaccountname($username)
     {
-        $attributes = array('givenname', 'sn','dn', 'useraccountcontrol', 'Description', 'title', 'mail', 'manager');
+        $attributes = array('givenname', 'sn','dn', 'useraccountcontrol', 'Description', 'title', 'mail', 'manager', 'company');
         $myDN = "OU=North America,DC=ILLY-DOMAIN,DC=COM";
 
         $txtSearch = "samaccountname={$username}";
@@ -488,9 +488,7 @@ class ActiveDirectory
             $userdata['streetAddress'] = \Config::get('app.' . $changes['company'] . '.streetAddress');
             $notifyChanges['company'] = $changes['company'];
             $notifyCurrentInfo['company'] = $fromAD[0]['company'][0];
-
         }
-
 
         @ldap_mod_replace(static::$conn, $dn, $userdata);
 
