@@ -2,28 +2,35 @@
 @section('content')
 
     <style type="text/css" >
-        #watermark {
 
+        .watermark {
+            position: absolute;
+            z-index: -1;
+
+            -ms-transform: rotate(-45deg);
+            -webkit-transform: rotate(-45deg);
+
+            left: 50%;
+            top: 50%;
             color: #d0d0d0;
             font-size: 50pt;
+            margin-left: -209px;
+            margin-top: -80px;
+            width: 418px;
+            height: 160px;
+
+
+            /*
             -webkit-transform: rotate(-45deg);
             -moz-transform: rotate(-45deg);
-            position: absolute;
-            width: 50%;
-            height: 50%;
-            margin: 0;
-            z-index: -1;
-            left: 100px;
-            top: 100px;
+*/
         }
+
     </style >
 
-    {{--<div>--}}
-    {{--<img src="images/illy-watermark.png">--}}
-    {{--</div>--}}
 
+    <div class="watermark">illy caffè North America, Inc</div>
     <div class="centerObj remark page_title" ><p >NEW HIRE</p ></div >
-
 
     <p ><span class="remark" >Name: </span >{{ $req['newH']['name'] }} {{ $req['newH']['lastName'] }}</p >
 

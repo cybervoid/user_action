@@ -70,7 +70,7 @@ class newHireController extends Controller
         $view['newH'] = $req->request->all();
         $view['url'] = $req->url();
 
-        Reports::generateReport($newHireReport, \Config::get('app.newHireReportsPath'), $req->request->get('reportType'), $view);
+        return Reports::generateReport($newHireReport, \Config::get('app.newHireReportsPath'), $req->request->get('reportType'), $view);
 
 
         //generate payroll Report

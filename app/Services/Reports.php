@@ -33,7 +33,7 @@ class Reports
         //get the domain so I can load the image on the PDF
         $parse = parse_url($req['url']);
 
-       $myView = view($reportType . 'ToPDF', ['req' => $req,
+       return $myView = view($reportType . 'ToPDF', ['req' => $req,
             'server' => $parse['scheme'] . '://' . $parse['host'] . '/',]);
 
         if (!fwrite($toPDF, $myView))
