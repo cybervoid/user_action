@@ -71,12 +71,6 @@ class MyMail extends Controller
             $ccRecipients[\Config::get('app.eMailIT')] = \Config::get('app.eMailIT');
         }
 
-        $oracle = $req->request->get('oracle');
-        if (isset($oracle))
-        {
-            $ccRecipients[\Config::get('app.eMailOracle')] = \Config::get('app.eMailOracle');
-        }
-
         $oManager = $req->request->get('oManager');
 
         if (isset($oManager))

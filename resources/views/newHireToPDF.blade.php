@@ -118,15 +118,15 @@
 </p >
 
 
-    @if(isset($req['newH']["oracle"]))
-<p ><span class="remark" >Oracle Specialist Natasha D'Souza</span ></p >
+    @if(isset($req['newH']["application"]))
+        <p ><span class="remark" >JDE Setup - Harshun Kondla</span ></p >
 <ul >
-    <li >Oracle Access/Oracle (HR) Number Approval (Sales, Finance, Logistics, Customer Care, IT, Tech Svcs)</li >
+    <li >{{ $req['newH']["application"] }}</li >
 </ul >
 @endif
 
     @if(isset($req['newH']["oManager"]))
-<p ><span class="remark" >HQ Office Manager-Suzie Schwab</span ></p >
+        <p ><span class="remark" >HQ Office Manager-Suzie Schwab and Stephanie Brush</span ></p >
 
 <ul >
     @foreach($req['newH']["oManager"] as $item)

@@ -1,288 +1,292 @@
 <br >
 <div class="theForm" >
 
-<input type="hidden" name="reportType" id="reportType" value="separation" >
+    <input type="hidden" name="reportType" id="reportType" value="separation" >
 
-<div class="left3" ><span class="bold" >Name: </span >
+    <div class="left3" ><span class="bold" >Name: </span >
 
-    {{ data.fromAD.givenname }} {{ data.fromAD.sn }}
-    <input type="hidden" name="name" id="name" value="{{ data.fromAD.givenname }}" >
-    <input type="hidden" name="lastName" id="lastName" value="{{ data.fromAD.sn }}" >
-</div >
-<div class="left3" >
-    <strong >
-        Department:</strong >
-    {{ data.fromAD.department }}
+        {{ data.fromAD.givenname }} {{ data.fromAD.sn }}
+        <input type="hidden" name="name" id="name" value="{{ data.fromAD.givenname }}" >
+        <input type="hidden" name="lastName" id="lastName" value="{{ data.fromAD.sn }}" >
+    </div >
+    <div class="left3" >
+        <strong >
+            Department:</strong >
+        {{ data.fromAD.department }}
 
-    <input type="hidden" class="inputRender" name="department" value="{{ data.fromAD.department }}" >
-
-
-</div >
-<div class="left3" >Employee ID #: <input class="inputRender" name="employeeID" style="width: 80px" ></div >
-<br ><br clear="left" >
-
-<div >
-    Nickname (if applicable): <input type="text" name="buddy" id="buddy" class="inputRender" >
-</div >
-<br ><br >
-
-<div >Title:
-    <input type="text" size="50%" name="title" class="inputRender" value="{{ data.fromAD.title }}" required="" >
+        <input type="hidden" class="inputRender" name="department" value="{{ data.fromAD.department }}" >
 
 
-</div >
-<br ><br clear="left" >
+    </div >
+    <div class="left3" >Employee ID #: <input class="inputRender" name="employeeID" style="width: 80px" ></div >
+    <br ><br clear="left" >
 
-<div class="left" >Manager:
-    <input type="text" name="manager" class="inputRender" value="{{ data.fromAD.manager }}" required="" >
-    <input type="hidden" name="managerEmail" id="managerEmail" value="{{ data.fromAD.managerEmail }}" >
+    <div >
+        Nickname (if applicable): <input type="text" name="buddy" id="buddy" class="inputRender" >
+    </div >
+    <br ><br >
 
-</div >
-<div class="left" >
-    <strong >Company: </strong >
-    {{ data.fromAD.company }}
-    <input type="hidden" id="company" name="company" value="{{ data.fromAD.company }}" >
-</div >
+    <div >Title:
+        <input type="text" size="50%" name="title" class="inputRender" value="{{ data.fromAD.title }}" required="" >
 
-<p ></p ><br ><br >
+
+    </div >
+    <br ><br clear="left" >
+
+    <div class="left" >Manager:
+        <input type="text" name="manager" class="inputRender" value="{{ data.fromAD.manager }}" required="" >
+        <input type="hidden" name="managerEmail" id="managerEmail" value="{{ data.fromAD.managerEmail }}" >
+
+    </div >
+    <div class="left" >
+        <strong >Company: </strong >
+        {{ data.fromAD.company }}
+        <input type="hidden" id="company" name="company" value="{{ data.fromAD.company }}" >
+    </div >
+
+    <p ></p ><br ><br >
                 <span class="subHeader" >
                 Separation:
                     </span >
-<hr >
+    <hr >
 
-<p ></p ><br >
+    <p ></p ><br >
 
-<p >
+    <p >
 
-<div class="left" >
-    Separation Date: <input class="inputRender" name="termDate" id="termDate" style="width: 100px"
-                            required="" placeholder="mm/dd/yyyy" >
+    <div class="left" >
+        Separation Date: <input class="inputRender" name="termDate" id="termDate" style="width: 100px"
+                                required="" placeholder="mm/dd/yyyy" >
+        <span class="errorSpan" >*</span >
+
+        <div id="termDateError" class="errorSpan" ></div >
+    </div >
+    <div class="left" >
+        <input class="inputRender" name="effectiveDate" id="effectiveDate" readonly style="width: 100px" required="" >
+        -
+        <input class="inputRender" name="effectiveDate1" id="effectiveDate1" readonly style="width: 100px" required="" >
+
+        <div id="benefitDateError" >Effective Date thru Date:</div >
+    </div >
+    </p>
+
+    <br >
+
+    <p ></p ><br >
+
+    <div class="left" >
+        <label >Employee Status</label >
+
+        <select class="inputRender" name="hireStatus" id="hireStatus" >
+            <option value="" >Select</option >
+            {{#each data.hireStatus }}
+                <option >{{this}}</option >
+            {{/each}}
+        </select >
+        <span id="hireStatusError" class="errorSpan" >*</span >
+    </div >
+    <div class="left" >
+        Location: <input type="text" class="inputRender" name="location" id="location"
+                         value="{{ data.fromAD.location }}" >
+
+    </div >
+
+    <p ></p ><br >
+    <br >
+
+
+    <label ><input type="checkbox" class="inputRender" name="onetime" id="onetime" value="onetime" > One time Severance
+        Pay: $: </label >
+    <input class="inputRender" name="onTimePayment" id="onTimePayment" >
+
+    <p ></p >
+
+    <label ><input type="checkbox" class="inputRender" name="severance" id="severance" value="severance" > Continued
+        Distribution of Severance Pay: $: </label >
+
+    <input class="inputRender" name="severancePay" id="severancePay" > Over #
+    <input class="inputRender" name="overTime" id="overTime" style="width: 80px" > Months/Weeks
+
+    <div >
+        <p ></p >
+        <label ><input type="checkbox" class="inputRender" name="cobra" id="cobra" value="cobra" > COBRA </label >
+        Period paid: <input class="inputRender" name="periodPaid" id="periodPaid" >
+    </div >
+
+
+    <p ></p >
+    P.TO days/Hours: <input class="inputRender" name="ptoDays" id="ptoDays" >
     <span class="errorSpan" >*</span >
 
-    <div id="termDateError" class="errorSpan" ></div >
-</div >
-<div class="left" >
-    <input class="inputRender" name="effectiveDate" id="effectiveDate" readonly style="width: 100px" required="" >
-    -
-    <input class="inputRender" name="effectiveDate1" id="effectiveDate1" readonly style="width: 100px" required="" >
-
-    <div id="benefitDateError" >Effective Date thru Date:</div >
-</div >
-</p>
-
-<br >
-
-<p ></p ><br >
-
-<div class="left" >
-    <label >Employee Status</label >
-
-    <select class="inputRender" name="hireStatus" id="hireStatus" >
-        <option value="" >Select</option >
-        {{#each data.hireStatus }}
-            <option >{{this}}</option >
-        {{/each}}
-    </select >
-    <span id="hireStatusError" class="errorSpan" >*</span >
-</div >
-<div class="left" >
-    Location: <input type="text" class="inputRender" name="location" id="location" value="{{ data.fromAD.location }}" >
-
-</div >
-
-<p ></p ><br >
-<br >
-
-
-<label ><input type="checkbox" class="inputRender" name="onetime" id="onetime" value="onetime" > One time Severance
-    Pay: $: </label >
-<input class="inputRender" name="onTimePayment" id="onTimePayment" >
-
-<p ></p >
-
-<label ><input type="checkbox" class="inputRender" name="severance" id="severance" value="severance" > Continued
-    Distribution of Severance Pay: $: </label >
-
-<input class="inputRender" name="severancePay" id="severancePay" > Over #
-<input class="inputRender" name="overTime" id="overTime" style="width: 80px" > Months/Weeks
-
-<div >
+    <div class="errorSpan" id="ptoDaysError" ></div >
     <p ></p >
-    <label ><input type="checkbox" class="inputRender" name="cobra" id="cobra" value="cobra" > COBRA </label >
-    Period paid: <input class="inputRender" name="periodPaid" id="periodPaid" >
-</div >
+    <label ><input type="checkbox" class="inputRender" name="other" id="other" value="other" > Other (Explain Below):
+    </label >
+
+    <div id="otherComments" ></div >
+
+    <p ></p >
+    <br >
+
+    <p >Comments/Notes for Payroll:</p >
+    <textarea class="inputRender" cols="40" rows="6" id="commentsPayroll" name="commentsPayroll" ></textarea >
 
 
-<p ></p >
-    P.TO days/Hours: <input class="inputRender" name="ptoDays" id="ptoDays" >
-<span class="errorSpan" >*</span >
-
-<div class="errorSpan" id="ptoDaysError" ></div >
-<p ></p >
-<label ><input type="checkbox" class="inputRender" name="other" id="other" value="other" > Other (Explain Below):
-</label >
-
-<div id="otherComments" ></div >
-
-<p ></p >
-<br >
-
-<p >Comments/Notes for Payroll:</p >
-<textarea class="inputRender" cols="40" rows="6" id="commentsPayroll" name="commentsPayroll" ></textarea >
-
-
-<p ></p ><br >
+    <p ></p ><br >
            <span class="subHeader" >
                 IT Service Desk E-Mail Distribution List:
                </span >
-<hr >
-<label >
-    <input type="checkbox" name="disableUser" id="disableUser" checked > Deactivate user from the system.
-    <input type="hidden" name="sAMAccountName" value="{{ data.fromAD.sAMAccountName }}" >
-</label >
+    <hr >
+    <label >
+        <input type="checkbox" name="disableUser" id="disableUser" checked > Deactivate user from the system.
+        <input type="hidden" name="sAMAccountName" value="{{ data.fromAD.sAMAccountName }}" >
+    </label >
 
 
-<p ></p >
-<br >
+    <p ></p >
+    <br >
 
     E-Mail Distribution List:<br >
     (Check groups the user will be removed from)
 
 
-<ul id="itChecklist" style="text-align: left; list-style: none">
+    <ul id="itChecklist" style="text-align: left; list-style: none" >
 
 
-    <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]" value="illyusaTeam Distribution Group"
-            >illyusaTeam Distribution Group</label ></li >
-    <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]"
-                        value="illyusa Rye Brook Distribution Group"
-            >illyusa Rye Brook Distribution Group</label ></li >
-    <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]"
-                        value="illy NYC Team Distribution Group"
-            >illy NYC Team Distribution Group</label ></li >
-    <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]"
-                        value="illyusa Managers Distribution Group"
-            >illyusa Managers Distribution Group</label ></li >
-    <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]"
-                        value="illyusa Sales Team Distribution Group" >illyusa Sales Team Distribution Group</label >
-    </li >
-</ul >
+        <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]"
+                            value="illyusaTeam Distribution Group"
+        >illyusaTeam Distribution Group</label ></li >
+        <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]"
+                            value="illyusa Rye Brook Distribution Group"
+        >illyusa Rye Brook Distribution Group</label ></li >
+        <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]"
+                            value="illy NYC Team Distribution Group"
+        >illy NYC Team Distribution Group</label ></li >
+        <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]"
+                            value="illyusa Managers Distribution Group"
+        >illyusa Managers Distribution Group</label ></li >
+        <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]"
+                            value="illyusa Sales Team Distribution Group" >illyusa Sales Team Distribution
+            Group</label >
+        </li >
+    </ul >
 
 
-<p ><span >Assets</span ></p >
+    <p ><span >Assets</span ></p >
 
-<ul id="itChecklistAssets" style="text-align: left; list-style: none" >
-    <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="email"
-                        value="e-mail Scanner (if applicable)" > e-mail Scanner (if applicable)</label ></li >
-    <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="laptop" value="Laptop" >
-        Laptop</label ></li >
-    <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="cellphone"
-                        value="Cell Phone     {{#if data.fromAD.mobile }}
+    <ul id="itChecklistAssets" style="text-align: left; list-style: none" >
+        <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="email"
+                            value="e-mail Scanner (if applicable)" > e-mail Scanner (if applicable)</label ></li >
+        <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="laptop" value="Laptop" >
+            Laptop</label ></li >
+        <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="cellphone"
+                            value="Cell Phone     {{#if data.fromAD.mobile }}
         (current {{ data.fromAD.mobile }})
     {{/if}}
 " > Cell
-        Phone
+            Phone
 
-        {{#if data.fromAD.mobile }}
-            (current {{ data.fromAD.mobile }})
-        {{/if}}
+            {{#if data.fromAD.mobile }}
+                (current {{ data.fromAD.mobile }})
+            {{/if}}
 
 
-    </label ></li >
-    <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="phone" value="Phone extension
+        </label ></li >
+        <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="phone" value="Phone extension
             {{#if data.fromAD.telephonenumber }}
             (current {{ data.fromAD.telephonenumber }})
         {{/if}}
 
     " >
-        Phone extension <span id="telephonenumber"></span>
+            Phone extension <span id="telephonenumber" ></span >
 
 
-    </label ></li >
-    <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="software" value="Software" >
-        Software</label ></li >
-    <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="outlook"
-                        value="Remove title and contact information in Outlook" >
-        Add/remove title and contact information in Outlook</label ></li >
-    <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="outlook"
-                        value="Will be a Contract After Termination" > Will be a Contract After Termination</label >
-    </li >
-    <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" value="citrix"
-                        value="Sales Center/Citrix and Genesys ID. (applicable for Customer Care)" >Sales
-        Center/Citrix and Genesys ID. (applicable for Customer Care)</label ></li >
-</ul >
+        </label ></li >
+        <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="software" value="Software" >
+            Software</label ></li >
+        <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="outlook"
+                            value="Remove title and contact information in Outlook" >
+            Add/remove title and contact information in Outlook</label ></li >
+        <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="outlook"
+                            value="Will be a Contract After Termination" > Will be a Contract After Termination</label >
+        </li >
+        <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" value="citrix"
+                            value="Sales Center/Citrix and Genesys ID. (applicable for Customer Care)" >Sales
+            Center/Citrix and Genesys ID. (applicable for Customer Care)</label ></li >
+    </ul >
 
 
-<p ></p ><br >
-What are the specific assets and or functionalities needed:<br >
-<textarea class="inputRender" cols="40" rows="6" id="itComments" name="itComments" ></textarea >
+    <p ></p ><br >
+    What are the specific assets and or functionalities needed:<br >
+    <textarea class="inputRender" cols="40" rows="6" id="itComments" name="itComments" ></textarea >
 
 
-<p ></p >
-<br >
-<span class="subHeader" >IT Oracle Specialist</span >
+    <p ></p >
+    <br >
+    <span class="subHeader" >JDE Setup - Harshun Kondla</span >
     <ul class="listNoBullets" >
-    <li >
-        <label ><input type="checkbox" class="inputRender" name="oracle" id="oracle"
-                       value="Oracle Access (Sales, Finance, Logistics, Customer Care, IT, Tech Svcs)" > Oracle
-            Access (Sales, Finance, Logistics, Customer Care, IT, Tech Svcs)</label >
-    </li >
-</ul >
+        <li >
+            <label ><input type="checkbox" class="inputRender" name="application" id="application"
+                           value="Remove JDE profile" >
+                Remove JDE profile
+            </label >
+        </li >
+    </ul >
 
 
-<br ><br >
+    <br ><br >
 
-<div class="subHeader" > Administration Office</div >
+    <div class="subHeader" >HQ Office Manager-Suzie Schwab and Stephanie Brush</div >
 
-<ul style="list-style: none" >
-    <li >
-        <label ><input type="checkbox" class="inputRender" name="oManager[]" id="accessCard"
-                       value="Access Card, if applicable" > Access Card, if applicable</label >
-    </li >
-    <li >
-        <label ><input type="checkbox" class="inputRender" name="oManager[]" id="seat"
-                       value="Seating Assignment, if applicable" > Seating Assignment, if applicable</label >
-    </li >
-    <li >
-        <label ><input type="checkbox" class="inputRender" name="oManager[]" id="corpCalendar"
-                       value="Corp Calendar" > Corp Calendar</label >
-    </li >
-    <li >
-        <label ><input type="checkbox" class="inputRender" name="oManager[]" id="giftCard"
-                       value="Gift Card, provide to HR Manager" > Gift Card, provide to HR Manager</label >
-    </li >
-    <li >
-        <label ><input type="checkbox" class="inputRender" name="oManager[]" id="businessCard"
-                       value="Business Cards" > Business Cards</label >
-    </li >
-    <li >
-        <label ><input type="checkbox" class="inputRender" name="oManager[]" id="fedex" value="FedEx Address Book" >
-            FedEx Address Book</label >
-    </li >
-</ul >
-Aditional Instructions if applicable: <br >
-<textarea class="inputRender" cols="40" rows="6" id="generalComments" name="generalComments" ></textarea >
+    <ul style="list-style: none" >
+        <li >
+            <label ><input type="checkbox" class="inputRender" name="oManager[]" id="accessCard"
+                           value="Access Card, if applicable" > Access Card, if applicable</label >
+        </li >
+        <li >
+            <label ><input type="checkbox" class="inputRender" name="oManager[]" id="seat"
+                           value="Seating Assignment, if applicable" > Seating Assignment, if applicable</label >
+        </li >
+        <li >
+            <label ><input type="checkbox" class="inputRender" name="oManager[]" id="corpCalendar"
+                           value="Corp Calendar" > Corp Calendar</label >
+        </li >
+        <li >
+            <label ><input type="checkbox" class="inputRender" name="oManager[]" id="giftCard"
+                           value="Gift Card, provide to HR Manager" > Gift Card, provide to HR Manager</label >
+        </li >
+        <li >
+            <label ><input type="checkbox" class="inputRender" name="oManager[]" id="businessCard"
+                           value="Business Cards" > Business Cards</label >
+        </li >
+        <li >
+            <label ><input type="checkbox" class="inputRender" name="oManager[]" id="fedex" value="FedEx Address Book" >
+                FedEx Address Book</label >
+        </li >
+    </ul >
+    Aditional Instructions if applicable: <br >
+    <textarea class="inputRender" cols="40" rows="6" id="generalComments" name="generalComments" ></textarea >
 
 
-<p ></p ><br >
+    <p ></p ><br >
 
     <div class="subHeader" > Finance - Marjorie Guthrie<br >
         (Credit Card and Concur Access Requests) *new hires and separation
 
-</div >
+    </div >
     <ul style="list-style: none" >
-    <li >
-        <label ><input type="checkbox" class="inputRender" name="creditCard[]" id="creditCard"
-                       value="COMPANY CREDIT CARD" > COMPANY CREDIT CARD</label >
-    </li >
-    <li >
-        <label ><input type="checkbox" class="inputRender" name="creditCard[]" id="concur" value="Concur Access" >
-            Concur Access</label >
-    </li >
-</ul >
-<p ></p ><br >
+        <li >
+            <label ><input type="checkbox" class="inputRender" name="creditCard[]" id="creditCard"
+                           value="COMPANY CREDIT CARD" > COMPANY CREDIT CARD</label >
+        </li >
+        <li >
+            <label ><input type="checkbox" class="inputRender" name="creditCard[]" id="concur" value="Concur Access" >
+                Concur Access</label >
+        </li >
+    </ul >
+    <p ></p ><br >
 
-<input type="button" id="cancel" class="inputRender" value="Cancel" >
+    <input type="button" id="cancel" class="inputRender" value="Cancel" >
     <input type="submit" id="submit" name="submit" class="inputRender" value="Submit" >
 
 </div >

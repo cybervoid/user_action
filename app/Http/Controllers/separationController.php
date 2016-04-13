@@ -1,13 +1,13 @@
 <?php namespace App\Http\Controllers;
 
 use App\Services\ActiveDirectory;
+use App\Services\Lookup;
+use App\Services\Mailer;
 use App\Services\Reports;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Services\Mailer;
 use Illuminate\Mail\Message;
-use App\Services\Lookup;
 
 
 class SeparationController extends Controller
@@ -83,7 +83,6 @@ class SeparationController extends Controller
         if($req->request->get('department')=='Sales') $mailNotifyDepartments[] = 'sales';
 
 
-//        $ccRecipients = MyMail::emailRecipients($req);
         $ccRecipients= MyMail::getRecipients( 'separation',$mailNotifyDepartments, $req->request->get('managerEmail'));
         $subject = \Config::get('app.subjectPrefix') . $name . ' ' . $lastName;
         $attachment = \Config::get('app.separationReportsPath') . $separationReport;
@@ -99,6 +98,7 @@ class SeparationController extends Controller
             }
         });
 
+
         $ccRecipients[$to] = $to;
         $ccRecipients = array_unique(array_map("StrToLower", $ccRecipients));
 
@@ -107,6 +107,22 @@ class SeparationController extends Controller
         $userName = $req->request->get('sAMAccountName');
         $disableUser = $req->request->get('disableUser');
 
+        $removeGroups = $req->request->get('iTDeptEmail');
+
+        // make translation for JDE and the application team
+        if ($req->request->get('application') != '')
+        {
+            $removeGroups[] = 'JDE USA Remote';
+        }
+
+        //if the user is deactivated remove from the default groups
+        if ($req->request->get('disableUser') != '')
+        {
+            $removeGroups[] = 'VPN_usa';
+            $removeGroups[] = 'WIFI_usa';
+        }
+
+
         if ((strtotime($today) >= strtotime($req->request->get('termDate'))))
         {
             //remove user from groups
@@ -114,7 +130,8 @@ class SeparationController extends Controller
             $ad = ActiveDirectory::get_connection();
             $user_ad_info = $ad->getsamaccountname($req->request->get('sAMAccountName'));
 
-            $ad->removeFromGroups($req->request->get('iTDeptEmail'), $user_ad_info[0]["dn"], $disableUser);
+
+            $ad->removeFromGroups($removeGroups, $user_ad_info[0]["dn"], $disableUser);
 
             //check if the user wants to disable AD user
             if (isset($disableUser))
@@ -126,7 +143,7 @@ class SeparationController extends Controller
         else
         {
             // if the separation date is not today, schedule when it will be effective
-            Schedule::addSchedule($req->request->get('termDate'), $userName, $name . ' ' . $lastName, 'separation', isset($disableUser), \Config::get('app.separationReportsPath') . $separationReport, $req->request->get('iTDeptEmail'));
+            Schedule::addSchedule($req->request->get('termDate'), $userName, $name . ' ' . $lastName, 'separation', isset($disableUser), \Config::get('app.separationReportsPath') . $separationReport, $removeGroups);
         }
 
         // add new entry to the schedule system with due date 6 month after effective date for AD deletion

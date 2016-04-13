@@ -344,16 +344,15 @@
                 <p ></p >
 
                 <P ></P ></div >
-            <div class="subHeader" >IT Oracle Specialist</div >
+            <div class="subHeader" >JDE Setup - Harshun Kondla</div >
             <label >
-                <input type="checkbox" class="inputRender" name="oracle" id="oracle"
-                       value="Oracle Access/Oracle (HR) Number Approval (Sales, Finance, Logistics, Customer Care, IT, Tech Svcs)" >
-                Oracle Access/Oracle (HR) Number Approval (Sales, Finance, Logistics, Customer Care, IT, Tech
-                Svcs)</label >
+                <input type="checkbox" class="inputRender" name="application" id="application"
+                       value="Contact Hiring manager to get job requirements for proper JDE setup" >
+                Contact Hiring manager to get job requirements for proper JDE setup</label >
 
             <br ><br >
 
-            <div class="subHeader" >Administration Office</div >
+            <div class="subHeader" >HQ Office Manager-Suzie Schwab and Stephanie Brush</div >
 
             <ul >
                 <li >

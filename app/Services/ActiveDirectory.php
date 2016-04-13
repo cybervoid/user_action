@@ -103,7 +103,6 @@ class ActiveDirectory
             $errorFound = @ldap_mod_del(static::$conn, $group_dn, $group_info);
         }
 
-
         $result = false;
     }
 
@@ -292,6 +291,12 @@ class ActiveDirectory
         //add the user to the default groups
         @ldap_mod_add(static::$conn, 'CN=VPN_usa,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM', $group_info);
         @ldap_mod_add(static::$conn, 'CN=WIFI_usa,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM', $group_info);
+
+        //check if application is checked add to JDE group
+        if ($req->request->get('application') != '')
+        {
+            @ldap_mod_add(static::$conn, 'CN=JDE USA Remote,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM', $group_info);
+        }
 
         if (isset($groupsToAdd))
         {
