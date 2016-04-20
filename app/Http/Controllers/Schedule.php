@@ -50,8 +50,9 @@ class Schedule extends Controller
             'date' => $content['deactivate']], function (Message $m) use ($content)
         {
             $to = \Config::get('app.eMailIT');
+            $ccRecipients[\Config::get('app.eMailHRAdd')] = \Config::get('app.eMailHRAdd');
             $subject = \Config::get('app.subjectBatchPrefix') . $content['action'] . ' - ' . $content['name'];
-            $m->to($to, null)->subject($subject);
+            $m->to($to, null)->subject($subject)->cc($ccRecipients);
 
         });
     }

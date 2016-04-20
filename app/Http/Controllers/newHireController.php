@@ -104,28 +104,6 @@ class newHireController extends Controller
         $ccRecipients[$to] = $to;
         $ccRecipients = array_unique(array_map("StrToLower", $ccRecipients));
 
-        /*
-
-        $illyGroups['illyusaNorth America'] = 'CN=illyusaTeam Distribution Group,OU=Distribution Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM';
-        $illyGroups['illyryebrook'] = 'CN=illyusa Rye Brook Distribution Group,OU=Distribution Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM';
-        $illyGroups['illyusa NYC Team'] = 'CN=illy NYC Team Distribution Group,OU=Distribution Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM';
-        $illyGroups['illyCanada'] = 'CN=illy Canada Distribution Group,OU=Distribution Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM';
-        $illyGroups['illyManagers'] = 'CN=illyusa Managers Distribution Group,OU=Distribution Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM';
-        $illyGroups['illySales'] = 'CN=illyusa Sales Team Distribution Group,OU=Distribution Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM';
-
-        if (env('APP_STATUS') == 'offline')
-        {
-            $groupsToAdd = $req->request->get('iTDeptEmail');
-            if (isset($groupsToAdd))
-            {
-                foreach ($groupsToAdd as $group)
-                {
-                    $groups[] = $illyGroups[$group];
-                }
-            }
-        }
-        */
-
         $samaacountname = strtolower(substr($lastName, 0, 5) . substr($name, 0, 2));
 
         if (env('APP_STATUS') != 'offline')
