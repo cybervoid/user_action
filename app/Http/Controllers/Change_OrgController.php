@@ -1,12 +1,12 @@
 <?php namespace App\Http\Controllers;
 
 use App\Services\ActiveDirectory;
+use App\Services\Lookup;
+use App\Services\Mailer;
 use App\Services\Reports;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Services\Lookup;
-use App\Services\Mailer;
 use Illuminate\Mail\Message;
 
 
@@ -43,11 +43,8 @@ class Change_OrgController extends Controller
     public function index()
     {
 
-
         $user = User::current();
-
         return view('change_org', ['user' => $user]);
-
     }
 
 

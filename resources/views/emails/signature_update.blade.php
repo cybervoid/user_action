@@ -20,7 +20,8 @@ You can update your own signature or follow this link while you are on VPN and t
 </p>
 
 <br>
-<p>If you are having any issue with this procedure please let us know.</p>
+<p >If you are having any issue with this procedure you can let us know at <a href="mailto:servicedesk@illy.com" >servicedesk@illy
+        .com</a ></p >
 <p>
     IT Department<br>
     illy caffè North America, Inc</p>
