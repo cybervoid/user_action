@@ -76,7 +76,6 @@ class SeparationController extends Controller
         $to = \Config::get('app.servicedesk');
         $mailNotifyDepartments= [];
 
-
         if($req->request->get('oManager')!='') $mailNotifyDepartments[] = 'management';
         if($req->request->get('creditCard')!='') $mailNotifyDepartments[] = 'creditCard';
         if($req->request->get('newDriver')!='') $mailNotifyDepartments[] = 'newDriver';
@@ -164,11 +163,9 @@ class SeparationController extends Controller
 
     public function separation_search(Request $req)
     {
-
         // get AD information
         $result_array['fromAD'] = Lookup::lookupUser($req);
         $result_array['hireStatus'] = \Config::get('app.hireStatus');
         return new Response(json_encode($result_array), 200, ['Content-Type' => 'application/json']);
-
     }
 }

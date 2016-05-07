@@ -106,7 +106,12 @@ class Change_OrgController extends Controller
 
         if (strtolower($req->request->get('company')) != strtolower($result[0]['company'][0]))
         {
-            $changes['company'] = $req->request->get('company');
+            //check if the user comes from another company or didn't one assigned, if not
+            // set one as default
+            if (in_array($result[0]['company'][0], \Config::get('app.companies')))
+            {
+                $changes['company'] = $req->request->get('company');
+            }
         }
 
 
@@ -152,12 +157,10 @@ class Change_OrgController extends Controller
         $ad = ActiveDirectory::get_connection();
         $result = $ad->getEmail($req["email"]);
 
-
         $name = $result[0]['givenname'][0];
         $lastName = $result[0]['sn'][0];
         $change_org_Report = \Config::get('app.org_change_ReportsPrefix') . $name . ' ' . $lastName . date('_m-d-Y') . '.pdf';
         $change_org_Report = Reports::escapeReportName($change_org_Report);
-
 
         //if one of the changes is manager get extra info
         if (isset($params['manager']))

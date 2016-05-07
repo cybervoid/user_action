@@ -466,11 +466,6 @@ class ActiveDirectory
         if(isset($notifyChanges['givenname']) || isset($notifyChanges['sn']))
             $userdata['displayName'] = ucfirst(strtolower($lastName)) . " " . ucfirst(strtolower($name));
 
-        // todo investigar como cabiar el dn para que aparezca con el nuevo nombre en AD
-        //$userdata['dn'] = 'ILLY-DOMAIN.COM/North America/Rye Brook/Users/Rigoberto Rondo'; // logon username
-        //$userdata['userPrincipalName'] = 'cucomania'; // logon username
-
-
         if (isset($changes['title']))
         {
             $userdata['description'] = $changes['title'];
@@ -484,6 +479,7 @@ class ActiveDirectory
             $userdata['manager'] = $fromAD['newManager'];
         }
 
+
         if (isset($changes['company']))
         {
             $userdata['st'] = \Config::get('app.' . $changes['company'] . '.st');
@@ -493,6 +489,18 @@ class ActiveDirectory
             $userdata['streetAddress'] = \Config::get('app.' . $changes['company'] . '.streetAddress');
             $notifyChanges['company'] = $changes['company'];
             $notifyCurrentInfo['company'] = $fromAD[0]['company'][0];
+        }
+        else
+        {
+            if (!in_array($fromAD[0]['company'][0], \Config::get('app.companies')))
+            {
+                $userdata['company'] = 'illy caffè North America, Inc';
+                $userdata['st'] = "NY";
+                $userdata['postalCode'] = "10573";
+                $userdata['l'] = "Rye Brook";
+                $userdata['c'] = "US";
+                $userdata['streetAddress'] = "800 Westchester Avenue, Suite S440";
+            }
         }
 
         @ldap_mod_replace(static::$conn, $dn, $userdata);
