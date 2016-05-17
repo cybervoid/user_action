@@ -45,8 +45,9 @@ class Schedule extends Controller
 
     public static function newHire_reminder($content)
     {
+
         Mailer::send('emails.newHire_reminder', ['name' => $content['name'],
-            'samaccountname' => $content['samaccountname'],
+            'samaccountname' => $content['samaccountname'], 'attachment' => $content['attachment'],
             'date' => $content['deactivate']], function (Message $m) use ($content)
         {
             $to = \Config::get('app.eMailIT');

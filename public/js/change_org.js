@@ -9,6 +9,12 @@ var App = App || {};
     $(document).ready(function () {
         $('#user').focus();
 
+        $('#manual-add').on('click', function () {
+            $.get('/org_change-add').done(function (response) {
+                $('#report').html(response);
+            });
+        });
+
         $("#user").autocomplete({
             source: "/autocomplete",
             minLength: 2,

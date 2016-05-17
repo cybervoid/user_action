@@ -5,7 +5,7 @@
 
 <br >
 
-<p >Check list for IT</p >
+<p ><strong >Check list for IT</strong ></p >
 <ul >
     <li >Change the default password</li >
     <li >Check if the groups are applied properly</li >
@@ -13,10 +13,14 @@
 </ul >
 <br >
 
-<p >Check list for Human Resources</p >
+
+{{ $attachment }}
+@if( !empty($attachment))
+    <p ><strong >Check list for Human Resources</strong ></p >
 <ul >
     <li >Prepare the user in JDE</li >
 </ul >
+@endif
 
 
 

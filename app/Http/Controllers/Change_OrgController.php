@@ -287,5 +287,14 @@ class Change_OrgController extends Controller
 
     }
 
+    public static function add(Request $req)
+    {
 
+        $user = User::current();
+
+        return view('template/newHire-template', ['user' => $user, 'departments' => \Config::get('app.departments'),
+            'companies' => \Config::get('app.companies'), 'hireStatus' => \Config::get('app.hireStatus'),
+            'salaryType' => \Config::get('app.salaryType'), 'locations' => \Config::get('app.locations'),]);
+
+    }
 }

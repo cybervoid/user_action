@@ -78,6 +78,7 @@ class newHireController extends Controller
         $payrollReport = Reports::escapeReportName($payrollReport);
         Reports::generateReport($payrollReport, \Config::get('app.payrollNewHireReportsPath'), 'payroll', $view);
 
+
         //send the email
         $to = \Config::get('app.servicedesk');
         $ccRecipients = MyMail::emailRecipients($req);
@@ -86,19 +87,17 @@ class newHireController extends Controller
         $attachment = \Config::get('app.newHireReportsPath') . $newHireReport;
         $attachment = isset($attachment) ? file_exists($attachment) ? $attachment : false : null;
 
-        if (env('APP_STATUS') != 'offline')
-        {
-            Mailer::send('emails.forms', [], function (Message $m) use ($to, $ccRecipients, $subject, $attachment)
-            {
-                $m->to($to, null)->subject($subject);
-                $m->cc($ccRecipients);
 
-                if ($attachment)
-                {
-                    $m->attach($attachment);
-                }
-            });
-        }
+        Mailer::send('emails.forms', [], function (Message $m) use ($to, $ccRecipients, $subject, $attachment)
+        {
+            $m->to($to, null)->subject($subject);
+            $m->cc($ccRecipients);
+
+            if ($attachment)
+            {
+                $m->attach($attachment);
+            }
+        });
 
 
         $ccRecipients[$to] = $to;
@@ -106,36 +105,29 @@ class newHireController extends Controller
 
         $samaacountname = strtolower(substr($lastName, 0, 5) . substr($name, 0, 2));
 
-        if (env('APP_STATUS') != 'offline')
+        //send request to engineering to add the user to VPN and WIFI group
+        Mailer::send('emails.joinGroups', ['userName' => $samaacountname, 'name' => $name . ' ' . $lastName,
+            'manager' => $req->request->get('manager')], function (Message $m) use ($samaacountname)
         {
-            //send request to si_infra to add the user to VPN and WIFI group
-            Mailer::send('emails.joinGroups', ['userName' => $samaacountname, 'name' => $name . ' ' . $lastName,
-                'manager' => $req->request->get('manager')], function (Message $m) use ($samaacountname)
-            {
-                $m->to(\Config::get('app.si_infra'), null)->subject('new user settings - ' . $samaacountname);
+            $m->to(\Config::get('app.si_infra'), null)->subject('new user settings - ' . $samaacountname);
 
-                // copy NA IT
-                $cc[\Config::get('app.eMailITManager')] = \Config::get('app.eMailITManager');
-                $cc[\Config::get('app.eMailIT')] = \Config::get('app.eMailIT');
+            // copy NA IT
+            $cc[\Config::get('app.eMailITManager')] = \Config::get('app.eMailITManager');
+            $cc[\Config::get('app.eMailIT')] = \Config::get('app.eMailIT');
 
-                $m->cc($cc);
-            });
-        }
+            $m->cc($cc);
+        });
 
-        //add reminder for a week before new hre starts
+        //add reminder for a week before new hire starts
         $dueDate = date('m/d/Y', strtotime('-1 week', strtotime($req->request->get('startDate'))));
-        Schedule::addSchedule($dueDate, $samaacountname, $name . ' ' . $lastName, 'newHire_reminder', $req->request->get('startDate'), null, null);
+        Schedule::addSchedule($dueDate, $samaacountname, $name . ' ' . $lastName, 'newHire_reminder', $req->request->get('startDate'), $req->request->get('application'), null);
 
-        if (env('APP_STATUS') != 'offline')
-        {
-            //create the username in the AD
-            $ad = ActiveDirectory::get_connection();
-            $ad->createUserAD($req);
-        }
+        //create the username in the AD
+        $ad = ActiveDirectory::get_connection();
+        $ad->createUserAD($req);
 
-        return view('thankYou', ['name' => $name, 'lastName' => $lastName,
-            'newHireReport' => $newHireReport, 'reportType' => 'newhire',
-            'newHireRouteURL' => \Config::get('app.newHireURL'), 'sendMail' => $ccRecipients,
+        return view('thankYou', ['name' => $name, 'lastName' => $lastName, 'newHireReport' => $newHireReport,
+            'reportType' => 'newhire', 'newHireRouteURL' => \Config::get('app.newHireURL'), 'sendMail' => $ccRecipients,
             'payrollNewHireReport' => $payrollReport, 'payrollNewHireRouteURL' => \Config::get('app.payrollNewHireURL'),
             'menu_Home' => '', 'menu_New' => '']);
     }

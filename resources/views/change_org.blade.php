@@ -24,6 +24,10 @@
     <label >Search user</label >
     <input type="text" id="user" name="user"class="inputRender" autocomplete="off"> <span
         id="searchProgress" ></span >
+    <p >
+    <div id="manual-add" class="element-as-link" >Manually Add user</div >
+
+    </p>
     <br ><br >
 
     <div class="report" id="report" >
