@@ -10,9 +10,7 @@ var App = App || {};
         $('#user').focus();
 
         $('#manual-add').on('click', function () {
-            $.get('/org_change-add').done(function (response) {
-                $('#report').html(response);
-            });
+            window.location.href = '/newHire';
         });
 
         $("#user").autocomplete({

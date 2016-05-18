@@ -4,8 +4,6 @@
 <script src="js/menu.js" ></script >
 <script src="js/groupsAD.js" ></script >
 <script src="js/change_org.js" ></script >
-
-
 @endsection
 
 @section('css')
