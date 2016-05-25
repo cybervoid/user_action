@@ -10,7 +10,7 @@
 <div class="centerObj" >
     <img src="{{ $server }}/images/logo.bmp" >
 
-<p style="font-weight: bold" >USER NOTIFICATION FORM</p >
+    <p style="font-weight: bold" >Action Notification</p >
 
     <p >Human Resources<br >
         * Transactions to be processed within 48 hours of notification
