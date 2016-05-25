@@ -55,6 +55,9 @@ class MyMail extends Controller
        // per Maren request, add Mark Romano to all notifiations
         $ccRecipients['Mark.Romano@illy.com'] = 'Mark.Romano@illy.com';
 
+        // per Maren request, add Martiza Zelvoin to all notifiations
+        $ccRecipients['maritza.zelvin@illy.com'] = 'maritza.zelvin@illy.com';
+
         return $ccRecipients;
 
     }
