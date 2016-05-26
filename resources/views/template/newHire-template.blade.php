@@ -30,8 +30,10 @@
                     <input type="text" class="inputRender" name="lastName" id="lastName" required="" value="" >
                 </li >
                 <li >
-                    <label >Buddy Name:</label >
-                    <input type="text" class="inputRender" name="buddy" id="buddy" >
+                    <label >
+                        Date of Birth: </label >
+                    <input type="text" class="inputRender" name="birthDate" id="birthDate"
+                           style="width: 100px" >
                 </li >
             </ul >
 
@@ -40,50 +42,45 @@
             <div class="subHeader" >Company</div >
             </p>
 
-            <div >
+            <li >
+            <span class="left" >
                 @if(count($companies)>0)
-                    <label >Will be working for</label >
+                    Will be working for
                     <select class="inputRender" name="company" id="company" >
-                        <option value="" >Select</option >
+                        <option value="" >Select company</option >
                         @foreach($companies as $company)
                             <option >{{ $company }}</option >
                         @endforeach
                     </select ><span id="companyError" class="errorSpan" >*</span ><br >
                 @endif
-            </div >
+            </span >
 
-            <p ></p >
-
-            <p >
-
-            <div class="subHeader" >Payroll</div >
-            </p>
-
-
-            <li >
-                <div class="left3" >
+            <span class="left" >
                     @if(count($departments)>0)
-                        <label >Department</label >
-                        <select class="inputRender" name="department" id="department" >
+                    Department
+                    <select class="inputRender" name="department" id="department" >
                             <option value="" >Select</option >
-                            @foreach($departments as $department)
-                                <option >{{ $department }}</option >
-                            @endforeach
+                        @foreach($departments as $department)
+                            <option >{{ $department }}</option >
+                        @endforeach
                         </select ><span id="departmentError" class="errorSpan" >*</span ><br >
-                    @endif
+                @endif
+            </span >
+                <br style="clear: left" >
+            </li >
+            <li >
+                <div class="left" >
+                    Buddy Name:
+                    <input type="text" class="inputRender" name="buddy" id="buddy" size="20" >
                 </div >
-                <div class="left3" >
+                <div class="left" >
                     Employee #
                     <input type="text" class="inputRender" name="employee" id="employee" > <br >
-                </div >
-                <div class="left3" >
-                    Date of Birth: <input type="text" class="inputRender" name="birthDate" id="birthDate"
-                                          style="width: 100px" >
                 </div >
                 <br style="clear: left" >
             </li >
             <li >
-                <label >Title</label >
+                Title
                 <input type="text" class="inputRender" name="title" id="title" required="" value="" >
             </li >
             <li >
@@ -105,9 +102,9 @@
 
             <!-- Employee New Hire Status -->
             <li >
-                <div style="float:left; width:50%;" >
+                <div class="left" >
                     @if(count($hireStatus)>0)
-                        <label >Employee New Hire Status</label >
+                        Action
                         <select class="inputRender" name="hireStatus" id="hireStatus" >
                             <option value="" >Select</option >
                             @foreach($hireStatus as $status)
@@ -117,16 +114,30 @@
                     @endif
 
                 </div >
-                <div style="float:left; width:50%;" >
-                    <select name="exepmtion" id="exepmtion" class="inputRender" >
-                        <option value="No-Exempt" >Non-Exempt</option >
-                        <option value="Exempt" >Exempt</option >
-                    </select >
+                <div class="left" >
+                    @if(count($associate_class)>0)
+                        Associate Classification
+                        <select class="inputRender" name="hireStatus" id="hireStatus" >
+                            <option value="" >Select</option >
+                            @foreach($associate_class as $item)
+                                <option >{{ $item }}</option >
+                            @endforeach
+                        </select >
+                    @endif
+
                 </div >
                 <br style="clear: left" >
             </li >
+            <div class="centerMe" >
+                <p ></p >
+                <select name="exepmtion" id="exepmtion" class="inputRender" >
+                    <option value="No-Exempt" >Non-Exempt</option >
+                    <option value="Exempt" >Exempt</option >
+                </select >
+            </div >
+            <li >
 
-
+            </li >
             <li >
                 <div class="left" >
                     Start Date

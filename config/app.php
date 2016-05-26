@@ -51,7 +51,7 @@ return $settings = [
         'l' => 'Rye Brook', 'c' => 'US', 'st' => 'NY'],
 
 
-    'hireStatus' => ['Full-time', 'Part-Time', 'Seasonal', 'Temporary',],
+    'hireStatus' => ['New Hire', 'Re-Hire', 'Seasonal', 'Temporary',], 'associate_class' => ['Full-time', 'Part-Time',],
 
 
     'salaryType' => ['Annual Salary', 'Hourly', 'Half Month', 'Other',],

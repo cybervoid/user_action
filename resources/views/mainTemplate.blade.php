@@ -21,7 +21,7 @@
 <div class="center mainFrm" >
     <img src="images/logo.bmp" >
 
-    <h2 >USER NOTIFICATION ACTION TOOL</h2 >
+    <h2 >ACTION NOTIFICATION</h2 >
 
     @if (isset($user->givenName))
     <div id="welcomeMsg" class="welcomeMsg" >Welcome {{ $user->givenName }}</div >
