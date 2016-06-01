@@ -77,7 +77,7 @@ class newHireController extends Controller
         //generate payroll Report
         $payrollReport = \Config::get('app.payrollNewHireReportsPrefix') . $name . ' ' . $lastName . '.pdf';
         $payrollReport = Reports::escapeReportName($payrollReport);
-        Reports::generateReport($payrollReport, \Config::get('app.payrollNewHireReportsPath'), 'payroll', $view);
+        //Reports::generateReport($payrollReport, \Config::get('app.payrollNewHireReportsPath'), 'payroll', $view);
 
 
         //send the email
