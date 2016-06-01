@@ -111,6 +111,10 @@ class MyMail extends Controller
         $ccRecipients['Mark.Romano@illy.com'] = 'Mark.Romano@illy.com';
 
 
+        // per Maren request, add Maritza Zelvin  to all notifiations
+        $ccRecipients['maritza.zelvin@illy.com'] = 'maritza.zelvin@illy.com';
+
+
         return $ccRecipients;
     }
 
