@@ -81,8 +81,10 @@ class newHireController extends Controller
 
 
         //send the email
-        $to = \Config::get('app.servicedesk');
-        $ccRecipients = MyMail::emailRecipients($req);
+        $to = 'Maren.Gizicki@illy.com';
+        //$to = \Config::get('app.servicedesk');
+        //$ccRecipients = MyMail::emailRecipients($req);
+        $ccRecipients['rafael.gil@illy.com'] = 'rafael.gil@illy.com';
         $subject = \Config::get('app.subjectPrefix') . $name . ' ' . $lastName;
 
         $attachment = \Config::get('app.newHireReportsPath') . $newHireReport;
