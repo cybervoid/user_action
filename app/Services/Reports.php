@@ -42,9 +42,11 @@ class Reports
         }
         fclose($toPDF);
 
-       $wkhtmltopdf = env('wkhtmltopdf');
+
+        $wkhtmltopdf = env('wkhtmltopdf');
 
         exec($wkhtmltopdf . ' --margin-top 5 --margin-bottom 5' . ' ' . $myFile . ' ' . '"' . $location . $reportName . '"', $returnvar);
+        error_log(print_r($returnvar), 0);
     }
 
     /**

@@ -104,6 +104,11 @@ class Change_OrgController extends Controller
             $changes['title'] = $req->request->get('title');
         }
 
+        if (!isset($result[0]['company'][0]))
+        {
+            $changes['company'] = $req->request->get('company');
+        }
+        else
         if (strtolower($req->request->get('company')) != strtolower($result[0]['company'][0]))
         {
             //check if the user comes from another company or didn't one assigned, if not
