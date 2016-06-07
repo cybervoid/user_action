@@ -64,7 +64,7 @@
 <table border="0" width="100%" >
     <tr >
         <td ><span class="remark" >Payroll/Salary:</span ></td >
-        <td colspan="2" align="right" ><span class="remark" >Date:</span > {{ $req['newH']["payrollDate"] }}<br ><span
+        <td colspan="2" align="right" ><span class="remark" >Date:</span > {{ $req['newH']["startDate"] }}<br ><span
                 class="remark" >(semi-monthly to reflect 1st or 16th of the month)</span ></td >
     <tr >
         <td colspan="3" >&nbsp;</td >
@@ -79,11 +79,6 @@
                 {{$req['newH']["salary"]!='' ? $req['newH']["salary"]:'(Salary type TBD)' }}
 
             @endif
-        </td >
-
-        <td >
-            <span class="remark" >Sales Level:</span >
-            {{$req['newH']["salesLevel"]!='' ? $req['newH']["salesLevel"]:'-' }}
         </td >
         <td ><span class="remark" >Bonus</span >
             {{$req['newH']["bonus"]!='' ? $req['newH']["bonus"]:'-' }}

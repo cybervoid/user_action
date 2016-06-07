@@ -31,9 +31,7 @@
             <ul >
                 <li >
                     <label >First Name</label >
-
                     <input type="text" class="inputRender" name="name" id="name" required="" value="" >
-
                 </li >
                 <li >
                     <label >Last Name</label >
@@ -46,9 +44,7 @@
                            style="width: 100px" >
                 </li >
             </ul >
-
             <p >
-
             <div class="subHeader" >Company</div >
             </p>
 
@@ -93,9 +89,7 @@
                 <div class="left" >
                     Title
                     <input type="text" class="inputRender" name="title" id="title" required="" value="" >
-
                 </div >
-
                 <div class="left" >
                     @if(count($locations)>0)
                         Location
@@ -157,31 +151,9 @@
                 </div >
                 <br style="clear: left" >
             </li >
-            <li >
-                <div class="left" >
-
-                    <select name="exepmtion" id="exepmtion" class="inputRender" >
-                        <option value="No-Exempt" >Non-Exempt</option >
-                        <option value="Exempt" >Exempt</option >
-                    </select >
-                </div >
-                <div class="left" >
-                    <label >Benefits effective Date <br > (Medical, Dental, FSA) 1st of the month following 30 days
-                        of
-                        employment</label >
-                    <input type="text" class="inputRender" name="benefitDate" id="benefitDate" readonly
-                           style="width: 100px" >
-                    <br ><span id="benefitDateError" class="errorSpan" ></span >
-                </div >
-                <br style="clear: left" >
-            </li >
-
 
             <!-- following 30 days of employment -->
-
-            <br >
-            <br >
-
+            <br ><br >
             <p >
 
             <div class="subHeader" >Payroll/Salary</div >
@@ -193,7 +165,7 @@
                     <div class="left3" >
                         @if(count($salaryType)>0)
                             <p >Payroll/Salary:</p >
-                            <input type="text" class="inputRender" name="salary" id="salary" style="width: 70px" >
+                            $<input type="text" class="inputRender" name="salary" id="salary" style="width: 70px" >
                             <select name="salaryType" id="salaryType" class="inputRender" >
                                 <option value="" >Select</option >
                                 @foreach($salaryType as $type)
@@ -210,8 +182,29 @@
                         <p >Bonus</p >
                         <input type="text" class="inputRender" name="bonus" id="bonus" style="width: 70px" >
                     </div >
+                    <br style="clear: left" >
                 </li >
+                <li >
+                <span class="left" >
+                <select name="exepmtion" id="exepmtion" class="inputRender" >
+                    <option value="No-Exempt" >Non-Exempt</option >
+                    <option value="Exempt" >Exempt</option >
+                </select >
+            </span >
+            <span class="left" >
+                Benefits effective Date <br > (Medical, Dental, FSA) 1st of the month following 30 days
+                of
+                employment
+                <input type="text" class="inputRender" name="benefitDate" id="benefitDate" readonly
+                       style="width: 100px" >
+                <span id="benefitDateError" class="errorSpan" ></span >
+            </span >
+
+                </li >
+
             </ul >
+
+
             <br style="clear: left" >
             <p ></p >
 
@@ -234,10 +227,7 @@
             <div class="subHeader" >Information for other departments:</div >
             </p>
             <hr >
-
         </div >
-
-
         <br >
 
         <div class="subHeader" >
@@ -319,36 +309,39 @@
 
         <div class="subHeader" >HQ Office Manager-Suzie Schwab and Stephanie Brush</div >
 
-        <ul >
-            <li >
-                <label ><input type="checkbox" class="inputRender" name="oManager[]" id="accessCard"
-                               value="Access Card, if applicable" > Access Card, if applicable</label >
-            </li >
-            <li >
-                <label ><input type="checkbox" class="inputRender" name="oManager[]" id="seat"
-                               value="Seating Assignment, if applicable" > Seating Assignment, if
-                    applicable</label >
-            </li >
-            <li >
-                <label ><input type="checkbox" class="inputRender" name="oManager[]" id="corpCalendar"
-                               value="Corp Calendar" > Corp Calendar</label >
-            </li >
-            <li >
-                <label ><input type="checkbox" class="inputRender" name="oManager[]" id="giftCard"
-                               value="Gift Card, provide to HR Manager" > Gift Card, provide to HR Manager</label >
-            </li >
-            <li >
-                <label ><input type="checkbox" class="inputRender" name="oManager[]" id="businessCard"
-                               value="Business Cards, if need to ship to outside location please contact
+<span class="checkbox" >
+<ul >
+    <li >
+        <label ><input type="checkbox" class="inputRender" name="oManager[]" id="accessCard"
+                       value="Access Card, if applicable" > Access Card, if applicable</label >
+    </li >
+    <li >
+        <label ><input type="checkbox" class="inputRender" name="oManager[]" id="seat"
+                       value="Seating Assignment, if applicable" > Seating Assignment, if
+            applicable</label >
+    </li >
+    <li >
+        <label ><input type="checkbox" class="inputRender" name="oManager[]" id="corpCalendar"
+                       value="Corp Calendar" > Corp Calendar</label >
+    </li >
+    <li >
+        <label ><input type="checkbox" class="inputRender" name="oManager[]" id="giftCard"
+                       value="Gift Card, provide to HR Manager" > Gift Card, provide to HR Manager</label >
+    </li >
+    <li >
+        <label ><input type="checkbox" class="inputRender" name="oManager[]" id="businessCard"
+                       value="Business Cards, if need to ship to outside location please contact
                 hiring manager for address" > Business Cards, if need to ship to outside location please contact
-                    hiring manager for address</label >
-            </li >
-            <li >
-                <label ><input type="checkbox" class="inputRender" name="oManager[]" id="fedex"
-                               value="FedEx Address Book" >
-                    FedEx Address Book</label >
-            </li >
-        </ul >
+            hiring manager for address</label >
+    </li >
+    <li >
+        <label ><input type="checkbox" class="inputRender" name="oManager[]" id="fedex"
+                       value="FedEx Address Book" >
+            FedEx Address Book</label >
+    </li >
+</ul >
+</span >
+
         <p ></p >
 
         <div class="subHeader" >New Driver for Company Vehicle Form-Erik Tellone (new hire notification only) (if
@@ -366,18 +359,19 @@
 
 
         </div >
-        <ul >
-            <li >
-                <label ><input type="checkbox" class="inputRender" name="creditCard[]" id="creditCard"
-                               value="COMPANY CREDIT CARD" > COMPANY CREDIT CARD</label >
-            </li >
-            <li >
-                <label ><input type="checkbox" class="inputRender" name="creditCard[]" id="concur"
-                               value="Concur Access" >
-                    Concur Access</label >
-            </li >
-        </ul >
-
+        <span class="checkbox" >
+<ul >
+    <li >
+        <label ><input type="checkbox" class="inputRender" name="creditCard[]" id="creditCard"
+                       value="COMPANY CREDIT CARD" > COMPANY CREDIT CARD</label >
+    </li >
+    <li >
+        <label ><input type="checkbox" class="inputRender" name="creditCard[]" id="concur"
+                       value="Concur Access" >
+            Concur Access</label >
+    </li >
+</ul >
+</span >
 
         <br ><br >
 <span ><div class="subHeader" >

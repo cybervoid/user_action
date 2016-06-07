@@ -2,7 +2,7 @@
 <html lang="en" >
 <head >
     <meta charset="utf-8" >
-    <title >Illy NA Roaming data activation</title >
+    <title >illy HR action notification form</title >
     <link rel="stylesheet" href="{{ $server }}/css/export.css" >
 </head >
 <body >
@@ -13,7 +13,7 @@
     <p style="font-weight: bold" >Action Notification</p >
 
     <p >Human Resources<br >
-        * Transactions to be processed within 48 hours of notification
+        * Actions processed within 24 hours
     </p >
 
     <p class="subHeader" >illy caffè North America, Inc.</p >
