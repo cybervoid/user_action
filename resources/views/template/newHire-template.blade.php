@@ -2,7 +2,7 @@
 
     <div class="centerMe" ><br >
         Human Resources<br >
-        * Transactions to be processed within 48 hours of notification <br >
+        * Actions processed within 24 hours <br >
     </div >
 
 
@@ -17,10 +17,20 @@
 
             <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>" >
 
+            <p ></p >
+            <div >
+                Date of Hire (1 and 16th where applicable):
+                <input type="text" class="inputRender" name="startDate" id="startDate" readonly
+                       style="width: 100px"
+                       required="" value="" >
+                <br ><span id="startDateError" class="errorSpan" ></span >
+                <br >
+            </div >
+
             <div class="subHeader" >Personal information</div >
             <ul >
                 <li >
-                    <label >Name</label >
+                    <label >First Name</label >
 
                     <input type="text" class="inputRender" name="name" id="name" required="" value="" >
 
@@ -59,7 +69,7 @@
                     @if(count($departments)>0)
                     Department
                     <select class="inputRender" name="department" id="department" >
-                            <option value="" >Select</option >
+                            <option value="" >Select department</option >
                         @foreach($departments as $department)
                             <option >{{ $department }}</option >
                         @endforeach
@@ -74,14 +84,33 @@
                     <input type="text" class="inputRender" name="buddy" id="buddy" size="20" >
                 </div >
                 <div class="left" >
-                    Employee #
+                    JDE #
                     <input type="text" class="inputRender" name="employee" id="employee" > <br >
                 </div >
                 <br style="clear: left" >
             </li >
             <li >
-                Title
-                <input type="text" class="inputRender" name="title" id="title" required="" value="" >
+                <div class="left" >
+                    Title
+                    <input type="text" class="inputRender" name="title" id="title" required="" value="" >
+
+                </div >
+
+                <div class="left" >
+                    @if(count($locations)>0)
+                        Location
+                        <select class="inputRender" name="location" id="location" >
+                            <option value="" >Select location</option >
+                            @foreach($locations as $type)
+                                <option >{{ $type }}</option >
+                            @endforeach
+                        </select ><span id="locationError" class="errorSpan" >*</span >
+                    @endif
+                    <span id="location_Other_Span" hidden="true" >
+            <input class="inputRender" type="text" name="location_Other" id="location_Other" >
+            </span >
+                </div >
+                <p ></p >
             </li >
             <li >
                 <div >
@@ -106,7 +135,7 @@
                     @if(count($hireStatus)>0)
                         Action
                         <select class="inputRender" name="hireStatus" id="hireStatus" >
-                            <option value="" >Select</option >
+                            <option value="" >Select action</option >
                             @foreach($hireStatus as $status)
                                 <option >{{ $status }}</option >
                             @endforeach
@@ -118,7 +147,7 @@
                     @if(count($associate_class)>0)
                         Associate Classification
                         <select class="inputRender" name="hireStatus" id="hireStatus" >
-                            <option value="" >Select</option >
+                            <option value="" >Select associate classification</option >
                             @foreach($associate_class as $item)
                                 <option >{{ $item }}</option >
                             @endforeach
@@ -128,23 +157,13 @@
                 </div >
                 <br style="clear: left" >
             </li >
-            <div class="centerMe" >
-                <p ></p >
-                <select name="exepmtion" id="exepmtion" class="inputRender" >
-                    <option value="No-Exempt" >Non-Exempt</option >
-                    <option value="Exempt" >Exempt</option >
-                </select >
-            </div >
-            <li >
-
-            </li >
             <li >
                 <div class="left" >
-                    Start Date
-                    <input type="text" class="inputRender" name="startDate" id="startDate" readonly
-                           style="width: 100px"
-                           required="" value="" >
-                    <br ><span id="startDateError" class="errorSpan" ></span >
+
+                    <select name="exepmtion" id="exepmtion" class="inputRender" >
+                        <option value="No-Exempt" >Non-Exempt</option >
+                        <option value="Exempt" >Exempt</option >
+                    </select >
                 </div >
                 <div class="left" >
                     <label >Benefits effective Date <br > (Medical, Dental, FSA) 1st of the month following 30 days
@@ -171,19 +190,7 @@
 
             <ul >
                 <li >
-
-                    <p style="text-align: center" >
-                        Date: Hire Date (1 and 16th where applicable):
-                        <input type="text" class="inputRender" name="payrollDate" id="payrollDate" readonly
-                               style="width: 100px"
-                               required="" value="" >
-                        <br ><span id="payrollDateError" class="errorSpan" ></span >
-                    </p >
-                </li >
-                <li >
-
                     <div class="left3" >
-
                         @if(count($salaryType)>0)
                             <p >Payroll/Salary:</p >
                             <input type="text" class="inputRender" name="salary" id="salary" style="width: 70px" >
@@ -195,44 +202,19 @@
                             </select ><span id="salaryTypeError" class="errorSpan" >*</span ><br >
                         @endif
                     </div >
-                    <div class="left3" id="sales_lev" >
-                        <p >Sales level</p >
-
-                        <select name="salesLevel" id="salesLevel" class="inputRender" >
-                            <option value="" >Select</option >
-                            <option value="Level I District Sales Manager" >Level I District Sales Manager</option >
-                            <option value="Level IA Business Development Manager" >Level IA Business Development
-                                Manager
-                            </option >
-                            <option value="Level II Branch Sales Manager" >Level II Branch Sales Manager</option >
-                            <option
-                                    value="Level III Regional / Division Sales Manager / <br> National Retail Managers / Systems Mgr" >
-                                Level III
-                            </option >
-                            <option value="Level IV Director / VP" >Level IV Director / VP</option >
-                        </select >
-
-
+                    <div class="left3" >
+                        <p >Transportation Allowance</p >
+                        <input type="text" class="inputRender" name="trans" id="trans" >
                     </div >
                     <div class="left3" >
                         <p >Bonus</p >
                         <input type="text" class="inputRender" name="bonus" id="bonus" style="width: 70px" >
                     </div >
-
-                    <br style="clear: left" >
-
-                    <p ></p >
-
-                    <div id="salesLevelDiv" class="center specialAnnouncements" ></div >
-                    <div class="center" >
-                        <p >Transportation Allowance</p >
-                        <input type="text" class="inputRender" name="trans" id="trans" >
-                    </div >
-                    <br style="clear: left" >
                 </li >
             </ul >
+            <br style="clear: left" >
+            <p ></p >
 
-            <br ><br ><br >
             <!-- Employee Benefits Section: -->
             <p >
 
@@ -253,20 +235,6 @@
             </p>
             <hr >
 
-            <li >
-                @if(count($locations)>0)
-                    <label >Location</label >
-                    <select class="inputRender" name="location" id="location" >
-                        <option value="" >Select</option >
-                        @foreach($locations as $type)
-                            <option >{{ $type }}</option >
-                        @endforeach
-                    </select ><span id="locationError" class="errorSpan" >*</span >
-                @endif
-                <span id="location_Other_Span" hidden="true" >
-            <input class="inputRender" type="text" name="location_Other" id="location_Other" >
-            </span >
-            </li >
         </div >
 
 
