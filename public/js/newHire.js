@@ -12,29 +12,16 @@ var App = App || {};
     $(document).ready(function () {
 
         $('#department').change(function () {
-            $('#sales_lev').hide();
             if ($('#department').val() === '') {
                 $('#department').toggleClass("inputRender", true);
                 $('#departmentError').html('*');
             }
             else {
-                if ($('#department').val() === 'Sales') {
-                    $('#sales_lev').show();
-                }
                 $('#department').toggleClass('validateError', false);
                 $('#department').toggleClass('inputRender', true);
                 $('#departmentError').html('');
             }
         });
-        $('#salesLevel').change(function () {
-            if ($('#salesLevel option:selected').val() == 'Level III Regional / Division Sales Manager / <br> National Retail Managers / Systems Mgr') {
-                $('#salesLevelDiv').html('Level III Regional / Division Sales Manager / <br> National Retail Managers / Systems Mgr');
-            }
-            else {
-                $('#salesLevelDiv').html('');
-            }
-        });
-
         $('#location').change(function () {
 
             if ($('#location').val() != '') {
@@ -191,7 +178,7 @@ var App = App || {};
             }
 
             if ($('#salaryType').val() == "") {
-                $('#salaryTypeError').html('<span class="errorSpan"> * You must choose a location before proceeding</span>');
+                $('#salaryTypeError').html('<span class="errorSpan"> * You must choose a salary category before proceeding</span>');
                 errorValidation($('#salaryType'), cansubmit);
                 cansubmit = false;
             }

@@ -4,7 +4,7 @@
 @section('content')
 
 
-<p class="remark" >NEW HIRE</p ><p class="remark" >EMPLOYEE ACTION FORM</p ></div>
+    <div class="centerObj remark page_title" ><p >NEW HIRE</p ></div >
 
 <p ><span class="remark" >Name: </span >{{ $req['newH']['name'] }} {{ $req['newH']['lastName'] }}</p >
 
