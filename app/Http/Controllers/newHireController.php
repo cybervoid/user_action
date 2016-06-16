@@ -83,12 +83,37 @@ class newHireController extends Controller
 
         //send the email
         $to = \Config::get('app.servicedesk');
-        $ccRecipients = MyMail::emailRecipients($req);
-        $ccRecipients['rafael.gil@illy.com'] = 'rafael.gil@illy.com';
+
+        $mailNotifyDepartments = [];
+
+        if ($req->request->get('oManager') != '')
+        {
+            $mailNotifyDepartments[] = 'management';
+        }
+        if ($req->request->get('application') != '')
+        {
+            $mailNotifyDepartments[] = 'application';
+        }
+        if ($req->request->get('creditCard') != '')
+        {
+            $mailNotifyDepartments[] = 'creditCard';
+        }
+        if ($req->request->get('newDriver') != '')
+        {
+            $mailNotifyDepartments[] = 'newDriver';
+        }
+        if ($req->request->get('department') == 'Sales')
+        {
+            $mailNotifyDepartments[] = 'sales';
+        }
+        $ccRecipients = MyMail::getRecipients('newHire', $mailNotifyDepartments, $req->request->get('managerEmail'));
+
+
         $subject = \Config::get('app.subjectPrefix') . $fullName;
 
         $attachment = \Config::get('app.newHireReportsPath') . $newHireReport;
         $attachment = isset($attachment) ? file_exists($attachment) ? $attachment : false : null;
+
         Mailer::send('emails.forms', [], function (Message $m) use ($to, $ccRecipients, $subject, $attachment)
         {
             $m->to($to, null)->subject($subject);
@@ -107,7 +132,7 @@ class newHireController extends Controller
 
         $samaacountname = strtolower(substr($lastName, 0, 5) . substr($name, 0, 2));
 
-        //send request to engineering to add the user to VPN and WIFI group
+        //send request to engineering to create a mailbox and JDE access if needed
         Mailer::send('emails.joinGroups', ['userName' => $samaacountname, 'name' => $fullName,
             'manager' => $req->request->get('manager')], function (Message $m) use ($samaacountname)
         {
@@ -131,6 +156,9 @@ class newHireController extends Controller
 
 
         // send notification to Max for JDE users
+        // REMOVE THE TEMPLATE emails.newHire-application
+
+        /*
         if ($req->request->get('application') != '')
         {
             Mailer::send('emails.newHire-application', ['name' => $fullName, 'date' => $req->request->get('startDate'),
@@ -145,6 +173,7 @@ class newHireController extends Controller
                 $m->cc($cc);
             });
         }
+        */
 
 
         return view('thankYou', ['name' => $name, 'lastName' => $lastName, 'newHireReport' => $newHireReport,

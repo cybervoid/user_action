@@ -8,8 +8,6 @@
  */
 
 
-use Illuminate\Http\Request;
-
 class MyMail extends Controller
 {
 
@@ -27,9 +25,12 @@ class MyMail extends Controller
             $ccRecipients[\Config::get('app.eMailITManager')] = \Config::get('app.eMailITManager');
         }
 
-        if(in_array('oracle', $deparments)){
-            $ccRecipients[\Config::get('app.eMailOracle')] = \Config::get('app.eMailOracle');
+
+        if (in_array('application', $deparments))
+        {
+            $ccRecipients[\Config::get('app.eMailITApplication')] = \Config::get('app.eMailITApplication');
         }
+
 
         if(in_array('management', $deparments)){
             $ccRecipients[\Config::get('app.eMailManagement')] = \Config::get('app.eMailManagement');
@@ -62,62 +63,62 @@ class MyMail extends Controller
 
     }
 
-
-        static public function emailRecipients(Request $req)
-    {
-
-        $ccRecipients[\Config::get('app.eMailHRAdd')] = \Config::get('app.eMailHRAdd');
-
-        $iTDeptEmail = $req->request->get('iTDeptEmail');
-        if (isset($iTDeptEmail) || isset($iTDept) || $req->request->get('reportType') == 'change_org')
+    /*
+            static public function emailRecipients(Request $req)
         {
-            $ccRecipients[\Config::get('app.eMailIT')] = \Config::get('app.eMailIT');
+
+            $ccRecipients[\Config::get('app.eMailHRAdd')] = \Config::get('app.eMailHRAdd');
+
+            $iTDeptEmail = $req->request->get('iTDeptEmail');
+            if (isset($iTDeptEmail) || isset($iTDept) || $req->request->get('reportType') == 'change_org')
+            {
+                $ccRecipients[\Config::get('app.eMailIT')] = \Config::get('app.eMailIT');
+            }
+
+            $oManager = $req->request->get('oManager');
+
+            if (isset($oManager))
+            {
+                $ccRecipients[\Config::get('app.eMailManagement')] = \Config::get('app.eMailManagement');
+                $ccRecipients[\Config::get('app.eMailManagement1')] = \Config::get('app.eMailManagement1');
+            }
+
+            $creditCard = $req->request->get('creditCard');
+            if (isset($creditCard))
+            {
+                $ccRecipients[\Config::get('app.eMailFinanceCreditCard')] = \Config::get('app.eMailFinanceCreditCard');
+            }
+
+            $newDriver = $req->request->get('newDriver');
+            if (isset($newDriver))
+            {
+                $ccRecipients[\Config::get('app.eMailFinanceDrivers')] = \Config::get('app.eMailFinanceDrivers');
+            }
+
+
+            // Per Maren's request include Stacey when we hire Sales Person
+            if ($req->request->get('department') == 'Sales')
+            {
+                $ccRecipients['Stacey.Berger@illy.com'] = 'Stacey.Berger@illy.com';
+            }
+
+            //Add the manager's email in the recipients list
+            if ($req->request->get('managerEmail') != '')
+            {
+                $ccRecipients[$req->request->get('managerEmail')] = $req->request->get('managerEmail');
+            }
+
+            // per Maren request, add Mark Romano to all notifiations
+            $ccRecipients['Mark.Romano@illy.com'] = 'Mark.Romano@illy.com';
+
+
+            // per Maren request, add Maritza Zelvin  to all notifiations
+            $ccRecipients['maritza.zelvin@illy.com'] = 'maritza.zelvin@illy.com';
+
+
+            return $ccRecipients;
         }
-
-        $oManager = $req->request->get('oManager');
-
-        if (isset($oManager))
-        {
-            $ccRecipients[\Config::get('app.eMailManagement')] = \Config::get('app.eMailManagement');
-            $ccRecipients[\Config::get('app.eMailManagement1')] = \Config::get('app.eMailManagement1');
-        }
-
-        $creditCard = $req->request->get('creditCard');
-        if (isset($creditCard))
-        {
-            $ccRecipients[\Config::get('app.eMailFinanceCreditCard')] = \Config::get('app.eMailFinanceCreditCard');
-        }
-
-        $newDriver = $req->request->get('newDriver');
-        if (isset($newDriver))
-        {
-            $ccRecipients[\Config::get('app.eMailFinanceDrivers')] = \Config::get('app.eMailFinanceDrivers');
-        }
-
-
-        // Per Maren's request include Stacey when we hire Sales Person
-        if ($req->request->get('department') == 'Sales')
-        {
-            $ccRecipients['Stacey.Berger@illy.com'] = 'Stacey.Berger@illy.com';
-        }
-
-        //Add the manager's email in the recipients list
-        if ($req->request->get('managerEmail') != '')
-        {
-            $ccRecipients[$req->request->get('managerEmail')] = $req->request->get('managerEmail');
-        }
-
-        // per Maren request, add Mark Romano to all notifiations
-        $ccRecipients['Mark.Romano@illy.com'] = 'Mark.Romano@illy.com';
-
-
-        // per Maren request, add Maritza Zelvin  to all notifiations
-        $ccRecipients['maritza.zelvin@illy.com'] = 'maritza.zelvin@illy.com';
-
-
-        return $ccRecipients;
-    }
-
+    */
     /**
      * Prepare email basic params to send email
      *

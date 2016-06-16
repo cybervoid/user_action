@@ -76,10 +76,15 @@ class SeparationController extends Controller
         $to = \Config::get('app.servicedesk');
         $mailNotifyDepartments= [];
 
+        if ($req->request->get('application') != '')
+        {
+            $mailNotifyDepartments[] = 'application';
+        }
         if($req->request->get('oManager')!='') $mailNotifyDepartments[] = 'management';
         if($req->request->get('creditCard')!='') $mailNotifyDepartments[] = 'creditCard';
         if($req->request->get('newDriver')!='') $mailNotifyDepartments[] = 'newDriver';
         if($req->request->get('department')=='Sales') $mailNotifyDepartments[] = 'sales';
+
 
 
         $ccRecipients= MyMail::getRecipients( 'separation',$mailNotifyDepartments, $req->request->get('managerEmail'));
