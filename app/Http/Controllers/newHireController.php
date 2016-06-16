@@ -86,6 +86,8 @@ class newHireController extends Controller
 
         $mailNotifyDepartments = [];
 
+
+        $mailNotifyDepartments[] = $req->request->get('company');
         if ($req->request->get('oManager') != '')
         {
             $mailNotifyDepartments[] = 'management';
@@ -109,7 +111,6 @@ class newHireController extends Controller
 
 
         $ccRecipients = MyMail::getRecipients('newHire', $mailNotifyDepartments, $req->request->get('managerEmail'));
-
 
         $subject = \Config::get('app.subjectPrefix') . $fullName;
 

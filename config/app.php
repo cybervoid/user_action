@@ -26,7 +26,7 @@ return $settings = [
      */
     'si_infra' => 'servicedesk.illy@eng.it', 'servicedesk' => 'itservicena@illy.com',
     'eMailHRAdd' => 'Maren.Gizicki@illy.com', 'eMailITManager' => 'roy.forster@illy.com',
-    'eMailITApplication' => 'Massimiliano.Delise@illy.com',
+    'eMailITApplication' => 'Massimiliano.Delise@illy.com', 'illySanFrancisco' => 'donna.garcia@illy.com',
     'eMailIT' => 'rafael.gil@illy.com', 'eMailManagement' => 'Suzanne.Schwab@illy.com',
     'eMailManagement1' => 'stephanie.brush@illy.com', 'eMailFinanceCreditCard' => 'Marjorie.Guthrie@illy.com',
     'eMailFinanceDrivers' => 'Erik.Tellone@illy.com',

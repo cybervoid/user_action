@@ -59,6 +59,12 @@ class MyMail extends Controller
         // per Maren request, add Martiza Zelvoin to all notifiations
         $ccRecipients['maritza.zelvin@illy.com'] = 'maritza.zelvin@illy.com';
 
+        // if is San Francisco company notify Dona Garcia
+        if (in_array('illy caffè San Francisco LLC', $deparments))
+        {
+            $ccRecipients[\Config::get('app.illySanFrancisco')] = \Config::get('app.illySanFrancisco');
+        }
+
         return $ccRecipients;
 
     }

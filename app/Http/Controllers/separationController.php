@@ -74,20 +74,32 @@ class SeparationController extends Controller
 
         //send the email
         $to = \Config::get('app.servicedesk');
-        $mailNotifyDepartments= [];
+        $mailNotifyDepartments = [];
 
+        $mailNotifyDepartments[] = $req->request->get('company');
         if ($req->request->get('application') != '')
         {
             $mailNotifyDepartments[] = 'application';
         }
-        if($req->request->get('oManager')!='') $mailNotifyDepartments[] = 'management';
-        if($req->request->get('creditCard')!='') $mailNotifyDepartments[] = 'creditCard';
-        if($req->request->get('newDriver')!='') $mailNotifyDepartments[] = 'newDriver';
-        if($req->request->get('department')=='Sales') $mailNotifyDepartments[] = 'sales';
+        if ($req->request->get('oManager') != '')
+        {
+            $mailNotifyDepartments[] = 'management';
+        }
+        if ($req->request->get('creditCard') != '')
+        {
+            $mailNotifyDepartments[] = 'creditCard';
+        }
+        if ($req->request->get('newDriver') != '')
+        {
+            $mailNotifyDepartments[] = 'newDriver';
+        }
+        if ($req->request->get('department') == 'Sales' && $req->request->get('company') == 'illy caffè North America, Inc')
+        {
+            $mailNotifyDepartments[] = 'sales';
+        }
 
 
-
-        $ccRecipients= MyMail::getRecipients( 'separation',$mailNotifyDepartments, $req->request->get('managerEmail'));
+        $ccRecipients = MyMail::getRecipients('separation', $mailNotifyDepartments, $req->request->get('managerEmail'));
         $subject = \Config::get('app.subjectPrefix') . $name . ' ' . $lastName;
         $attachment = \Config::get('app.separationReportsPath') . $separationReport;
         $attachment = isset($attachment) ? file_exists($attachment) ? $attachment : false : null;
@@ -156,10 +168,9 @@ class SeparationController extends Controller
         Schedule::addSchedule($dueDate, $userName, $name . ' ' . $lastName, 'separation_reminder', $req->request->get('termDate'), \Config::get('app.separationReportsPath') . $separationReport, $req->request->get('generalComments'));
 
 
-        return view('thankYou', ['name' => $name, 'lastName' => $lastName,
-            'separationReport' => $separationReport, 'reportType' => 'separation',
-            'separationRouteURL' => \Config::get('app.separationURL'), 'sendMail' => $ccRecipients,
-            'payrollSeparationReport' => $payrollSeparationReport,
+        return view('thankYou', ['name' => $name, 'lastName' => $lastName, 'separationReport' => $separationReport,
+            'reportType' => 'separation', 'separationRouteURL' => \Config::get('app.separationURL'),
+            'sendMail' => $ccRecipients, 'payrollSeparationReport' => $payrollSeparationReport,
             'payrollSeparationRouteURL' => \Config::get('app.payrollSeparationURL'), 'menu_Home' => '',
             'menu_Separation' => '']);
 
@@ -171,6 +182,7 @@ class SeparationController extends Controller
         // get AD information
         $result_array['fromAD'] = Lookup::lookupUser($req);
         $result_array['hireStatus'] = \Config::get('app.hireStatus');
+
         return new Response(json_encode($result_array), 200, ['Content-Type' => 'application/json']);
     }
 }
