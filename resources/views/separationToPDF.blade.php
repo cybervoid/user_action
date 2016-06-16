@@ -67,7 +67,7 @@
 
 
     @if(isset($req['sep']["application"]))
-        <p ><span class="remark" >JDE Setup - Harshun Kondla</span ></p >
+        <p ><span class="remark" >JDE Setup - IT Team</span ></p >
         <ul >
             <li >{{ $req['sep']["application"]  }}
             </li >

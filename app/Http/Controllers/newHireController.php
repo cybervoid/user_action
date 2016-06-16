@@ -64,9 +64,10 @@ class newHireController extends Controller
 
         $name = trim($req->request->get('name'));
         $lastName = trim($req->request->get('lastName'));
+        $fullName = $name . ' ' . $lastName;
 
         // generate newHire reports
-        $newHireReport = \Config::get('app.newHireReportsPrefix') . $name . ' ' . $lastName . '.pdf';
+        $newHireReport = \Config::get('app.newHireReportsPrefix') . $fullName . '.pdf';
         $newHireReport = Reports::escapeReportName($newHireReport);
         $view['newH'] = $req->request->all();
         $view['url'] = $req->url();
@@ -75,7 +76,7 @@ class newHireController extends Controller
 
 
         //generate payroll Report
-        $payrollReport = \Config::get('app.payrollNewHireReportsPrefix') . $name . ' ' . $lastName . '.pdf';
+        $payrollReport = \Config::get('app.payrollNewHireReportsPrefix') . $fullName . '.pdf';
         $payrollReport = Reports::escapeReportName($payrollReport);
         Reports::generateReport($payrollReport, \Config::get('app.payrollNewHireReportsPath'), 'payroll', $view);
 
@@ -84,12 +85,10 @@ class newHireController extends Controller
         $to = \Config::get('app.servicedesk');
         $ccRecipients = MyMail::emailRecipients($req);
         $ccRecipients['rafael.gil@illy.com'] = 'rafael.gil@illy.com';
-        $subject = \Config::get('app.subjectPrefix') . $name . ' ' . $lastName;
+        $subject = \Config::get('app.subjectPrefix') . $fullName;
 
         $attachment = \Config::get('app.newHireReportsPath') . $newHireReport;
         $attachment = isset($attachment) ? file_exists($attachment) ? $attachment : false : null;
-
-
         Mailer::send('emails.forms', [], function (Message $m) use ($to, $ccRecipients, $subject, $attachment)
         {
             $m->to($to, null)->subject($subject);
@@ -102,13 +101,14 @@ class newHireController extends Controller
         });
 
 
+
         $ccRecipients[$to] = $to;
         $ccRecipients = array_unique(array_map("StrToLower", $ccRecipients));
 
         $samaacountname = strtolower(substr($lastName, 0, 5) . substr($name, 0, 2));
 
         //send request to engineering to add the user to VPN and WIFI group
-        Mailer::send('emails.joinGroups', ['userName' => $samaacountname, 'name' => $name . ' ' . $lastName,
+        Mailer::send('emails.joinGroups', ['userName' => $samaacountname, 'name' => $fullName,
             'manager' => $req->request->get('manager')], function (Message $m) use ($samaacountname)
         {
             $m->to(\Config::get('app.si_infra'), null)->subject('new user settings - ' . $samaacountname);
@@ -120,13 +120,32 @@ class newHireController extends Controller
             $m->cc($cc);
         });
 
+
         //add reminder for a week before new hire starts
         $dueDate = date('m/d/Y', strtotime('-1 week', strtotime($req->request->get('startDate'))));
-        Schedule::addSchedule($dueDate, $samaacountname, $name . ' ' . $lastName, 'newHire_reminder', $req->request->get('startDate'), $req->request->get('application'), null);
+        Schedule::addSchedule($dueDate, $samaacountname, $fullName, 'newHire_reminder', $req->request->get('startDate'), $req->request->get('application'), null);
 
         //create the username in the AD
         $ad = ActiveDirectory::get_connection();
         $ad->createUserAD($req);
+
+
+        // send notification to Max for JDE users
+        if ($req->request->get('application') != '')
+        {
+            Mailer::send('emails.newHire-application', ['name' => $fullName, 'date' => $req->request->get('startDate'),
+                'manager' => $req->request->get('manager')], function (Message $m) use ($fullName)
+            {
+                $m->to(\Config::get('app.eMailITApplication'), null)->subject('JDE setup for - ' . $fullName);
+
+                // copy NA IT
+                $cc[\Config::get('app.eMailITManager')] = \Config::get('app.eMailITManager');
+                $cc[\Config::get('app.eMailIT')] = \Config::get('app.eMailIT');
+
+                $m->cc($cc);
+            });
+        }
+
 
         return view('thankYou', ['name' => $name, 'lastName' => $lastName, 'newHireReport' => $newHireReport,
             'reportType' => 'newhire', 'newHireRouteURL' => \Config::get('app.newHireURL'), 'sendMail' => $ccRecipients,

@@ -299,7 +299,7 @@
             <p ></p >
 
             <P ></P ></div >
-        <div class="subHeader" >JDE Setup - Harshun Kondla</div >
+        <div class="subHeader" >JDE Setup - IT Team</div >
         <label >
             <input type="checkbox" class="inputRender" name="application" id="application"
                    value="Contact Hiring manager to get job requirements for proper JDE setup" >

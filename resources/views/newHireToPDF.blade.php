@@ -119,7 +119,7 @@
 
 
     @if(isset($req['newH']["application"]))
-        <p ><span class="remark" >JDE Setup - Harshun Kondla</span ></p >
+        <p ><span class="remark" >JDE Setup - IT Team</span ></p >
 <ul >
     <li >{{ $req['newH']["application"] }}</li >
 </ul >
