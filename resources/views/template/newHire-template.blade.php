@@ -300,11 +300,12 @@
 
             <P ></P ></div >
         <div class="subHeader" >JDE Setup - IT Team</div >
+        <li >
         <label >
             <input type="checkbox" class="inputRender" name="application" id="application"
                    value="Contact Hiring manager to get job requirements for proper JDE setup" >
             Contact Hiring manager to get job requirements for proper JDE setup</label >
-
+        </li >
         <br ><br >
 
         <div class="subHeader" >HQ Office Manager-Suzie Schwab and Stephanie Brush</div >

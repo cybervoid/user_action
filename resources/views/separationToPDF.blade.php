@@ -26,7 +26,7 @@
 
     <div class="container custom_top" >
         <div class="row" ><span class="remark">Separation Date:</span> {{ $req['sep']['termDate'] }}</div >
-        <div class="row" ><span class="remark">Hire Status:</span> {{ $req['sep']['hireStatus'] }}</div >
+        <div class="row" ><span class="remark" >Employee Status:</span > {{ $req['sep']['hireStatus'] }}</div >
         @if (isset($req['sep']["location_Other"]))
         <div class="row" ><span class="remark">Location:</span> {{ $req['sep']["location"] }} {{ $req['sep']["location_Other"] }}</div >
         @endif
