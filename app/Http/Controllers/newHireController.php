@@ -125,8 +125,6 @@ class newHireController extends Controller
             }
         });
 
-
-
         $ccRecipients[$to] = $to;
         $ccRecipients = array_unique(array_map("StrToLower", $ccRecipients));
 
