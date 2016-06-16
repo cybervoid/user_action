@@ -102,10 +102,12 @@ class newHireController extends Controller
         {
             $mailNotifyDepartments[] = 'newDriver';
         }
-        if ($req->request->get('department') == 'Sales')
+        if ($req->request->get('department') == 'Sales' && $req->request->get('company') == 'illy caffè North America, Inc')
         {
             $mailNotifyDepartments[] = 'sales';
         }
+
+
         $ccRecipients = MyMail::getRecipients('newHire', $mailNotifyDepartments, $req->request->get('managerEmail'));
 
 
@@ -151,27 +153,6 @@ class newHireController extends Controller
         //create the username in the AD
         $ad = ActiveDirectory::get_connection();
         $ad->createUserAD($req);
-
-
-        // send notification to Max for JDE users
-        // REMOVE THE TEMPLATE emails.newHire-application
-
-        /*
-        if ($req->request->get('application') != '')
-        {
-            Mailer::send('emails.newHire-application', ['name' => $fullName, 'date' => $req->request->get('startDate'),
-                'manager' => $req->request->get('manager')], function (Message $m) use ($fullName)
-            {
-                $m->to(\Config::get('app.eMailITApplication'), null)->subject('JDE setup for - ' . $fullName);
-
-                // copy NA IT
-                $cc[\Config::get('app.eMailITManager')] = \Config::get('app.eMailITManager');
-                $cc[\Config::get('app.eMailIT')] = \Config::get('app.eMailIT');
-
-                $m->cc($cc);
-            });
-        }
-        */
 
 
         return view('thankYou', ['name' => $name, 'lastName' => $lastName, 'newHireReport' => $newHireReport,
