@@ -300,12 +300,16 @@
 
             <P ></P ></div >
         <div class="subHeader" >JDE Setup - IT Team</div >
-        <li >
+<span class="checkbox" >
+<ul >
+    <li >
         <label >
             <input type="checkbox" class="inputRender" name="application" id="application"
                    value="Contact Hiring manager to get job requirements for proper JDE setup" >
             Contact Hiring manager to get job requirements for proper JDE setup</label >
         </li >
+    </ul >
+    </span >
         <br ><br >
 
         <div class="subHeader" >HQ Office Manager-Suzie Schwab and Stephanie Brush</div >
@@ -348,10 +352,14 @@
         <div class="subHeader" >New Driver for Company Vehicle Form-Erik Tellone (new hire notification only) (if
             applicable)
         </div >
-
+<span class="checkbox" >
+<ul >
+    <li >
         <label ><input type="checkbox" class="inputRender" name="newDriver" id="newDriver"
                        value="Form to Hiring Manager" > Form to Hiring Manager</label >
-
+</li >
+    </ul >
+    </span >
         <p ></p >
 
         <div class="subHeader" >

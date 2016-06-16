@@ -94,34 +94,42 @@
     <p ></p ><br >
     <br >
 
-
+<span class="checkbox" >
+<ul >
+    <li >
     <label ><input type="checkbox" class="inputRender" name="onetime" id="onetime" value="onetime" > One time Severance
         Pay: $: </label >
     <input class="inputRender" name="onTimePayment" id="onTimePayment" >
-
+</li >
     <p ></p >
 
+    <li >
     <label ><input type="checkbox" class="inputRender" name="severance" id="severance" value="severance" > Continued
         Distribution of Severance Pay: $: </label >
 
     <input class="inputRender" name="severancePay" id="severancePay" > Over #
     <input class="inputRender" name="overTime" id="overTime" style="width: 80px" > Months/Weeks
-
+</li >
+    <li >
     <div >
         <p ></p >
         <label ><input type="checkbox" class="inputRender" name="cobra" id="cobra" value="cobra" > COBRA </label >
         Period paid: <input class="inputRender" name="periodPaid" id="periodPaid" >
     </div >
-
-
+</li >
+<li >
     <p ></p >
     P.TO days/Hours: <input class="inputRender" name="ptoDays" id="ptoDays" >
     <span class="errorSpan" >*</span >
 
     <div class="errorSpan" id="ptoDaysError" ></div >
     <p ></p >
+    </li ><li >
     <label ><input type="checkbox" class="inputRender" name="other" id="other" value="other" > Other (Explain Below):
     </label >
+</li >
+                </ul >
+    </span >
 
     <div id="otherComments" ></div >
 
@@ -150,9 +158,8 @@
     (Check groups the user will be removed from)
 
 
+<span class="checkbox" >
     <ul id="itChecklist" style="text-align: left; list-style: none" >
-
-
         <li ><label ><input type="checkbox" class="inputRender" name="iTDeptEmail[]"
                             value="illyusaTeam Distribution Group"
         >illyusaTeam Distribution Group</label ></li >
@@ -170,10 +177,10 @@
             Group</label >
         </li >
     </ul >
-
+</span >
 
     <p ><span >Assets</span ></p >
-
+<span class="checkbox" >
     <ul id="itChecklistAssets" style="text-align: left; list-style: none" >
         <li ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="email"
                             value="e-mail Scanner (if applicable)" > e-mail Scanner (if applicable)</label ></li >
@@ -214,6 +221,7 @@
                             value="Sales Center/Citrix and Genesys ID. (applicable for Customer Care)" >Sales
             Center/Citrix and Genesys ID. (applicable for Customer Care)</label ></li >
     </ul >
+    </span >
 
 
     <p ></p ><br >
@@ -224,6 +232,7 @@
     <p ></p >
     <br >
     <span class="subHeader" >JDE Setup - IT Team</span >
+    <span class="checkbox" >
     <ul class="listNoBullets" >
         <li >
             <label ><input type="checkbox" class="inputRender" name="application" id="application"
@@ -232,12 +241,12 @@
             </label >
         </li >
     </ul >
-
+</span >
 
     <br ><br >
 
     <div class="subHeader" >HQ Office Manager-Suzie Schwab and Stephanie Brush</div >
-
+<span class="checkbox" >
     <ul style="list-style: none" >
         <li >
             <label ><input type="checkbox" class="inputRender" name="oManager[]" id="accessCard"
@@ -264,6 +273,7 @@
                 FedEx Address Book</label >
         </li >
     </ul >
+    </span >
     Aditional Instructions if applicable: <br >
     <textarea class="inputRender" cols="40" rows="6" id="generalComments" name="generalComments" ></textarea >
 
@@ -274,6 +284,8 @@
         (Credit Card and Concur Access Requests) *new hires and separation
 
     </div >
+
+    <span class="checkbox" >
     <ul style="list-style: none" >
         <li >
             <label ><input type="checkbox" class="inputRender" name="creditCard[]" id="creditCard"
@@ -284,6 +296,7 @@
                 Concur Access</label >
         </li >
     </ul >
+        </span >
     <p ></p ><br >
 
     <input type="button" id="cancel" class="inputRender" value="Cancel" >
