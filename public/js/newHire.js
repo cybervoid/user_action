@@ -33,7 +33,6 @@ var App = App || {};
             $('#location_Other').val("");
             $('#location_Other_Span').hide();
 
-
             switch ($('#location').val()) {
                 case "":
                     $('#location').toggleClass('inputRender', true);
@@ -53,9 +52,7 @@ var App = App || {};
                     $('#location_Other').focus();
                     break;
             }
-
         });
-
 
         $('#laptop').click(function () {  // add/remove li element to the list
             if ($('#laptop').is(":checked")) {

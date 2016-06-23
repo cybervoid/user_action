@@ -4,8 +4,6 @@
         Human Resources<br >
         * Actions processed within 24 hours <br >
     </div >
-
-
     <br >
 
     <form method="post" action="/add" name="newHire" id="newHire" >
@@ -23,6 +21,7 @@
                 <input type="text" class="inputRender" name="startDate" id="startDate" readonly
                        style="width: 100px"
                        required="" value="" >
+
                 <br ><span id="startDateError" class="errorSpan" ></span >
                 <br >
             </div >
@@ -31,11 +30,11 @@
             <ul >
                 <li >
                     <label >First Name</label >
-                    <input type="text" class="inputRender" name="name" id="name" required="" value="" >
+                    <input type="text" class="inputRender" name="name" id="name" value="" required="" >
                 </li >
                 <li >
                     <label >Last Name</label >
-                    <input type="text" class="inputRender" name="lastName" id="lastName" required="" value="" >
+                    <input type="text" class="inputRender" name="lastName" id="lastName" value="" required="" >
                 </li >
                 <li >
                     <label >
@@ -88,7 +87,7 @@
             <li >
                 <div class="left" >
                     Title
-                    <input type="text" class="inputRender" name="title" id="title" required="" value="" >
+                    <input type="text" class="inputRender" name="title" id="title" value="" required="" >
                 </div >
                 <div class="left" >
                     @if(count($locations)>0)
@@ -159,8 +158,17 @@
             <div class="subHeader" >Payroll/Salary</div >
             </p>
             <hr >
-
             <ul >
+                <li >
+                    <span class="centerInsideLi" >
+                        Payroll type:
+                        <select name="payrollType" id="payrollType" class="inputRender" >
+                            <option value="" >Select Payroll Type</option >
+                            <option value="ADP Payroll" >ADP Payroll</option >
+                            <option value="Non - ADP Payroll" >Non - ADP Payroll</option >
+                            </select >
+                    </span >
+                </li >
                 <li >
                     <div class="left3" >
                         @if(count($salaryType)>0)

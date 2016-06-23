@@ -44,9 +44,22 @@
 </table >
 
 
-    @if (isset($req['newH']["title"]))
-        <p ><span class="remark" >Title: </span >{{ $req['newH']["title"] }}</p >
-@endif
+    <table width="70%" >
+        <tr >
+            <td width="left" >
+                @if (isset($req['newH']["title"]))
+                    <p ><span class="remark" >Title: </span >{{ $req['newH']["title"] }}</p >
+                @endif
+            </td >
+            <td width="left" >
+                @if (($req['newH']["payrollType"])!='')
+                    <p ><span class="remark" >Payroll Type: </span >{{ $req['newH']["payrollType"] }}</p >
+                @endif
+            </td >
+        </tr >
+    </table >
+
+
 
 
     <p ><span class="remark" >Employee #: </span >
@@ -66,7 +79,12 @@
                 <span class="remark" >Location: </span > {{ $req['newH']["location"] }} {{ $req['newH']["location_Other"] }}</td >
         @endif
 
-        <td width="right" ><span class="remark" >Hire Status: </span > {{ $req['newH']["hireStatus"] }}</td >
+        <td width="right" >
+
+            @if($req['newH']["hireStatus"]!='')
+                <span class="remark" >Hire Status: </span > {{ $req['newH']["hireStatus"] }}
+            @endif
+        </td >
     </tr >
 </table >
 
