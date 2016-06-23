@@ -116,90 +116,76 @@ var App = App || {};
 
         $('#newHire').submit(function (event) {
             // VALIDATION
-            var cansubmit = true;
 
-            if ($('#company').val() == "") {
-                $('#companyError').html('<span class="errorSpan"> * You have to choose a company before proceeding</span>');
-                errorValidation($('#company'), cansubmit);
-                cansubmit = false;
-            }
-            else {
-                $('#companyError').html('<span class="errorSpan"> *</span>');
-            }
-
-            if ($('#department').val() == "") {
-                $('#departmentError').html('<span class="errorSpan"> * You have to choose a department before proceeding</span>');
-                errorValidation($('#department'), cansubmit);
-                cansubmit = false;
-            }
-            else {
-                $('#departmentError').html('<span class="errorSpan"> *</span>');
-            }
-
-            if ($('#hireStatus').val() == "") {
-                $('#hireStatusError').html('<span class="errorSpan"> * You have to choose a hire status before proceeding</span>');
-                errorValidation($('#hireStatus'), cansubmit);
-                cansubmit = false;
-            }
-            else {
-                $('#hireStatusError').html('<span class="errorSpan"> * </span>');
-            }
-
+            var firstError = '';
 
             if ($('#startDate').val().length < 2) {
-                $('#startDateError').html('<span class="errorSpan"> * You have to choose a start date before proceeding</span>');
-                errorValidation($('#startDate'), cansubmit);
-                cansubmit = false;
+                $('#startDateError').html('<div class="errorSpan"> * You have to choose a start date before proceeding</div>');
+                firstError = '#startDate';
             }
             else {
                 $('#startDateError').html('<span class="errorSpan"> * </span>');
             }
 
 
-            if ($('#payrollDate').val().length < 2) {
-                $('#payrollDateError').html('<span class="errorSpan"> * You have to choose a payroll start date before proceeding</span>');
-                errorValidation($('#payrollDate'), cansubmit);
-                cansubmit = false;
+            if ($('#company').val() == "") {
+                $('#companyError').html('<div class="errorSpan"> * You have to choose a company before proceeding</div>');
+                if (firstError == '') {
+                    firstError = '#company';
+                }
             }
             else {
-                $('#payrollDateError').html('<span class="errorSpan"> * </span>');
+                $('#companyError').html('<span class="errorSpan"> *</span>');
+            }
+
+            if ($('#department').val() == "") {
+                $('#departmentError').html('<div class="errorSpan"> * You have to choose a department before proceeding</div>');
+                if (firstError == '') {
+                    firstError = '#department';
+                }
+            }
+            else {
+                $('#departmentError').html('<span class="errorSpan"> *</span>');
             }
 
             if ($('#location').val() == "") {
-                $('#locationError').html('<span class="errorSpan"> * You must choose a location before proceeding</span>');
-                errorValidation($('#location'), cansubmit);
-                cansubmit = false;
+                $('#locationError').html('<div class="errorSpan"> * You must choose a location before proceeding</div>');
+                if (firstError == '') {
+                    firstError = '#location';
+                }
             }
             else {
                 $('#locationError').html('<span class="errorSpan"> * </span>');
             }
 
+
+            if ($('#hireStatus').val() == "") {
+                $('#hireStatusError').html('<div class="errorSpan"> * You have to choose a hire status before proceeding</div>');
+                if (firstError == '') {
+                    firstError = '#hireStatus';
+                }
+            }
+            else {
+                $('#hireStatusError').html('<span class="errorSpan"> * </span>');
+            }
+
             if ($('#salaryType').val() == "") {
-                $('#salaryTypeError').html('<span class="errorSpan"> * You must choose a salary category before proceeding</span>');
-                errorValidation($('#salaryType'), cansubmit);
-                cansubmit = false;
+                $('#salaryTypeError').html('<div class="errorSpan"> * You must choose a salary category before proceeding</div>');
+                if (firstError == '') {
+                    firstError = '#salaryType';
+                }
             }
             else {
                 $('#salaryTypeError').html('<span class="errorSpan"> * </span>');
             }
 
 
-            if (cansubmit) {
-                $("#submit").attr('disabled', 'disabled');
-            }
+            // roll the page to the first element
+            var offset = $(firstError).offset();
+            $("html, body").animate({scrollTop: offset.top}, "slow");
 
-            return cansubmit
+            return (firstError == '') ? true : false;
         });
-
-
-        function errorValidation(obj, cansubmit) {
-            $('#errorDiv').html("* You have some errors in your form, Please check the fields in red.");
-            if (!cansubmit) {
-                return false;
-            }
-            var offset = obj.offset();
-            $("html, body").animate({ scrollTop: offset.top }, "slow");
-        }
 
         $("#startDate").datepicker({"dateFormat": "mm/dd/yy"});
 

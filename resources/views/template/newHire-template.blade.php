@@ -173,7 +173,8 @@
                     <div class="left3" >
                         @if(count($salaryType)>0)
                             <p >Payroll/Salary:</p >
-                            $<input type="text" class="inputRender" name="salary" id="salary" style="width: 70px" >
+                            $<input type="text" class="inputRender" name="salary" id="salary" style="width: 70px"
+                                    required="" >
                             <select name="salaryType" id="salaryType" class="inputRender" >
                                 <option value="" >Select</option >
                                 @foreach($salaryType as $type)
