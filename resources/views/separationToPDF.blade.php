@@ -26,12 +26,17 @@
 
     <div class="container custom_top" >
         <div class="row" ><span class="remark">Separation Date:</span> {{ $req['sep']['termDate'] }}</div >
-        <div class="row" ><span class="remark" >Employee Status:</span > {{ $req['sep']['hireStatus'] }}</div >
+        <div class="row" ><span class="remark" >Employee Status:</span > Separation</div >
         @if (isset($req['sep']["location_Other"]))
         <div class="row" ><span class="remark">Location:</span> {{ $req['sep']["location"] }} {{ $req['sep']["location_Other"] }}</div >
         @endif
     </div >
 
+    @if ($req['sep']["payrollType"]!='')
+        <div class="custom_top" >
+            <p ><span class="remark" >payrollType: </span > {{ $req['sep']["payrollType"] }}</p >
+        </div >
+    @endif
 
     @if (isset($req['sep']["iTDeptEmail"]))
 

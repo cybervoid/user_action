@@ -61,7 +61,6 @@
                         class="bold" >Effective Date thru Date:</span >
             </td >
         </tr >
-
         @if(isset($req['sep']["onetime"]))
             <tr colspan="2" >
                 <td >

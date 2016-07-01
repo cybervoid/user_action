@@ -98,12 +98,10 @@ class SeparationController extends Controller
             $mailNotifyDepartments[] = 'sales';
         }
 
-
         $ccRecipients = MyMail::getRecipients('separation', $mailNotifyDepartments, $req->request->get('managerEmail'));
         $subject = \Config::get('app.subjectPrefix') . $name . ' ' . $lastName;
         $attachment = \Config::get('app.separationReportsPath') . $separationReport;
         $attachment = isset($attachment) ? file_exists($attachment) ? $attachment : false : null;
-
 
         Mailer::send('emails.forms', [], function (Message $m) use ($to, $ccRecipients, $subject, $attachment)
         {
@@ -182,6 +180,7 @@ class SeparationController extends Controller
         // get AD information
         $result_array['fromAD'] = Lookup::lookupUser($req);
         $result_array['hireStatus'] = \Config::get('app.hireStatus');
+        $result_array['payrollType'] = \Config::get('app.payrollType');
 
         return new Response(json_encode($result_array), 200, ['Content-Type' => 'application/json']);
     }

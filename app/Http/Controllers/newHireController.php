@@ -47,7 +47,7 @@ class newHireController extends Controller
         return view('newHire', ['user' => $user, 'departments' => \Config::get('app.departments'),
             'companies' => \Config::get('app.companies'), 'hireStatus' => \Config::get('app.hireStatus'),
             'associate_class' => \Config::get('app.associate_class'), 'salaryType' => \Config::get('app.salaryType'),
-            'locations' => \Config::get('app.locations'),]);
+            'locations' => \Config::get('app.locations'), 'payrollType' => \Config::get('app.payrollType')]);
 
     }
 

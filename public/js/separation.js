@@ -162,8 +162,6 @@ var App = App || {};
                     $('#ptoDays').keyup(function () {
                         $('#ptoDaysError').html('');
                     });
-
-
                 });
 
         }

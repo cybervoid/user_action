@@ -161,12 +161,15 @@
             <ul >
                 <li >
                     <span class="centerInsideLi" >
-                        Payroll type:
-                        <select name="payrollType" id="payrollType" class="inputRender" >
+                        @if(count($payrollType)>0)
+                            <p >Payroll type:</p >
+                            <select name="payrollType" id="payrollType" class="inputRender" >
                             <option value="" >Select Payroll Type</option >
-                            <option value="ADP Payroll" >ADP Payroll</option >
-                            <option value="Non - ADP Payroll" >Non - ADP Payroll</option >
+                                @foreach($payrollType as $type)
+                                    <option >{{ $type }}</option >
+                                @endforeach
                             </select >
+                        @endif
                     </span >
                 </li >
                 <li >

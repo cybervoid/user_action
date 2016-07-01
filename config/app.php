@@ -57,6 +57,7 @@ return $settings = [
 
 
     'salaryType' => ['Annual Salary', 'Hourly', 'Half Month', 'Other',],
+    'payrollType' => ['ADP Payroll', 'Non - ADP Payroll',],
 
     'locations' => ['Rye Brook', 'New York City', 'Canada', 'Scottsdale', 'Remote Users',],
 
