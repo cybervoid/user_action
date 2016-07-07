@@ -44,14 +44,20 @@
 </table >
 
 
-    <table width="70%" >
+    <table width="100%" border="0" >
         <tr >
-            <td width="left" >
+            <td width="40%" >
                 @if (isset($req['newH']["title"]))
                     <p ><span class="remark" >Title: </span >{{ $req['newH']["title"] }}</p >
                 @endif
             </td >
-            <td width="left" >
+            <td width="30%" >
+                @if (($req['newH']["associate_class"])!='')
+                    <p ><span class="remark" >Associate Classification: </span >{{ $req['newH']["associate_class"] }}
+                    </p >
+                @endif
+            </td >
+            <td align="30%" >
                 @if (($req['newH']["payrollType"])!='')
                     <p ><span class="remark" >Payroll Type: </span >{{ $req['newH']["payrollType"] }}</p >
                 @endif

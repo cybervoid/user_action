@@ -16,7 +16,6 @@
                 <span class="remark" >Employee ID #: </span >{{ $req['newH']["employee"]!='' ? $req['newH']["employee"]:'TBD' }}
             </p >
         </td >
-        <td ><p ><span class="remark" >Date of Birth: </span >{{ $req['newH']["birthDate"] ?: "-" }}</p ></td >
     </tr >
 </table >
 
@@ -57,8 +56,6 @@
     </tr >
 </table >
 
-
-<br style="clear: left" ><br ><span class="remark" >following 30 days of employment:</span >
 <hr >
 
 <table border="0" width="100%" >

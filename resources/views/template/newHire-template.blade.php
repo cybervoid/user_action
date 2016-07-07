@@ -36,12 +36,6 @@
                     <label >Last Name</label >
                     <input type="text" class="inputRender" name="lastName" id="lastName" value="" required="" >
                 </li >
-                <li >
-                    <label >
-                        Date of Birth: </label >
-                    <input type="text" class="inputRender" name="birthDate" id="birthDate"
-                           style="width: 100px" >
-                </li >
             </ul >
             <p >
             <div class="subHeader" >Company</div >
@@ -139,7 +133,7 @@
                 <div class="left" >
                     @if(count($associate_class)>0)
                         Associate Classification
-                        <select class="inputRender" name="hireStatus" id="hireStatus" >
+                        <select class="inputRender" name="associate_class" id="associate_class" >
                             <option value="" >Select associate classification</option >
                             @foreach($associate_class as $item)
                                 <option >{{ $item }}</option >
