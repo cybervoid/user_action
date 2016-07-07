@@ -28,7 +28,7 @@ return $settings = [
     'eMailHRAdd' => 'Maren.Gizicki@illy.com', 'eMailITManager' => 'roy.forster@illy.com',
     'eMailITApplication' => 'Massimiliano.Delise@illy.com', 'illySanFrancisco' => 'donna.garcia@illy.com',
     'eMailIT' => 'rafael.gil@illy.com', 'eMailManagement' => 'Suzanne.Schwab@illy.com',
-    'eMailManagement1' => 'stephanie.brush@illy.com', 'eMailFinanceCreditCard' => 'Marjorie.Guthrie@illy.com',
+    'eMailFinanceCreditCard' => 'Marjorie.Guthrie@illy.com',
     'eMailFinanceDrivers' => 'Erik.Tellone@illy.com',
 
     'subjectPrefix' => 'User Action Notification for ', 'subjectBatchPrefix' => 'HR Tool Action taken for ',

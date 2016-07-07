@@ -34,7 +34,6 @@ class MyMail extends Controller
 
         if(in_array('management', $deparments)){
             $ccRecipients[\Config::get('app.eMailManagement')] = \Config::get('app.eMailManagement');
-            $ccRecipients[\Config::get('app.eMailManagement1')] = \Config::get('app.eMailManagement1');
         }
 
         if(in_array('creditCard', $deparments)){
