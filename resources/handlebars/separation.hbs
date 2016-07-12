@@ -144,10 +144,17 @@
                 IT Service Desk E-Mail Distribution List:
                </span >
     <hr >
-    <label >
-        <input type="checkbox" name="disableUser" id="disableUser" checked > Deactivate user from the system.
-        <input type="hidden" name="sAMAccountName" value="{{ data.fromAD.sAMAccountName }}" >
-    </label >
+    <span class="checkbox" >
+        <ul class="listNoBullets-indent" >
+            <li id="deactivateUser" >
+                <label >
+                <input type="checkbox" name="disableUser" id="disableUser" checked value="modeon" > Deactivate user from the system
+                    </label >
+                <input type="hidden" name="sAMAccountName" value="{{ data.fromAD.sAMAccountName }}" >
+
+            </li >
+        </ul >
+</span >
 
 
     <p ></p >

@@ -7,6 +7,7 @@ var App = App || {};
 
     App.separation = App.separation || {};
     $(document).ready(function () {
+
         $('#email').focus();
 
         $('#email').bind('keypress', function (e) {
@@ -62,16 +63,14 @@ var App = App || {};
 
         });
 
-
         function errorValidation(obj, cansubmit) {
             $('#errorDiv').html("* You have some errors in your form, Please check the fields in red.");
             if (!cansubmit) {
                 return false;
             }
             var offset = obj.offset();
-            $("html, body").animate({ scrollTop: offset.top }, "slow");
+            $("html, body").animate({scrollTop: offset.top}, "slow");
         }
-
 
         $("#email").autocomplete({
             source: "/autocomplete",
@@ -92,7 +91,6 @@ var App = App || {};
                     getEmail(ui.content[0].value);
 
                 }
-
             },
             select: function (event, ui) {
                 $("#email").val(ui.item.label);
@@ -125,7 +123,7 @@ var App = App || {};
                         $("#cellphone").prop('checked', true);
                     }
 
-                    if (msg['fromAD']["telephonenumber"] != '' && msg['fromAD']["telephonenumber"]!= '+1 914 253 4') {
+                    if (msg['fromAD']["telephonenumber"] != '' && msg['fromAD']["telephonenumber"] != '+1 914 253 4') {
                         $("#phone").prop('checked', true);
                         $('#telephonenumber').html(msg['fromAD']["telephonenumber"]);
                     }
@@ -162,10 +160,25 @@ var App = App || {};
                     $('#ptoDays').keyup(function () {
                         $('#ptoDaysError').html('');
                     });
-                });
 
+                    // if the user is going to be deactivated ask if should be deactivated by the end
+                    //of the day or right away
+                    setDeactivation();
+                    $('#disableUser').click(function () {
+                        setDeactivation();
+                    });
+                });
         }
 
+        function setDeactivation() {
+            if ($('#disableUser').is(":checked")) {
+                $("#deactivateUser").after('<li id="deactivateUserli" style="margin: 0px 0px 0px 30px"><label><input type="checkbox" name="disableNow" id="disableNow" value="disableNow"> Deactivate immediately, otherwise will be processed today at 6pm EST </li></label>');
+
+            }
+            else {
+                $("#deactivateUserli").remove();
+            }
+        }
     });
 }(jQuery));
 

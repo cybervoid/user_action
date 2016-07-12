@@ -120,7 +120,6 @@ class SeparationController extends Controller
         $today = date('m/d/Y');
         $userName = $req->request->get('sAMAccountName');
         $disableUser = $req->request->get('disableUser');
-
         $removeGroups = $req->request->get('iTDeptEmail');
 
         // make translation for JDE and the application team
@@ -137,8 +136,9 @@ class SeparationController extends Controller
         }
 
 
-        if ((strtotime($today) >= strtotime($req->request->get('termDate'))))
+        if (strtotime($today) >= strtotime($req->request->get('termDate')) && $req->request->get('disableNow') == '')
         {
+            echo 'due today';
             //remove user from groups
 
             $ad = ActiveDirectory::get_connection();
@@ -156,6 +156,7 @@ class SeparationController extends Controller
         }
         else
         {
+            echo 'to schedule';
             // if the separation date is not today, schedule when it will be effective
             Schedule::addSchedule($req->request->get('termDate'), $userName, $name . ' ' . $lastName, 'separation', isset($disableUser), \Config::get('app.separationReportsPath') . $separationReport, $removeGroups);
         }
