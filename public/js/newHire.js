@@ -180,11 +180,20 @@ var App = App || {};
             }
 
 
-            // roll the page to the first element
-            var offset = $(firstError).offset();
-            $("html, body").animate({scrollTop: offset.top}, "slow");
+            if (firstError == '') {
 
-            return (firstError == '') ? true : false;
+                $("#submit").attr('disabled', 'disabled');
+                return true;
+            }
+            else {
+
+                // roll the page to the first element
+                var offset = $(firstError).offset();
+                $("html, body").animate({scrollTop: offset.top}, "slow");
+                return false;
+
+            }
+
         });
 
         $("#startDate").datepicker({"dateFormat": "mm/dd/yy"});
