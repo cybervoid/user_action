@@ -318,7 +318,7 @@
     </span >
         <br ><br >
 
-        <div class="subHeader" >HQ Office Manager-Suzie Schwab and Stephanie Brush</div >
+        <div class="subHeader" >HQ Office Manager-Suzie Schwab</div >
 
 <span class="checkbox" >
 <ul >

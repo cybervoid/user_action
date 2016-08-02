@@ -80,7 +80,7 @@
     @endif
 
     @if(isset($req['sep']["oManager"]))
-        <p ><span class="remark" >HQ Office Manager-Suzie Schwab and Stephanie Brush</span ></p >
+        <p ><span class="remark" >HQ Office Manager-Suzie Schwab</span ></p >
 
         <ul >
             @foreach($req['sep']["oManager"] as $item)
@@ -99,6 +99,17 @@
             @endforeach
         </ul >
     @endif
+
+    @if(isset($req['sep']["payroll"]))
+        <p ><span class="remark" >Benefits/Payroll Manager - Maritza Zelvin</span ></p >
+
+        <ul >
+            @foreach($req['sep']["payroll"] as $item)
+                <li >{{ $item }}</li >
+            @endforeach
+        </ul >
+    @endif
+
 
     @if ($req['sep']["generalComments"]!='')
         <p ><span class="remark">Additional instructions for Administration Office:</span ></p >

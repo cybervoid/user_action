@@ -150,7 +150,7 @@
 @endif
 
     @if(isset($req['newH']["oManager"]))
-        <p ><span class="remark" >HQ Office Manager-Suzie Schwab and Stephanie Brush</span ></p >
+        <p ><span class="remark" >HQ Office Manager-Suzie Schwab</span ></p >
 
 <ul >
     @foreach($req['newH']["oManager"] as $item)
