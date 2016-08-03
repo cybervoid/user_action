@@ -179,8 +179,16 @@ class SeparationController extends Controller
     {
         // get AD information
         $result_array['fromAD'] = Lookup::lookupUser($req);
-        $result_array['hireStatus'] = \Config::get('app.hireStatus');
-        $result_array['payrollType'] = \Config::get('app.payrollType');
+
+        $app['itDepartment'] = \Config::get('app.itDepartment');
+        $app['applicationTeam'] = \Config::get('app.applicationTeam');
+        $app['officeManager'] = \Config::get('app.officeManager');
+        $app['finance'] = \Config::get('app.finance');
+        $app['payroll'] = \Config::get('app.payroll');
+        $app['payrollType'] = \Config::get('app.payrollType');
+
+        $result_array['appConfig'] = $app;
+
 
         return new Response(json_encode($result_array), 200, ['Content-Type' => 'application/json']);
     }

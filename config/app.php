@@ -63,6 +63,15 @@ return $settings = [
 
 
     /*
+     * Notifications section
+     * */
+    'itDepartment' => 'IT Department Checklist: Rafael Gil and Service Desk',
+    'applicationTeam' => 'JDE Setup - IT Team', 'officeManager' => 'HQ Office Manager-Suzie Schwab',
+    'newDriver' => 'New Driver for Company Vehicle Form-Erik Tellone (new hire notification only) (if applicable)',
+    'finance' => 'Finance - Marjorie Guthrie', 'payroll' => 'Benefits/Payroll Manager - Maritza Zelvin',
+
+
+    /*
 	|--------------------------------------------------------------------------
 	| Application Debug Mode
 	|--------------------------------------------------------------------------

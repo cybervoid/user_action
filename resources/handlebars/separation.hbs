@@ -78,7 +78,7 @@
         <label >Payroll Type</label >
         <select class="inputRender" name="payrollType" id="payrollType" >
             <option value="" >Select Payroll Type</option >
-            {{#each data.payrollType }}
+            {{#each data.appConfig.payrollType }}
                 <option >{{this}}</option >
             {{/each}}
         </select >
@@ -140,9 +140,7 @@
 
 
     <p ></p ><br >
-    <span class="subHeader" >
-                IT Service Desk E-Mail Distribution List:
-               </span >
+    <span class="subHeader" >{{ data.appConfig.itDepartment }} </span >
     <hr >
     <label >
         <input type="checkbox" name="disableUser" id="disableUser" checked > Deactivate user from the system.
@@ -230,7 +228,7 @@
 
     <p ></p >
     <br >
-    <span class="subHeader" >JDE Setup - IT Team</span >
+    <span class="subHeader" >{{ data.appConfig.applicationTeam }}</span >
     <span class="checkbox" >
     <ul class="listNoBullets" >
         <li >
@@ -244,7 +242,7 @@
 
     <br ><br >
 
-    <div class="subHeader" >HQ Office Manager-Suzie Schwab</div >
+    <div class="subHeader" >{{ data.appConfig.officeManager }}</div >
     <span class="checkbox" >
     <ul style="list-style: none" >
         <li >
@@ -279,7 +277,7 @@
 
     <p ></p ><br >
 
-    <div class="subHeader" > Finance - Marjorie Guthrie<br >
+    <div class="subHeader" >{{ data.appConfig.finance }}<br >
         (Credit Card and Concur Access Requests) *new hires and separation
 
     </div >
@@ -299,7 +297,7 @@
 
     <p ></p ><br >
 
-    <div class="subHeader" > Benefits/Payroll Manager - Maritza Zelvin</div >
+    <div class="subHeader" >{{ data.appConfig.payroll }}</div >
     <span class="checkbox" >
     <ul style="list-style: none" >
         <li >

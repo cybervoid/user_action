@@ -54,16 +54,16 @@
                 @endif
             </span >
 
-            <span class="left" >
+                <span class="left" >
                     @if(count($departments)>0)
-                    Department
-                    <select class="inputRender" name="department" id="department" >
+                        Department
+                        <select class="inputRender" name="department" id="department" >
                             <option value="" >Select department</option >
-                        @foreach($departments as $department)
-                            <option >{{ $department }}</option >
-                        @endforeach
+                            @foreach($departments as $department)
+                                <option >{{ $department }}</option >
+                            @endforeach
                         </select ><span id="departmentError" class="errorSpan" >*</span ><br >
-                @endif
+                    @endif
             </span >
                 <br style="clear: left" >
             </li >
@@ -106,7 +106,7 @@
                 <input type="text" class="inputRender" name="manager" id="manager" required="" >
                 <span id="searchProgress" ></span >
             </span >
-            <span class="left" >
+                    <span class="left" >
                 <label >Manager's Email</label >
                 <input type="text" class="inputRender" name="managerEmail" id="managerEmail" required="" >
             </span >
@@ -197,7 +197,7 @@
                     <option value="Exempt" >Exempt</option >
                 </select >
             </span >
-            <span class="left" >
+                    <span class="left" >
                 Benefits effective Date <br > (Medical, Dental, FSA) 1st of the month following 30 days
                 of
                 employment
@@ -226,8 +226,8 @@
             <br ><span id="HRBError" class="errorSpan" ></span >
             <li >
                 <label >Payroll Comments</label >
-                    <textarea class="inputRender" cols="40" rows="6" id="payrollComments"
-                              name="payrollComments" ></textarea >
+                <textarea class="inputRender" cols="40" rows="6" id="payrollComments"
+                          name="payrollComments" ></textarea >
             </li >
             <p >
             <div class="subHeader" >Information for other departments:</div >
@@ -237,10 +237,10 @@
         <br >
 
         <div class="subHeader" >
-            IT Department Checklist: Rafael Gil and Service Desk<br >
+            {{ $itDepartment }}<br >
             E-Mail Distribution List:
         </div >
-<span class="checkbox" >
+        <span class="checkbox" >
         <ul id="itCheckList" >
             <li id="prepareLaptop" ><label ><input type="checkbox" class="inputRender" name="iTDept[]" id="laptop"
                                                    value="Laptop" >Laptop/Computer</label ></li >
@@ -305,8 +305,8 @@
             <p ></p >
 
             <P ></P ></div >
-        <div class="subHeader" >JDE Setup - IT Team</div >
-<span class="checkbox" >
+        <div class="subHeader" >{{ $applicationTeam }}</div >
+        <span class="checkbox" >
 <ul >
     <li >
         <label >
@@ -318,9 +318,9 @@
     </span >
         <br ><br >
 
-        <div class="subHeader" >HQ Office Manager-Suzie Schwab</div >
+        <div class="subHeader" >{{ $officeManager }}</div >
 
-<span class="checkbox" >
+        <span class="checkbox" >
 <ul >
     <li >
         <label ><input type="checkbox" class="inputRender" name="oManager[]" id="accessCard"
@@ -355,10 +355,8 @@
 
         <p ></p >
 
-        <div class="subHeader" >New Driver for Company Vehicle Form-Erik Tellone (new hire notification only) (if
-            applicable)
-        </div >
-<span class="checkbox" >
+        <div class="subHeader" > {{ $newDriver }}</div >
+        <span class="checkbox" >
 <ul >
     <li >
         <label ><input type="checkbox" class="inputRender" name="newDriver" id="newDriver"
@@ -368,8 +366,7 @@
     </span >
         <p ></p >
 
-        <div class="subHeader" >
-            Finance - Marjorie Guthrie<br >
+        <div class="subHeader" >{{ $finance }}<br >
             (Credit Card and Concur Access Requests) *new hires and separation
 
 
@@ -389,7 +386,7 @@
 </span >
 
         <br ><br >
-<span ><div class="subHeader" >
+        <span ><div class="subHeader" >
         SPECIFIC INSTRUCTIONS HERE:
     </div ></span >
         <textarea class="inputRender" cols="40" rows="6" id="comments" name="comments" ></textarea >

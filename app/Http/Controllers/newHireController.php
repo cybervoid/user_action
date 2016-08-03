@@ -47,7 +47,11 @@ class newHireController extends Controller
         return view('newHire', ['user' => $user, 'departments' => \Config::get('app.departments'),
             'companies' => \Config::get('app.companies'), 'hireStatus' => \Config::get('app.hireStatus'),
             'associate_class' => \Config::get('app.associate_class'), 'salaryType' => \Config::get('app.salaryType'),
-            'locations' => \Config::get('app.locations'), 'payrollType' => \Config::get('app.payrollType')]);
+            'locations' => \Config::get('app.locations'), 'payrollType' => \Config::get('app.payrollType'),
+            'itDepartment' => \Config::get('app.itDepartment'),
+            'applicationTeam' => \Config::get('app.applicationTeam'),
+            'officeManager' => \Config::get('app.officeManager'), 'newDriver' => \Config::get('app.newDriver'),
+            'finance' => \Config::get('app.finance'), 'payroll' => \Config::get('app.payroll')]);
 
     }
 
