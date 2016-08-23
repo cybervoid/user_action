@@ -44,6 +44,7 @@ class Change_OrgController extends Controller
     {
 
         $user = User::current();
+
         return view('change_org', ['user' => $user]);
     }
 
@@ -108,8 +109,7 @@ class Change_OrgController extends Controller
         {
             $changes['company'] = $req->request->get('company');
         }
-        else
-        if (strtolower($req->request->get('company')) != strtolower($result[0]['company'][0]))
+        else if (strtolower($req->request->get('company')) != strtolower($result[0]['company'][0]))
         {
             //check if the user comes from another company or didn't one assigned, if not
             // set one as default
@@ -141,7 +141,11 @@ class Change_OrgController extends Controller
                     $manager['oldManager'] = 'none';
                 }
             }
-        } else $manager='';
+        }
+        else
+        {
+            $manager = '';
+        }
 
         return view('change_org_verify', ['changes' => $changes, 'fromAD' => $result, 'req' => $req->request->all(),
             'menu_Home' => '', 'menu_Org_Change' => '', 'manager' => $manager]);
@@ -184,11 +188,18 @@ class Change_OrgController extends Controller
                 $result[0]['manager'][0] = '';
             }
             $view['newManagerName'] = $getManager[0]['givenname'][0] . ' ' . $getManager[0]['sn'][0];// use this var later on the view
-        } else{
-            if(isset($result[0]['manager'][0])){
-                $oldManager= $ad->getManager($result[0]['manager'][0]);
-                $managerEmail= $oldManager[0]['mail'][0];
-            } else $managerEmail = '';
+        }
+        else
+        {
+            if (isset($result[0]['manager'][0]))
+            {
+                $oldManager = $ad->getManager($result[0]['manager'][0]);
+                $managerEmail = $oldManager[0]['mail'][0];
+            }
+            else
+            {
+                $managerEmail = '';
+            }
         }
 
         // make the change permanent in AD
@@ -205,7 +216,23 @@ class Change_OrgController extends Controller
                 $schedule['attachment'] = \Config::get('app.change_org_ReportsPath') . $change_org_Report;
 
                 $schedule['changes'] = $params;
-                Schedule::createSchedule($main_req['effectiveDate'], $schedule);
+
+                // modify the effective date to a day before so it can be execute by the cron by the end of the previous business day
+                $effectiveDate = strtotime('-1 day', strtotime($main_req['effectiveDate']));
+
+                // if the effective day is a Sunday subtract 2 days to make it effective a Friday
+                if (date('w', $effectiveDate) == 0)
+                {
+                    $effectiveDate = strtotime('-2 days', $effectiveDate);
+                }
+
+                // if the effective day is a Saturday subtract 1 day to make it effective a Friday
+                if (date('w', $effectiveDate) == 6)
+                {
+                    $effectiveDate = strtotime('-1 day', $effectiveDate);
+                }
+
+                Schedule::createSchedule(date('m/d/Y', $effectiveDate), $schedule);
 
             }
             else
@@ -243,12 +270,12 @@ class Change_OrgController extends Controller
         //SEND THE MAIL
         $to = \Config::get('app.servicedesk');
 
-        $mailNotifyDepartments= array('management');
+        $mailNotifyDepartments = array('management');
         if ($view['main_req']['department'] == 'Sales')
         {
-            $mailNotifyDepartments[]= 'sales';
+            $mailNotifyDepartments[] = 'sales';
         }
-        $ccRecipients= MyMail::getRecipients( 'change_org',$mailNotifyDepartments, $managerEmail);
+        $ccRecipients = MyMail::getRecipients('change_org', $mailNotifyDepartments, $managerEmail);
 
         $subject = \Config::get('app.subjectPrefix') . $name . ' ' . $lastName;
         $attachment = \Config::get('app.change_org_ReportsPath') . $change_org_Report;
