@@ -121,6 +121,7 @@ class newHireController extends Controller
         $attachment = \Config::get('app.newHireReportsPath') . $newHireReport;
         $attachment = isset($attachment) ? file_exists($attachment) ? $attachment : false : null;
 
+
         Mailer::send('emails.forms', [], function (Message $m) use ($to, $ccRecipients, $subject, $attachment)
         {
             $m->to($to, null)->subject($subject);
@@ -131,6 +132,7 @@ class newHireController extends Controller
                 $m->attach($attachment);
             }
         });
+
 
         $ccRecipients[$to] = $to;
         $ccRecipients = array_unique(array_map("StrToLower", $ccRecipients));

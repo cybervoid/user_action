@@ -48,8 +48,10 @@ return $settings = [
         'l' => 'Rye Brook', 'c' => 'US', 'st' => 'NY'],
     'illy caffè San Francisco LLC' => ['streetAddress' => '535 Mission Street, Suite 1584', 'postalCode' => '94105',
         'l' => 'San Francisco', 'c' => 'US', 'st' => 'CA'],
-    'illy Espresso Canada' => ['streetAddress' => '800 Westchester Avenue, Suite S440', 'postalCode' => '10573',
-        'l' => 'Rye Brook', 'c' => 'US', 'st' => 'NY'],
+    'illy Espresso Canada' => ['streetAddress' => '197 Main Street', 'postalCode' => 'E3A 1E1', 'l' => 'Fredericton',
+        'c' => 'CA', 'st' => 'NB'],
+    'illy caffè North America, Inc - nyc' => ['streetAddress' => '275 Madison Avenue, 18th Floor',
+        'postalCode' => '10016', 'l' => 'New York', 'c' => 'US', 'st' => 'NY'],
 
 
     'hireStatus' => ['New Hire', 'Re-Hire', 'Seasonal', 'Temporary', 'Separation'],

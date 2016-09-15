@@ -28,6 +28,14 @@ var App = App || {};
                 $('#location').toggleClass('validateError', false);
                 $('#location').toggleClass('inputRender', true);
                 $('#locationError').html('');
+                switch ($('#location').val()) {
+                    case "Canada":
+                        if ($('#company').val() != 'illy Espresso Canada') {
+                            $('#company').val('illy Espresso Canada').change();
+                        }
+                        break
+                }
+
             }
 
             $('#location_Other').val("");
@@ -96,6 +104,14 @@ var App = App || {};
 
         $('#company').change(function() {
             $('#companyError').html('');
+            switch ($('#company').val()) {
+                case "illy Espresso Canada":
+                    if ($('#location').val() != 'Canada') {
+                        $('#location').val('Canada').change();
+                    }
+                    break
+            }
+
         });
 
         $('#department').change(function() {

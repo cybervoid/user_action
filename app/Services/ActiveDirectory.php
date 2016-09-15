@@ -188,6 +188,7 @@ class ActiveDirectory
 
     public function createUserAD(Request $req)
     {
+
         $name = trim($req->request->get('name'));
         $lastName = trim($req->request->get('lastName'));
 
@@ -210,11 +211,18 @@ class ActiveDirectory
                 switch ($req->request->get('location'))
                 {
                     case "New York City":
-                        $ldaprecord['streetAddress'] = "275 Madison Avenue, 31st Floor";
-                        $ldaprecord['st'] = "NY";
-                        $ldaprecord['postalCode'] = "10016";
-                        $ldaprecord['l'] = "New York";
-                        $ldaprecord['c'] = "US";
+                        $ldaprecord['streetAddress'] = \Config::get('app.illy caffè North America, Inc - nyc')['streetAddress'];
+                        $ldaprecord['st'] = \Config::get('app.illy caffè North America, Inc - nyc')['st'];
+                        $ldaprecord['postalCode'] = \Config::get('app.illy caffè North America, Inc - nyc')['postalCode'];
+                        $ldaprecord['l'] = \Config::get('app.illy caffè North America, Inc - nyc')['l'];
+                        $ldaprecord['c'] = \Config::get('app.illy caffè North America, Inc - nyc')['c'];
+                        break;
+                    case "Canada":
+                        $ldaprecord['streetAddress'] = \Config::get('app.illy Espresso Canada')['streetAddress'];
+                        $ldaprecord['st'] = \Config::get('app.illy Espresso Canada')['st'];
+                        $ldaprecord['postalCode'] = \Config::get('app.illy Espresso Canada')['postalCode'];
+                        $ldaprecord['l'] = \Config::get('app.illy Espresso Canada')['l'];
+                        $ldaprecord['c'] = \Config::get('app.illy Espresso Canada')['c'];
                         break;
                     default:
                         $ldaprecord['st'] = "NY";
@@ -227,21 +235,34 @@ class ActiveDirectory
                 }
                 break;
             case "Espressamente illy":
-                $ldaprecord['st'] = "NY";
-                $ldaprecord['postalCode'] = "10573";
-                $ldaprecord['l'] = "Rye Brook";
-                $ldaprecord['c'] = "US";
-                $ldaprecord['streetAddress'] = "800 Westchester Avenue, Suite S438";
+                $ldaprecord['st'] = \Config::get('app.Espressamente illy')['st'];
+                $ldaprecord['postalCode'] = \Config::get('app.Espressamente illy')['postalCode'];
+                $ldaprecord['l'] = \Config::get('app.Espressamente illy')['l'];
+                $ldaprecord['c'] = \Config::get('app.Espressamente illy')['c'];
+                $ldaprecord['streetAddress'] = \Config::get('app.Espressamente illy')['streetAddress'];
                 break;
             case "illy caffè San Francisco LLC":
-                $ldaprecord['st'] = "CA";
-                $ldaprecord['postalCode'] = "94105";
-                $ldaprecord['l'] = "San Francisco";
-                $ldaprecord['c'] = "US";
-                $ldaprecord['streetAddress'] = "535 Mission Street, Suite 1584";
+                $ldaprecord['st'] = \Config::get('app.illy caffè San Francisco LLC')['st'];
+                $ldaprecord['postalCode'] = \Config::get('app.illy caffè San Francisco LLC')['postalCode'];
+                $ldaprecord['l'] = \Config::get('app.illy caffè San Francisco LLC')['l'];
+                $ldaprecord['c'] = \Config::get('app.illy caffè San Francisco LLC')['c'];
+                $ldaprecord['streetAddress'] = \Config::get('app.illy caffè San Francisco LLC')['streetAddress'];
                 break;
         }
 
+        switch ($req->request->get('location'))
+        {
+            case "Canada":
+                $ldaprecord['streetAddress'] = \Config::get('app.illy Espresso Canada')['streetAddress'];
+                $ldaprecord['st'] = \Config::get('app.illy Espresso Canada')['st'];
+                $ldaprecord['postalCode'] = \Config::get('app.illy Espresso Canada')['postalCode'];
+                $ldaprecord['l'] = \Config::get('app.illy Espresso Canada')['l'];
+                $ldaprecord['c'] = \Config::get('app.illy Espresso Canada')['c'];
+                break;
+        }
+
+        var_dump($ldaprecord);
+        die;
 
         $ldaprecord['displayName'] = ucfirst(strtolower($lastName)) . " " . ucfirst(strtolower($name));
 
