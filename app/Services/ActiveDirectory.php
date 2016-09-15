@@ -230,7 +230,6 @@ class ActiveDirectory
                         $ldaprecord['l'] = "Rye Brook";
                         $ldaprecord['c'] = "US";
                         $ldaprecord['streetAddress'] = "800 Westchester Avenue, Suite S440";
-
                         break;
                 }
                 break;
@@ -260,9 +259,6 @@ class ActiveDirectory
                 $ldaprecord['c'] = \Config::get('app.illy Espresso Canada')['c'];
                 break;
         }
-
-        var_dump($ldaprecord);
-        die;
 
         $ldaprecord['displayName'] = ucfirst(strtolower($lastName)) . " " . ucfirst(strtolower($name));
 
