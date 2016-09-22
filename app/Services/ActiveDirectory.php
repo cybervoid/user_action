@@ -335,6 +335,12 @@ class ActiveDirectory
             case "Human Resources":
                 @ldap_mod_add(static::$conn, 'CN=Human Resources NA,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM', $group_info);
                 break;
+            case "Marketing":
+                @ldap_mod_add(static::$conn, 'CN=Marketing NA,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM', $group_info);
+                break;
+            case "Human Resources":
+                @ldap_mod_add(static::$conn, 'CN=Human Resources NA,OU=Security Groups,OU=Rye Brook,OU=North America,DC=ILLY-DOMAIN,DC=COM', $group_info);
+                break;
         }
 
     }
