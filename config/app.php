@@ -28,6 +28,7 @@ return $settings = [
     'eMailHRAdd' => 'Maren.Gizicki@illy.com', 'eMailITManager' => 'roy.forster@illy.com',
     'eMailITApplication' => 'Massimiliano.Delise@illy.com', 'illySanFrancisco' => 'donna.garcia@illy.com',
     'eMailIT' => 'Michael.Voisine@illy.com', 'eMailManagement' => 'Suzanne.Schwab@illy.com',
+    'eMailManagement1' => 'tanita.billups@illy.com',
     'eMailFinanceCreditCard' => 'Marjorie.Guthrie@illy.com',
     'eMailFinanceDrivers' => 'Erik.Tellone@illy.com',
 
