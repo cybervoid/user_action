@@ -17,8 +17,8 @@ This is the information needed for the new user: <br >
 <br >
 <p >Thank you!!,</p >
 <br >
-<i >Rafael Gil</i >
-
-
-
-
+<i >
+    <p >
+        IT Department<br >
+        illy caffè North America, Inc</p >
+</i >

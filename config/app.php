@@ -27,7 +27,7 @@ return $settings = [
     'si_infra' => 'servicedesk.illy@eng.it', 'servicedesk' => 'itservicena@illy.com',
     'eMailHRAdd' => 'Maren.Gizicki@illy.com', 'eMailITManager' => 'roy.forster@illy.com',
     'eMailITApplication' => 'Massimiliano.Delise@illy.com', 'illySanFrancisco' => 'donna.garcia@illy.com',
-    'eMailIT' => 'rafael.gil@illy.com', 'eMailManagement' => 'Suzanne.Schwab@illy.com',
+    'eMailIT' => 'Michael.Voisine@illy.com', 'eMailManagement' => 'Suzanne.Schwab@illy.com',
     'eMailFinanceCreditCard' => 'Marjorie.Guthrie@illy.com',
     'eMailFinanceDrivers' => 'Erik.Tellone@illy.com',
 
@@ -67,7 +67,7 @@ return $settings = [
     /*
      * Notifications section
      * */
-    'itDepartment' => 'IT Department Checklist: Rafael Gil and Service Desk',
+    'itDepartment' => 'IT Department Checklist: Michael Voisine and Service Desk',
     'applicationTeam' => 'JDE Setup - IT Team', 'officeManager' => 'HQ Office Manager-Suzie Schwab',
     'newDriver' => 'New Driver for Company Vehicle Form-Erik Tellone (new hire notification only) (if applicable)',
     'finance' => 'Finance - Marjorie Guthrie', 'payroll' => 'Benefits/Payroll Manager - Maritza Zelvin',
